@@ -6,7 +6,11 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('login', FALSE);
+		if($this->input->post()){
+            $this->session->set_userdata('role','Admin');
+            redirect(base_url("admin/main"));
+        }
+		$this->load->view('login', ['role'=>'Admin'], FALSE);
 	}
 
 }

@@ -5,7 +5,8 @@ class Temp extends CI_Controller {
 
 	public function index()
 	{
-		$data['role'] = 'Admin';
+		$data['role'] = 'Admin]
+		';
 		$this->load->view('template/main', $data, FALSE);
 	}
 

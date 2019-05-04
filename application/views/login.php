@@ -44,7 +44,7 @@
 <body class="animsition page-login-v3 layout-full">
 
 	<!-- Page -->
-	<div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">>
+	<div class="page vertical-align text-center" data-animsition-in="fade-in" data-animsition-out="fade-out">
 		<div class="page-content vertical-align-middle">
 			<div class="panel">
 				<div class="panel-body">
@@ -52,7 +52,7 @@
 						<img class="brand-img" width="80px" src="<?php echo base_url() ?>assets/images/logo-dkp3.png" alt="...">
 						<br><br><h2 class="brand-text font-size-18">SMSK&D DKP-3</h2>
 					</div>
-					<form method="post" action="<?php echo base_url()?>temp" autocomplete="off">
+					<form method="post" action="<?php echo base_url()?>admin/main" autocomplete="off">
 						<div class="form-group form-material floating" data-plugin="formMaterial">
 							<input type="text" class="form-control" name="user" id="user" />
 							<label class="floating-label">Username</label>
