@@ -4,12 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Login extends CI_Controller {
 
-	public function index()
+	public function login()
 	{
-		if($this->input->post()){
-            $this->session->set_userdata('role','Admin');
-            redirect(base_url("admin/dashboard"));
-        }
 		$this->load->view('login', ['role'=>'Admin'], FALSE);
 	}
 
