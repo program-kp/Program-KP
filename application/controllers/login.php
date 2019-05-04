@@ -8,7 +8,7 @@ class Login extends CI_Controller {
 	{
 		if($this->input->post()){
             $this->session->set_userdata('role','Admin');
-            redirect(base_url("admin/main"));
+            redirect(base_url("admin/dashboard"));
         }
 		$this->load->view('login', ['role'=>'Admin'], FALSE);
 	}
