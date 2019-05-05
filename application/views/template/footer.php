@@ -38,6 +38,8 @@
         <script src="<?php echo base_url() ?>assets/global/vendor/datatables.net-buttons-bs4/buttons.bootstrap4.js"></script>
         <script src="<?php echo base_url() ?>assets/global/vendor/asrange/jquery-asRange.min.js"></script>
         <script src="<?php echo base_url() ?>assets/global/vendor/bootbox/bootbox.js"></script>
+        <!-- Alert -->
+        <script src="<?php echo base_url() ?>assets/global/vendor/bootstrap-notify/bootstrap-notify.js"></script>
     
     <!-- Scripts -->
     <script src="<?php echo base_url() ?>assets/global/js/Component.js"></script>
@@ -64,6 +66,9 @@
     
         <script src="<?php echo base_url() ?>assets/examples/js/tables/datatable.js"></script>
         <script src="<?php echo base_url() ?>assets/examples/js/uikit/icon.js"></script>
+        <!-- Alert -->
+        <script src="<?php echo base_url() ?>assets/global/js/Plugin/alertify.js"></script>
+        <script src="<?php echo base_url() ?>assets/global/js/Plugin/notie-js.js"></script>
 
 </body>
 </html>

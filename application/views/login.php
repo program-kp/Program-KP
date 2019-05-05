@@ -20,6 +20,7 @@
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/css/site.min.css">
 
 	<!-- Plugins -->
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/font-awesome/font-awesome.min.css">
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/animsition/animsition.css">
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/asscrollable/asScrollable.css">
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/switchery/switchery.css">
@@ -52,16 +53,22 @@
 						<img class="brand-img" width="80px" src="<?php echo base_url() ?>assets/images/logo-dkp3.png" alt="...">
 						<br><br><h2 class="brand-text font-size-18">SMSK&D DKP-3</h2>
 					</div>
-					<form method="post" action="<?php echo site_url()?>/admin/dashboard" autocomplete="off">
+					<div id="type_alert" class="alert dark alert-dismissible d-none notif">
+						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+						<h5 id="text">Data Berhasil ditambahkan.</h5>
+					</div>
+					<form id="form" action="javascript:login()">
 						<div class="form-group form-material floating" data-plugin="formMaterial">
-							<input type="text" class="form-control" name="user" id="user" />
+							<input type="text" class="form-control" name="username" id="username" />
 							<label class="floating-label">Username</label>
+							<small id=er></small>
 						</div>
 						<div class="form-group form-material floating" data-plugin="formMaterial">
-							<input type="password" class="form-control" name="pass" id="user" />
+							<input type="password" class="form-control" name="password" id="password" />
 							<label class="floating-label">Password</label>
+							<small id=er></small>
 						</div>
-						<button type="submit" class="btn btn-primary btn-block btn-lg mt-40">Sign in</button>
+						<button id="login" type="submit" class="btn btn-primary btn-block btn-lg mt-40" onclick="">Login</button>
 					</form>
 				</div>
 			</div>
@@ -127,6 +134,58 @@
 				Site.run();
 			});
 		})(document, window, jQuery);
+
+		function success()
+		{		
+			$('#er').html("");
+			$('input').val('');
+			$('#type_alert').attr('class', 'alert alert-dismissible mt-3 d-none');
+			$('#icon').attr('class', '');
+			$('#text').html('');
+			$('#type_alert').removeClass('d-none');
+		}
+
+		function login() {
+
+			$("#login").html("Processing...");
+			$('#login').attr('disabled','disabled');
+
+			var form_data = new FormData(); 
+			form_data.append("username", $('#username').val());
+			form_data.append("password", $('#password').val());
+			$.ajax({
+				url : "<?php echo base_url()?>login/datainput",
+				type : 'POST',
+				processData: false,
+				contentType: false,
+				dataType:'json',
+				data : form_data,
+				success: function(data){
+					console.log(data);
+					if (data.status=="validasi") {
+
+						$.each(data, function(key, value) {
+							$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);
+						});
+
+					} else if (data.status=="berhasil") {
+
+						window.location = "<?php echo base_url() ?>"+data.page;
+
+					} else {
+
+						$('small').html('');
+						success();
+						$('#type_alert').addClass(data.type_alert);
+						$('#icon').addClass(data.icon);
+						$('#text').html(data.text);
+
+					}
+					$('#login').html('Login');
+					$('#login').removeAttr('disabled');
+				}
+			});
+		}
 	</script>
 
 </body>

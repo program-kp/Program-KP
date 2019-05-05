@@ -8,15 +8,15 @@ class Surat extends CI_Controller {
 		parent::__construct();
 		// $this->load->model("m_users", "users");
 		$this->load->helper("form");	
-		// if ($this->session->userdata('role_db') != "super")
-		// 	redirect('/login/');
+		if ($this->session->userdata('role') != "Admin")
+			redirect('/login/');
 	}
 
 	public function index()
 	{		
 		$data['role'] = 'Admin';
 		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('surat_masuk/index', FALSE);
+		$this->load->view('surat/surat_masuk/index', FALSE);
 		$this->load->view('template/footer', FALSE);
 	}
 
@@ -29,7 +29,7 @@ class Surat extends CI_Controller {
 	{		
 		$data['role'] = 'Admin';
 		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('undangan/index', FALSE);
+		$this->load->view('surat/undangan/index', FALSE);
 		$this->load->view('template/footer', FALSE);
 	}
 
@@ -37,7 +37,15 @@ class Surat extends CI_Controller {
 	{		
 		$data['role'] = 'Admin';
 		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('surat_keluar/index', FALSE);
+		$this->load->view('surat/surat_keluar/index', FALSE);
+		$this->load->view('template/footer', FALSE);
+	}
+
+	public function disposisi()
+	{		
+		$data['role'] = 'Admin';
+		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('surat/disposisi/index', FALSE);
 		$this->load->view('template/footer', FALSE);
 	}
 

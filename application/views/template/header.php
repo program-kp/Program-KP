@@ -35,7 +35,8 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/datatables.net-responsive-bs4/dataTables.responsive.bootstrap4.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/datatables.net-buttons-bs4/dataTables.buttons.bootstrap4.css">
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/examples/css/tables/datatable.css">
-    
+
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap-notify/animate.css">
     
     <!-- Fonts -->
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/font-awesome/font-awesome.css">
@@ -88,16 +89,10 @@
 
 				<!-- Navbar Toolbar Right -->
 				<ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-
 					<li class="nav-item">
-						<label class="nav-link navbar-avatar">
-							<span class="avatar avatar-online">
-								<img src="<?php echo base_url() ?>assets/global/portraits/5.jpg" alt="...">
-							</span>
-						</label>
-					</li>
-					<li class="nav-item">
-						<label class="nav-link waves-effect waves-light waves-round">Muhamamad Bawaihi</label>		
+						<label class="nav-link waves-effect waves-light waves-round">
+							<?php echo $this->session->userdata("nama") ?>
+						</label>		
 					</li>
 				</ul>
 				<!-- End Navbar Toolbar Right -->
@@ -110,7 +105,7 @@
 			<div>
 				<div>
 					<?php
-					switch ($role) {
+					switch ($this->session->userdata("role")) {
 						case 'Admin':
 						$this->load->view('template/_menu_admin');
 						break;
@@ -118,7 +113,7 @@
 						$this->load->view('template/_menu_bidang');
 						break;
 						default:
-						echo "<ul><li><a>Tidak ada menu</a></li></ul>";
+						$this->load->view('login');
 					}
 
 					?>

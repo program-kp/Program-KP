@@ -1,7 +1,7 @@
 <ul id="menu-navigation" class="site-menu" data-plugin="menu">
 	<li class="site-menu-category">General</li>
 	<li class="site-menu-item" id="dashboard">
-		<a class="animsition-link" href="<?php echo site_url()?>/admin/dashboard">
+		<a class="animsition-link" href="<?php echo base_url()?>admin/dashboard">
 			<i class="site-menu-icon fa fa-dashboard" aria-hidden="true"></i>
 			<span class="site-menu-title">Dashboard</span>
 		</a>
@@ -14,53 +14,90 @@
 		</a>
 		<ul class="site-menu-sub">
 			<li class="site-menu-item" id="surat_masuk">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/surat/surat_masuk">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/surat/surat_masuk">
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Masuk</span>
 				</a>
 			</li>
-			<li class="site-menu-item" id="undangan_masuk">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/surat/undangan_masuk">
+			<li class="site-menu-item" id="undangan">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/surat/undangan">
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Undangan Masuk</span>
 				</a>
 			</li>
 			<li class="site-menu-item" id="surat_keluar">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/surat/surat_keluar">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/surat/surat_keluar">
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Keluar</span>
 				</a>
 			</li>
 			<li class="site-menu-item" id="disposisi">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/surat/disposisi">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/surat/disposisi">
 					<span class="site-menu-title"><i class="fa fa-mail-forward" aria-hidden="true"></i>&ensp;Disposisi</span>
 				</a>
 			</li>
 		</ul>
-	</li>
-	<li class="site-menu-item has-sub" id="data_master">
+	</li><li class="site-menu-item has-sub" id="data_master">
 		<a href="javascript:void(0)">
-			<i class="site-menu-icon fa fa-cogs" aria-hidden="true"></i>
+			<i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
 			<span class="site-menu-title">Data Master</span>
 			<span class="site-menu-arrow"></span>
 		</a>
 		<ul class="site-menu-sub">
-			<li class="site-menu-item" id="data_admin">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/master/admin">
-					<span class="site-menu-title"><i class="fa fa-user-o" aria-hidden="true"></i>&ensp;Data Admin</span>
+			<li class="site-menu-item" id="referensi_bidang">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/master/referensi_bidang">
+					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Referensi Bidang</span>
 				</a>
 			</li>
-			<li class="site-menu-item" id="data_bidang">
-				<a class="animsition-link" href="<?php echo site_url()?>/admin/master/bidang">
-					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Data Bidang</span>
+			<li class="site-menu-item" id="admin_bidang">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/master/admin_bidang">
+					<span class="site-menu-title"><i class="fa fa-users" aria-hidden="true"></i>&ensp;Admin Bidang</span>
 				</a>
 			</li>
 		</ul>
 	</li>
 	<li class="site-menu-item">
-		<a class="animsition-link" href="<?php echo site_url()?>/login/logout">
+		<a class="animsition-link" href="javascript:logout()">
 			<i class="site-menu-icon fa fa-sign-out" aria-hidden="true"></i>
 			<span class="site-menu-title">Logout</span>
 		</a>
 	</li>
 </ul>
+
+<script>
+	function logout()
+	{
+		bootbox.confirm({
+			// size: "small",
+			centerVertical: true,
+			message: "Anda yakin untuk keluar dari aplikasi ini ?",
+			buttons: {
+				confirm: {
+					label: 'Ya',
+					className: 'btn-danger',
+				},
+				cancel: {
+					label: 'Tidak',
+					className: 'btn-default',
+
+				}
+			},
+			callback: function (result) {
+				if (result==true) {
+					window.location = "<?php echo base_url() ?>login/logout";
+				}
+			}
+		}).find('.modal-dialog').css({
+			'width' : '450px'
+		}).find('.modal-content').css({
+			'font-size': '20px',
+			'margin-top': function (){
+				var w = $( window ).height();
+				var b = $(".modal-dialog").height();
+        		// should not be (w-h)/2
+        		var h = (w-b)/3;
+        		return h+"px";
+        	}
+        });
+	}
+</script>
 
 <!-- <ul id="menu-navigation" class="site-menu" data-plugin="menu">
 	<li class="site-menu-category">General</li>
