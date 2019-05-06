@@ -7,8 +7,8 @@ class Surat extends CI_Controller {
 	{
 		parent::__construct();
 		// $this->load->model("m_users", "users");
-		$this->load->helper("form");	
-		if ($this->session->userdata('role') != "Admin")
+		$this->load->helper("form");
+		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
 

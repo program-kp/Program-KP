@@ -14,11 +14,32 @@ class Referensi_bidang_m extends CI_Model {
 			return false;
 	}
 
-	function get_data()
+	function get_data($get= null)
 	{
 		$this->db->order_by('nama_bidang', 'asc');
+		if ($get!=null) {
+			$this->db->where('status_user', 0);
+		}
 		$query = $this->db->get('tbl_bidang');
 		return $query->result();
+	}
+
+	function ar_bidang($a = null)
+	{
+		$data = $this->get_data(1);
+		if ($a == null) {
+			$list[''] = "-- Pilih Bidang --";
+			foreach ($data as $row){
+				$list[$row->id_bidang] = $row->id_bidang." - ".$row->nama_bidang;
+			}
+			return $list;
+		} else {
+			$list="<option value=''>-- Pilih Bidang --</option>";
+			foreach ($data as $row){
+				$list.="<option value='".$row->id_bidang."'>".$row->id_bidang." - ".$row->nama_bidang."</option>";
+			}
+			return $list;
+		}
 	}
 
 	function get_data_byID($id_bidang)
@@ -26,6 +47,18 @@ class Referensi_bidang_m extends CI_Model {
 		$this->db->select('*');
 		$this->db->from('tbl_bidang');
 		$this->db->where('id_bidang', $id_bidang);
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	function count_data_byBidang($id_bidang)
+	{
+		$this->db->select('COUNT(*) AS jumlah_data');
+		$this->db->from('tbl_user');
+		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_user.id_bidang');
+		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
+		$this->db->where('tbl_user.id_bidang', $id_bidang);
+		// $this->db->group_by("tbl_user.id_bidang");
 		$query = $this->db->get();
 		return $query->row();
 	}
@@ -45,6 +78,13 @@ class Referensi_bidang_m extends CI_Model {
 	{
 		$this->db->where('id_bidang', $id_bidang);
 		$query = $this->db->delete('tbl_bidang');
+		return $query;
+	}
+
+	function delete_user($id_bidang)
+	{
+		$this->db->where('id_bidang', $id_bidang);
+		$query = $this->db->delete('tbl_user');
 		return $query;
 	}
 

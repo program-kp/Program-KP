@@ -8,6 +8,8 @@ class Referensi_bidang extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
+		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
+			redirect('/login/');
 	}
 
 	function getdata()
@@ -52,17 +54,18 @@ class Referensi_bidang extends CI_Controller {
 	function datahapus($id_bidang)
 	{
 		$cek = $this->bidang->cek($id_bidang);
+		$data = $this->bidang->get_data_byID($id_bidang);
 		if ($cek) {
 
-			$data = $this->bidang->get_data_byID($id_bidang);
 			$this->bidang->delete($id_bidang);
+			$this->bidang->delete_user($id_bidang);
 
 			$validasi = [
 				'hasil' => 'berhasil',
 				'type' => 'success',
 				'icon' => 'fa fa-check',
 				'title' => 'Berhasil',
-				'message' => 'Data '.$data->nama_bidang.' Berhasil dihapus.'
+				'message' => 'Data <b>'.$data->nama_bidang.'</b> Berhasil dihapus.'
 			];
 		} else {
 			$validasi = [
@@ -70,7 +73,7 @@ class Referensi_bidang extends CI_Controller {
 				'type' => 'danger',
 				'icon' => 'fa fa-ban',
 				'title' => 'Gagal',
-				'message' => 'Terdapat Kesalahan pada Data yang ingin dihapus.'
+				'message' => 'Data <b>'.$data->nama_bidang.'</b> tidak Tersedia.'
 			];
 		}
 		echo json_encode($validasi);
@@ -109,7 +112,7 @@ class Referensi_bidang extends CI_Controller {
 					'type' => 'success',
 					'icon' => 'fa fa-check',
 					'title' => 'Berhasil',
-					'message' => 'Data '.$nama->nama_bidang.' Berhasil diedit.'
+					'message' => 'Data <b>'.$nama->nama_bidang.'</b> Berhasil diedit.'
 				];
 
 			} else {
@@ -154,8 +157,14 @@ class Referensi_bidang extends CI_Controller {
 			"</div>";
 			$row[] = $bidang->nama_bidang;
 
+			$jumlah = $this->bidang->count_data_byBidang($bidang->id_bidang);
+
+			if ($bidang->status_user==1) $row[] = 'Ada ('.$jumlah->jumlah_data.')';
+			else $row[] = 'Belum Ada';
+
+
 			$row[] = "
-			<div align='center'><button class='btn btn-sm btn-info edit' name='edit' id='edit".$no."' data-value='".$bidang->id_bidang."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$bidang->id_bidang."' data-nama='".$bidang->nama_bidang."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			<div align='center'><button class='btn btn-sm btn-info edit' name='edit' id='edit".$no."' data-value='".$bidang->id_bidang."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$bidang->id_bidang."' data-nama='".$bidang->nama_bidang."' data-jumlah='".$jumlah->jumlah_data."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

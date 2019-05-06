@@ -2,11 +2,11 @@
 <!-- Page -->
 <div class="page">
 	<div class="page-header">
-		<h1 class="page-title">Referensi Bidang</h1>
+		<h1 class="page-title">User Bidang</h1>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="<?php echo base_url()?>admin/dashboard">Home</a></li>
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Data Master</a></li>
-			<li class="breadcrumb-item active">Referensi Bidang</li>
+			<li class="breadcrumb-item active">User Bidang</li>
 		</ol>
 	</div>
 	<div class="page-content container-fluid">
@@ -15,20 +15,20 @@
 
 			<!-- CHANGE -->
 			<div class="panel-heading">
-				<h3 class="panel-title">Referensi Bidang
-					<small>Berisi Data Bidang yang ada di DKP3 Kota Banjarbaru</small>
+				<h3 class="panel-title">User Bidang
+					<small>Berisi User untuk Bidang yang ada di DKP3 Kota Banjarbaru</small>
 				</h3>
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Referensi Bidang</button><hr>
+				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah User Bidang</button><hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nama Bidang</th>
-							<th>Status User</th>
+							<th>Username</th>
 							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
@@ -53,14 +53,38 @@ role="dialog" tabindex="-1">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> Referensi Bidang</h4>
+				<h4 class="modal-title"><span id=judul>Tambah</span> User Bidang</h4>
 			</div>
 			<div class="modal-body">
-				<input type="hidden" id="id_bidang">
+				<input type="hidden" id="username_L">
+				<input type="hidden" id="id_bidang_edit">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Nama Bidang<span required="">*</span></label>
 					<div class="col-sm-8">
-						<?php echo form_input('nama_bidang', '', ["class" => "form-control", 'id' => 'nama_bidang']); ?>
+						<?php echo form_dropdown('id_bidang', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'id_bidang']); ?>
+						<small id=er>Validasi View</small>
+						<?php echo form_input('nama_bidang', '', ["class" => "form-control edit_data d-none", 'id' => 'nama_bidang']); ?>
+						<small id=er>Validasi View</small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 form-label">Username<span required="">*</span></label>
+					<div class="col-sm-8">
+						<?php echo form_input('username', '', ["class" => "form-control", 'id' => 'username']); ?>
+						<small id=er>Validasi View</small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 form-label">Password<span required="">*</span></label>
+					<div class="col-sm-8">
+						<?php echo form_input('password', '', ["class" => "form-control", 'id' => 'password']); ?>
+						<small id=er>Validasi View</small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 form-label">Konfirmasi Password<span required="">*</span></label>
+					<div class="col-sm-8">
+						<?php echo form_input('c_password', '', ["class" => "form-control", 'id' => 'c_password']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
@@ -85,7 +109,7 @@ role="dialog" tabindex="-1">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> Referensi Bidang</h4>
+				<h4 class="modal-title"><span id=judul>Hapus</span> User Bidang</h4>
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="id">
@@ -93,15 +117,17 @@ role="dialog" tabindex="-1">
 					<thead>
 						<tr>
 							<th>Nama Bidang</th>
+							<th>Username</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td id="nama"></td>
+							<td id="user"></td>
 						</tr>
 					</tbody>
 				</table>
-				<div id="konfirmasi"></div>
+				<div id="konfirmasi">Yakin Ingin hapus data ?</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
@@ -123,18 +149,7 @@ role="dialog" tabindex="-1">
 	{
 		$('#id').val($('#confirm'+no).data().value);
 		$('#nama').html($('#confirm'+no).data().nama);
-
-		var nama_bidang = $('#confirm'+no).data().nama;
-		var jumlah = $('#confirm'+no).data().jumlah;
-
-		if (jumlah==0) {
-			$('#konfirmasi').html('Tidak terdapat Akun padang bidang '+$('#confirm'+no).data().nama)
-		} else {
-			var text = "Terdapat "+jumlah+"  data User yg ada di Bidang " + nama_bidang + ". Yakin ingin hapus data ?";
-			$('#konfirmasi').html(text);
-		}
-
-		$('#data_user').html();
+		$('#user').html($('#confirm'+no).data().user);
 		$('#modal_hapus').modal('show');
 	}
 
@@ -143,15 +158,18 @@ role="dialog" tabindex="-1">
 		var id_bidang = $('#id').val();
 		
 		$.ajax({
-			url : "<?php echo base_url()?>admin/referensi_bidang/datahapus/"+id_bidang,
+			url : "<?php echo base_url()?>admin/user_bidang/datahapus/"+id_bidang,
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
 				console.log(data);
-				if (data.hasil == "berhasil") {
-					table.ajax.reload( null, false );
+				if (data.hasil == "berhasil") {					
 					success();
-					notify(data.title, data.message, data.icon, data.type);
+					notify(data.title, data.message, data.icon, data.type);					
+					table.ajax.reload( null, false );
+
+					$('#id_bidang').html('');
+					$('#id_bidang').append(data.ar_bidang);
 				}
 			}
 		});
@@ -159,9 +177,10 @@ role="dialog" tabindex="-1">
 
 	function edit(no)
 	{
-		var id_bidang = $('#edit'+no).data().value;
+		success();
+		var username = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/referensi_bidang/dataedit/"+id_bidang,
+			url : "<?php echo base_url()?>admin/user_bidang/dataedit/"+username,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -175,8 +194,16 @@ role="dialog" tabindex="-1">
 					$('input').val('');
 					$('#modal').modal('show');
 					$('#judul').html('Edit');
-					$('#id_bidang').val(data.id_bidang);
+
+					$('.input_data').addClass('d-none');
+					$('.edit_data').removeClass('d-none');
+
+					$('#username_L').val(data.username);
+					$('#username').val(data.username);
+					$('#id_bidang_edit').val(data.id_bidang);
+					$('#nama_bidang').attr('disabled','disabled');
 					$('#nama_bidang').val(data.nama_bidang);
+					$('#password').val(data.password);
 				}
 			}
 		});
@@ -188,10 +215,14 @@ role="dialog" tabindex="-1">
 		$('.simpan').attr('disabled','disabled');
 
 		var form_data = new FormData(); 
+		form_data.append("username_L", $('#username_L').val());
 		form_data.append("id_bidang", $('#id_bidang').val());
-		form_data.append("nama_bidang", $('#nama_bidang').val());
+		form_data.append("id_bidang_edit", $('#id_bidang_edit').val());
+		form_data.append("username", $('#username').val());
+		form_data.append("password", $('#password').val());
+		form_data.append("c_password", $('#c_password').val());
 		$.ajax({
-			url : "<?php echo base_url()?>admin/referensi_bidang/datainput",
+			url : "<?php echo base_url()?>admin/user_bidang/datainput",
 			type : 'POST',
 			processData: false,
 			contentType: false,
@@ -207,28 +238,24 @@ role="dialog" tabindex="-1">
 				} else {
 					success();
 					notify(data.title, data.message, data.icon, data.type);
-					table.ajax.reload( null, false );
 
+					table.ajax.reload( null, false );
 				}
 				$('.simpan').html('Simpan');
 				$('.simpan').removeAttr('disabled');
+				$('#id_bidang').html('');
+				$('#id_bidang').append(data.ar_bidang);
 			}
 		});
 	}	
 
 	function success()
 	{
+		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
-		$('#modal, #modal_hapus').modal('hide');
 		$('small').html('');
 		$('input').val('');
 		$('select').val('');
-	}
-
-
-	function reload_table()
-	{
-		table.ajax.reload( null, false );
 	}
 
 	function notify(title, message, icon, type)
@@ -242,8 +269,8 @@ role="dialog" tabindex="-1">
 				from: 'bottom',
 				align: 'right'
 			},
-			delay: 2000,
 			newest_on_top: true,
+			delay: 3000,
 			mouse_over: 'pause',
 			animate: {
 				enter: 'animated fadeInRight',
@@ -268,10 +295,9 @@ role="dialog" tabindex="-1">
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/referensi_bidang/view_data',
+				"url": '<?php echo base_url()?>admin/user_bidang/view_data',
 				"type": "POST",
 			},
-			// "order": [ [1, "asc"] ],
 			responsive: true,
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",
@@ -290,7 +316,7 @@ role="dialog" tabindex="-1">
 				searchPlaceholder: "Search..."
 			},
 			"columnDefs": [ {
-				"targets": [ 0, 2 ],
+				"targets": [ 0, 2, 3 ],
 				"orderable": false,
 				"searchable": false
 			} ]
@@ -303,7 +329,7 @@ role="dialog" tabindex="-1">
 
 		//Active Menu
 		$('#data_master').addClass('active open');
-		$('#referensi_bidang').addClass('active hover');
+		$('#user_bidang').addClass('active hover');
 
 		dataTable();		
 
@@ -312,7 +338,11 @@ role="dialog" tabindex="-1">
 			$('er').html('');
 			$('small').html('');
 			$('input').val('');
-			$('select').val('');
+			$('select').val('');			
+
+			$('.input_data').removeClass('d-none');
+			$('.edit_data').addClass('d-none');
+			$('#id_bidang_edit').removeAttr('disabled');
 		})
 	});
 </script>

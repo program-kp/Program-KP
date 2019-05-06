@@ -46,9 +46,9 @@
 					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Referensi Bidang</span>
 				</a>
 			</li>
-			<li class="site-menu-item" id="admin_bidang">
-				<a class="animsition-link" href="<?php echo base_url()?>admin/master/admin_bidang">
-					<span class="site-menu-title"><i class="fa fa-users" aria-hidden="true"></i>&ensp;Admin Bidang</span>
+			<li class="site-menu-item" id="user_bidang">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/master/user_bidang">
+					<span class="site-menu-title"><i class="fa fa-users" aria-hidden="true"></i>&ensp;User Bidang</span>
 				</a>
 			</li>
 		</ul>

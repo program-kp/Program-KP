@@ -7,14 +7,13 @@ class Dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		// $this->load->model("m_users", "users");
-		if ($this->session->userdata('role') != "Admin")
+		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
 
 	public function index()
 	{
-		$data['role'] = 'Admin';
-		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('template/header', FALSE);
 		$this->load->view('dashboard/index', FALSE);
 		$this->load->view('template/footer', FALSE);
 	}
