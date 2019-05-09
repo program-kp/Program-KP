@@ -1,13 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Referensi_bidang extends CI_Controller {
-
-	function __construct()
+class Surat_keluar extends CI_Controller {function __construct()
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
+		$this->load->model("surat_keluar_m", "surat_keluar");
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -31,12 +30,12 @@ class Referensi_bidang extends CI_Controller {
 		}
 	}
 
-	function dataedit($id_bidang)
+	function dataedit($no_surat)
 	{
-		$cek = $this->bidang->cek($id_bidang);
+		$cek = $this->bidang->cek($no_surat);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->bidang->get_data_byID($id_bidang);
+			$data = $this->bidang->get_data_byID($no_surat);
 			echo json_encode($data);
 
 		} else {
@@ -51,14 +50,14 @@ class Referensi_bidang extends CI_Controller {
 		}
 	}
 
-	function datahapus($id_bidang)
+	function datahapus($no_surat)
 	{
-		$cek = $this->bidang->cek($id_bidang);
-		$data = $this->bidang->get_data_byID($id_bidang);
+		$cek = $this->bidang->cek($no_surat);
+		$data = $this->bidang->get_data_byID($no_surat);
 		if ($cek) {
 
-			$this->bidang->delete($id_bidang);
-			$this->bidang->delete_user($id_bidang);
+			$this->bidang->delete($no_surat);
+			$this->bidang->delete_user($no_surat);
 
 			$validasi = [
 				'hasil' => 'berhasil',
@@ -86,7 +85,7 @@ class Referensi_bidang extends CI_Controller {
 		$this->form_validation->set_rules('nama_bidang', 'Nama Bidang', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('nama_kabid', 'Nama Kepala Bidang', 'required|trim|callback_cekInput');
 
-		$id_bidang = $this->input->post('id_bidang', TRUE);
+		$no_surat = $this->input->post('id_bidang', TRUE);
 
 		if ($this->form_validation->run() == FALSE) {
 
@@ -105,11 +104,11 @@ class Referensi_bidang extends CI_Controller {
 				"nama_kabid" => $this->input->post('nama_kabid', TRUE),
 			];
 
-			$cek = $this->bidang->cek($id_bidang);
+			$cek = $this->bidang->cek($no_surat);
 			if ($cek) {
 
-				$nama = $this->bidang->get_data_byID($id_bidang);
-				$this->bidang->update($id_bidang, $data);
+				$nama = $this->bidang->get_data_byID($no_surat);
+				$this->bidang->update($no_surat, $data);
 
 				$validasi = [
 					'type' => 'success',
@@ -119,7 +118,7 @@ class Referensi_bidang extends CI_Controller {
 				];
 
 			} else {
-				$cek = $this->bidang->cek($id_bidang);
+				$cek = $this->bidang->cek($no_surat);
 				if ($cek) {
 
 					$validasi = [
@@ -182,5 +181,5 @@ class Referensi_bidang extends CI_Controller {
 
 }
 
-/* End of file Referensi_bidang.php */
-/* Location: ./application/modules/admin/controllers/Referensi_bidang.php */
+/* End of file Surat_keluar.php */
+/* Location: ./application/modules/admin/controllers/Surat_keluar.php */

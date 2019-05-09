@@ -37,6 +37,7 @@
 					</tbody>
 				</table>
 			</div>
+			<!-- END CHANGE -->
 		</div>
 		<!-- End Panel Basic -->
 	</div>
@@ -77,14 +78,14 @@ role="dialog" tabindex="-1">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Password<span required="">*</span></label>
 					<div class="col-sm-8">
-						<?php echo form_input('password', '', ["class" => "form-control", 'id' => 'password']); ?>
+						<?php echo form_password('password', '', ["class" => "form-control", 'id' => 'password']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Konfirmasi Password<span required="">*</span></label>
 					<div class="col-sm-8">
-						<?php echo form_input('c_password', '', ["class" => "form-control", 'id' => 'c_password']); ?>
+						<?php echo form_password('c_password', '', ["class" => "form-control", 'id' => 'c_password']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
@@ -162,14 +163,11 @@ role="dialog" tabindex="-1">
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
-				console.log(data);
+				// console.log(data);
 				if (data.hasil == "berhasil") {					
 					success();
 					notify(data.title, data.message, data.icon, data.type);					
 					table.ajax.reload( null, false );
-
-					$('#id_bidang').html('');
-					$('#id_bidang').append(data.ar_bidang);
 				}
 			}
 		});
@@ -185,7 +183,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',
 			success: function(data){
 				if (data.hasil=='error') {
-
 					success();					
 					notify(data.title, data.message, data.icon, data.type);
 
@@ -239,12 +236,12 @@ role="dialog" tabindex="-1">
 					success();
 					notify(data.title, data.message, data.icon, data.type);
 
-					table.ajax.reload( null, false );
+					table.ajax.reload( null, false );					
+					$('#id_bidang').html('');
+					$('#id_bidang').append(data.ar_bidang);
 				}
 				$('.simpan').html('Simpan');
 				$('.simpan').removeAttr('disabled');
-				$('#id_bidang').html('');
-				$('#id_bidang').append(data.ar_bidang);
 			}
 		});
 	}	

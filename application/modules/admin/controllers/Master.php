@@ -18,21 +18,13 @@ class Master extends CI_Controller {
 	{
 		$data['role'] = $this->session->userdata('role');
 		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('data_master/data_admin/index', FALSE);
+		$this->load->view('data_master/referensi_bidang/index', FALSE);
 		$this->load->view('template/footer', FALSE);
-	}
-
-	public function admin()
-	{
-		$this->index();
 	}
 
 	public function referensi_bidang()
 	{
-		$data['role'] = $this->session->userdata('role');
-		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('data_master/referensi_bidang/index', FALSE);
-		$this->load->view('template/footer', FALSE);
+		$this->index();
 	}
 
 	public function user_bidang()

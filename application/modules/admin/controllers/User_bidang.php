@@ -78,7 +78,6 @@ class User_bidang extends CI_Controller {
 				'icon' => 'fa fa-check',
 				'title' => 'Berhasil',
 				'message' => 'Data User Bidang <b>'.$data->nama_bidang.'</b> Berhasil dihapus.',
-				'ar_bidang' => $this->bidang->ar_bidang(1)
 			];
 		} else {
 			$validasi = [
@@ -111,7 +110,8 @@ class User_bidang extends CI_Controller {
 				'id_bidang' => form_error('id_bidang'),
 				'username' => form_error('username'),
 				'password' => form_error('password'),
-				'c_password' => form_error('c_password'),
+				'c_password' => form_error('c_password'),				
+				'ar_bidang' => $this->bidang->ar_bidang(1)
 			];
 
 			echo json_encode($validasi);

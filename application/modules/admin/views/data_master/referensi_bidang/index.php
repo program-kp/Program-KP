@@ -28,6 +28,7 @@
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nama Bidang</th>
+							<th>Nama Kepala Bidang</th>
 							<th>Status User</th>
 							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
@@ -64,6 +65,13 @@ role="dialog" tabindex="-1">
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
+				<div class="form-group row">
+					<label class="col-sm-4 form-label">Nama Kepala Bidang<span required="">*</span></label>
+					<div class="col-sm-8">
+						<?php echo form_input('nama_kabid', '', ["class" => "form-control", 'id' => 'nama_kabid']); ?>
+						<small id=er>Validasi View</small>
+					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
@@ -93,11 +101,13 @@ role="dialog" tabindex="-1">
 					<thead>
 						<tr>
 							<th>Nama Bidang</th>
+							<th>Nama Kepala Bidang</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td id="nama"></td>
+							<td id="kabid"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -123,14 +133,15 @@ role="dialog" tabindex="-1">
 	{
 		$('#id').val($('#confirm'+no).data().value);
 		$('#nama').html($('#confirm'+no).data().nama);
+		$('#kabid').html($('#confirm'+no).data().kabid);
 
 		var nama_bidang = $('#confirm'+no).data().nama;
 		var jumlah = $('#confirm'+no).data().jumlah;
 
 		if (jumlah==0) {
-			$('#konfirmasi').html('Tidak terdapat Akun padang bidang '+$('#confirm'+no).data().nama)
+			$('#konfirmasi').html('Tidak terdapat Akun padang bidang '+$('#confirm'+no).data().nama+'. Yakin ingin hapus data ?')
 		} else {
-			var text = "Terdapat "+jumlah+"  data User yg ada di Bidang " + nama_bidang + ". Yakin ingin hapus data ?";
+			var text = "Masih terdapat data User yg ada di Bidang " + nama_bidang + ", menghapus bidang akan menghapus data User terkait. Yakin ingin hapus data ?";
 			$('#konfirmasi').html(text);
 		}
 
@@ -172,11 +183,13 @@ role="dialog" tabindex="-1">
 
 				} else {
 
-					$('input').val('');
+					$('er').html('');
+					$('small').html('');
 					$('#modal').modal('show');
 					$('#judul').html('Edit');
 					$('#id_bidang').val(data.id_bidang);
 					$('#nama_bidang').val(data.nama_bidang);
+					$('#nama_kabid').val(data.nama_kabid);
 				}
 			}
 		});
@@ -190,6 +203,7 @@ role="dialog" tabindex="-1">
 		var form_data = new FormData(); 
 		form_data.append("id_bidang", $('#id_bidang').val());
 		form_data.append("nama_bidang", $('#nama_bidang').val());
+		form_data.append("nama_kabid", $('#nama_kabid').val());
 		$.ajax({
 			url : "<?php echo base_url()?>admin/referensi_bidang/datainput",
 			type : 'POST',
@@ -223,12 +237,6 @@ role="dialog" tabindex="-1">
 		$('small').html('');
 		$('input').val('');
 		$('select').val('');
-	}
-
-
-	function reload_table()
-	{
-		table.ajax.reload( null, false );
 	}
 
 	function notify(title, message, icon, type)
@@ -271,7 +279,7 @@ role="dialog" tabindex="-1">
 				"url": '<?php echo base_url()?>admin/referensi_bidang/view_data',
 				"type": "POST",
 			},
-			// "order": [ [1, "asc"] ],
+			"order": [ [1, "asc"] ],
 			responsive: true,
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",
@@ -287,10 +295,10 @@ role="dialog" tabindex="-1">
 					"sPrevious": "Previous", // This is the link to the previous page
 					"sNext": "Next", // This is the link to the next page
 				},
-				searchPlaceholder: "Search..."
 			},
+			"lengthMenu": [ [5, 10, -1], [5, 10, "All"] ],
 			"columnDefs": [ {
-				"targets": [ 0, 2 ],
+				"targets": [ 0, 2, 3, 4 ],
 				"orderable": false,
 				"searchable": false
 			} ]
@@ -317,7 +325,6 @@ role="dialog" tabindex="-1">
 	});
 </script>
 <!-- END SCRIPT -->
-
 
 </div>
 </div>

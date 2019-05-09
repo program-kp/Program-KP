@@ -7,10 +7,10 @@
 	<meta name="description" content="bootstrap material admin template">
 	<meta name="author" content="">
 
-	<title>SMSK&D DK-3</title>
+	<title>SMSK&D DKP-3</title>
 
 	<link rel="apple-touch-icon" href="<?php echo base_url() ?>assets/images/apple-touch-icon.png">
-    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/logo-dkp3.png">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/css/bootstrap.min.css">
@@ -61,14 +61,10 @@
 			<button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-collapse"
 			data-toggle="collapse">
 			<i class="icon md-more" aria-hidden="true"></i></button>
-			<div class="navbar-brand navbar-brand-center" data-toggle="gridmenu">
-				<img class="navbar-brand-logo" src="<?php echo base_url() ?>assets/images/logo-dkp3.png" title="Remark">
-				<span class="navbar-brand-text hidden-xs-down"> SMSK&D DK-3</span>
+			<div class="navbar-brand navbar-brand-center">
+				<img class="navbar-brand-logo" src="<?php echo base_url() ?>assets/images/logo-dkp3.png">
+				<span class="navbar-brand-text hidden-xs-down"> SMSK&D DKP-3</span>
 			</div>
-			<button type="button" class="navbar-toggler collapsed" data-target="#site-navbar-search"
-			data-toggle="collapse">
-			<span class="sr-only">Toggle Search</span>
-			<i class="icon md-search" aria-hidden="true"></i></button>
 		</div>
 
 		<div class="navbar-container container-fluid">
