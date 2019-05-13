@@ -28,13 +28,13 @@ class Referensi_bidang_m extends CI_Model {
 	{
 		$data = $this->get_data(1);
 		if ($a == null) {
-			$list[''] = "-- Pilih Bidang --";
+			$list[''] = "-- Pilih --";
 			foreach ($data as $row){
 				$list[$row->id_bidang] = $row->id_bidang." - ".$row->nama_bidang;
 			}
 			return $list;
 		} else {
-			$list="<option value=''>-- Pilih Bidang --</option>";
+			$list="<option value=''>-- Pilih --</option>";
 			foreach ($data as $row){
 				$list.="<option value='".$row->id_bidang."'>".$row->id_bidang." - ".$row->nama_bidang."</option>";
 			}

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html class="no-js css-menubar" lang="en">
 <head>
 	<meta charset="utf-8">
@@ -37,6 +37,8 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/examples/css/tables/datatable.css">
 
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap-notify/animate.css">
+        
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
     
     <!-- Fonts -->
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/font-awesome/font-awesome.css">
@@ -111,7 +113,6 @@
 						default:
 						$this->load->view('login');
 					}
-
 					?>
 				</div>
 			</div>

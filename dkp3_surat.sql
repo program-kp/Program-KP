@@ -25,7 +25,7 @@ CREATE TABLE `tbl_bidang` (
   `nama_kabid` varchar(100) DEFAULT NULL,
   `status_user` char(1) DEFAULT '0',
   PRIMARY KEY (`id_bidang`)
-) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_bidang` */
 
@@ -33,7 +33,8 @@ insert  into `tbl_bidang`(`id_bidang`,`nama_bidang`,`nama_kabid`,`status_user`) 
 (1,'Pertanian dan Perkebunan',NULL,'1'),
 (27,'Penyuluhan',NULL,'1'),
 (63,'123','436341','0'),
-(65,'34242','2342342','0');
+(65,'34242','2342342','0'),
+(66,'Kepala Dinas','qwerty','0');
 
 /*Table structure for table `tbl_disposisi` */
 
@@ -41,14 +42,14 @@ DROP TABLE IF EXISTS `tbl_disposisi`;
 
 CREATE TABLE `tbl_disposisi` (
   `kode_disposisi` int(11) NOT NULL AUTO_INCREMENT,
-  `no_surat` varchar(30) DEFAULT NULL,
+  `no_urut` int(11) DEFAULT NULL,
   `tipe_surat` varchar(30) DEFAULT NULL,
   `keterangan` text,
   `tgl_disposisi` date DEFAULT NULL,
   PRIMARY KEY (`kode_disposisi`),
-  KEY `Surat Undangan` (`no_surat`),
-  CONSTRAINT `Surat Masuk` FOREIGN KEY (`no_surat`) REFERENCES `tbl_surat_masuk` (`no_surat`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Surat Undangan` FOREIGN KEY (`no_surat`) REFERENCES `tbl_surat_undangan` (`no_surat`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `Surat Undangan` (`no_urut`),
+  CONSTRAINT `Surat Masuk` FOREIGN KEY (`no_urut`) REFERENCES `tbl_surat_masuk` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Surat Undangan` FOREIGN KEY (`no_urut`) REFERENCES `tbl_surat_undangan` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_disposisi` */
@@ -58,8 +59,8 @@ CREATE TABLE `tbl_disposisi` (
 DROP TABLE IF EXISTS `tbl_surat_keluar`;
 
 CREATE TABLE `tbl_surat_keluar` (
-  `no_surat` varchar(30) NOT NULL,
   `no_urut` int(11) DEFAULT NULL,
+  `no_surat` varchar(30) NOT NULL,
   `tgl_surat` date DEFAULT NULL,
   `perihal` text,
   `tujuan_surat` text,
@@ -77,29 +78,33 @@ CREATE TABLE `tbl_surat_keluar` (
 DROP TABLE IF EXISTS `tbl_surat_masuk`;
 
 CREATE TABLE `tbl_surat_masuk` (
-  `no_surat` varchar(30) NOT NULL,
-  `no_urut` int(11) DEFAULT NULL,
+  `no_urut` int(11) NOT NULL,
+  `no_surat` varchar(30) DEFAULT NULL,
   `asal_surat` int(11) DEFAULT NULL,
   `perihal` text,
   `tgl_terima` date DEFAULT NULL,
-  PRIMARY KEY (`no_surat`),
+  PRIMARY KEY (`no_urut`),
   KEY `Asal Surat` (`asal_surat`),
   CONSTRAINT `Asal Surat` FOREIGN KEY (`asal_surat`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_masuk` */
 
+insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_terima`) values 
+(1,'123',65,'2341','1970-01-14'),
+(34242,'qwerty',65,'auihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wyauihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wy','2019-05-26');
+
 /*Table structure for table `tbl_surat_undangan` */
 
 DROP TABLE IF EXISTS `tbl_surat_undangan`;
 
 CREATE TABLE `tbl_surat_undangan` (
-  `no_surat` varchar(30) NOT NULL,
-  `no_urut` int(11) DEFAULT NULL,
+  `no_urut` int(11) NOT NULL,
+  `no_surat` varchar(30) DEFAULT NULL,
   `tgl_terima` date DEFAULT NULL,
   `waktu_undangan` datetime DEFAULT NULL,
   `tempat_undangan` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`no_surat`)
+  PRIMARY KEY (`no_urut`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_undangan` */

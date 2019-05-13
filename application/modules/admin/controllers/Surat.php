@@ -8,6 +8,7 @@ class Surat extends CI_Controller {
 		parent::__construct();
 		// $this->load->model("m_users", "users");
 		$this->load->helper("form");
+		$this->load->model("referensi_bidang_m", "bidang");
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -15,6 +16,7 @@ class Surat extends CI_Controller {
 	public function index()
 	{		
 		$data['role'] = 'Admin';
+		$data['ar_bidang'] = $this->bidang->ar_bidang();
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('surat/surat_masuk/index', FALSE);
 		$this->load->view('template/footer', FALSE);

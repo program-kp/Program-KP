@@ -54,7 +54,7 @@ class Surat_keluar_m extends CI_Model {
 	}
 
 	function delete($no_surat)
-	{
+	{       
 		$this->db->where('no_surat', $no_surat);
 		$query = $this->db->delete('tbl_surat_keluar');
 		return $query;

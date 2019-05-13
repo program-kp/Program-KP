@@ -11,8 +11,6 @@
 	</div>
 	<div class="page-content container-fluid">
 		<div class="panel">
-
-
 			<!-- CHANGE -->
 			<div class="panel-heading">
 				<h3 class="panel-title">Surat Keluar
