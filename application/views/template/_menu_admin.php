@@ -36,7 +36,7 @@
 		</ul>
 	</li><li class="site-menu-item has-sub" id="data_master">
 		<a href="javascript:void(0)">
-			<i class="site-menu-icon fa fa-book" aria-hidden="true"></i>
+			<i class="site-menu-icon fa fa-gear" aria-hidden="true"></i>
 			<span class="site-menu-title">Data Master</span>
 			<span class="site-menu-arrow"></span>
 		</a>

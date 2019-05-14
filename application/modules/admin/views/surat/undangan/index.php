@@ -47,7 +47,7 @@
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center">
+<div class="modal-dialog modal-simple">
 	<div class="modal-content">
 		<form action="#" id="form">
 			<div class="modal-header">
@@ -128,9 +128,9 @@ role="dialog" tabindex="-1">
 					</thead>
 					<tbody>
 						<tr>
-							<td id="nosurat"></td>
-							<td id="waktu"></td>
-							<td id="tempat"></td>
+							<td id="hapus_nosurat"></td>
+							<td id="hapus_waktu"></td>
+							<td id="hapus_tempat"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -155,17 +155,19 @@ role="dialog" tabindex="-1">
 	function confirm(no)
 	{
 		$('#id').val($('#confirm'+no).data().value);
-		$('#asal').html($('#confirm'+no).data().asal);
-		$('td#perihal').html($('#confirm'+no).data().perihal);
+		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
+		$('#hapus_waktu').html($('#confirm'+no).data().waktu);
+		$('#hapus_tempat').html($('#confirm'+no).data().tempat);
+		$('#hapus_tgl').html($('#confirm'+no).data().tanggal);
 		$('#modal_hapus').modal('show');
 	}
 
 	function hapus()
 	{
-		var no_urut = $('#id').val();
+		var nourut = $('#id').val();
 		
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_masuk/datahapus/"+no_urut,
+			url : "<?php echo base_url()?>admin/undangan/datahapus/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
@@ -178,40 +180,12 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function info(no)
-	{
-		success();
-		var username = $('#edit'+no).data().value;
-		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_masuk/dataedit/"+username,
-			type : 'POST',
-			dataType:'json',
-			success: function(data){
-				if (data.hasil=='error') {
-
-					success();					
-					notify(data.title, data.message, data.icon, data.type);
-
-				} else {
-
-					$('#modal_info').modal('show');
-
-					$('#info_nourut').html(data.no_urut);
-					$('#info_nosurat').html(data.no_surat);
-					$('#info_asalsurat').html(data.nama_bidang);
-					$('#info_perihal').html(data.perihal);
-					$('#info_tglterima').html(data.tgl_terima);
-				}
-			}
-		});
-	}
-
 	function edit(no)
 	{
 		success();
-		var username = $('#edit'+no).data().value;
+		var nourut = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_masuk/dataedit/"+username,
+			url : "<?php echo base_url()?>admin/undangan/dataedit/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -229,8 +203,8 @@ role="dialog" tabindex="-1">
 					$('#no_urut_L').val(data.no_urut);
 					$('#no_urut').val(data.no_urut);
 					$('#no_surat').val(data.no_surat);
-					$('#id_bidang').val(data.asal_surat);
-					$('textarea#perihal').val(data.perihal);
+					$('#waktu_undangan').val(data.waktu_undangan);
+					$('#tempat_undangan').val(data.tempat_undangan);
 					$('#tgl_terima').val(data.tgl_terima);
 				}
 			}
@@ -246,11 +220,11 @@ role="dialog" tabindex="-1">
 		form_data.append("no_urut_L", $('#no_urut_L').val());
 		form_data.append("no_urut", $('#no_urut').val());
 		form_data.append("no_surat", $('#no_surat').val());
-		form_data.append("id_bidang", $('#id_bidang').val());
-		form_data.append("perihal", $('textarea#perihal').val());
+		form_data.append("waktu_undangan", $('#waktu_undangan').val());
+		form_data.append("tempat_undangan", $('#tempat_undangan').val());
 		form_data.append("tgl_terima", $('#tgl_terima').val());
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_masuk/datainput",
+			url : "<?php echo base_url()?>admin/undangan/datainput",
 			type : 'POST',
 			processData: false,
 			contentType: false,
@@ -321,14 +295,15 @@ role="dialog" tabindex="-1">
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/surat_masuk/view_data',
+				"url": '<?php echo base_url()?>admin/undangan/view_data',
 				"type": "POST",
 			},
+			serverside:true,
 			responsive: true,
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",
 				sSearch: "Pencarian : ",
-				sSearchPlaceholder: "Nama Bidang",
+				sSearchPlaceholder: "",
 				sInfo: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
 				sInfoEmpty: "Menampilkan 0 hingga 0 dari 0 data",
 				sEmptyTable: "Tidak ada data",
@@ -360,14 +335,16 @@ role="dialog" tabindex="-1">
 		dataTable();
 
 
-		$("#tgl_terima").keypress(function(event) {
+		$("#tgl_terima, #waktu_undangan").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_terima').datepicker({
-			format: 'dd/mm/yyyy',
-			autoclose: true,
+		$('#waktu_undangan').datetimepicker({
+			format: "DD/MM/YYYY HH:mm",
+		});
 
+		$('#tgl_terima').datetimepicker({			
+			format: "DD/MM/YYYY",
 		});
 
 		$('.tambah').on('click', function(){

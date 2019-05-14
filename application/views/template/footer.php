@@ -40,11 +40,12 @@
         <script src="<?php echo base_url() ?>assets/global/vendor/bootbox/bootbox.js"></script>
         <!-- Alert -->
         <script src="<?php echo base_url() ?>assets/global/vendor/bootstrap-notify/bootstrap-notify.js"></script>
-        
-        <script src="<?php echo base_url() ?>assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-
         <!-- Moment -->
         <script src="<?php echo base_url() ?>assets/global/vendor/moment/moment.js"></script>
+        
+        <script src="<?php echo base_url() ?>assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+        <script src="<?php echo base_url() ?>assets/global/vendor/bootstrap4-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+
     
     <!-- Scripts -->
     <script src="<?php echo base_url() ?>assets/global/js/Component.js"></script>

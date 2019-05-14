@@ -19,6 +19,7 @@
     
     <!-- Plugins -->
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/font-awesome/font-awesome.css">
+	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/glyphicons/glyphicons.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/animsition/animsition.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/asscrollable/asScrollable.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/switchery/switchery.css">
@@ -39,9 +40,10 @@
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap-notify/animate.css">
         
         <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap-datepicker/bootstrap-datepicker.css">
+
+        <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/vendor/bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css">
     
     <!-- Fonts -->
-        <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/font-awesome/font-awesome.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/material-design/material-design.min.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/global/fonts/brand-icons/brand-icons.min.css">
     <link rel='stylesheet' href='http://fonts.googleapis.com/css?family=Roboto:300,400,500,300italic'>

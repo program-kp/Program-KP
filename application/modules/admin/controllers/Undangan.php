@@ -8,7 +8,7 @@ class Undangan extends CI_Controller {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
-		$this->load->model("surat_masuk_m", "surat_masuk");
+		$this->load->model("undangan_m", "surat_undangan");
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -16,7 +16,7 @@ class Undangan extends CI_Controller {
 	function getdata()
 	{
 		echo "<pre>";
-		print_r ($this->surat_masuk->get_data());
+		print_r ($this->surat_undangan->get_data());
 		echo "</pre>";
 	}
 
@@ -34,10 +34,10 @@ class Undangan extends CI_Controller {
 
 	function dataedit($no_urut)
 	{
-		$cek = $this->surat_masuk->cek($no_urut);
+		$cek = $this->surat_undangan->cek($no_urut);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->surat_masuk->get_data_byID($no_urut);
+			$data = $this->surat_undangan->get_data_byID($no_urut);
 			echo json_encode($data);
 
 		} else {
@@ -54,11 +54,11 @@ class Undangan extends CI_Controller {
 
 	function datahapus($no_urut)
 	{
-		$cek = $this->surat_masuk->cek($no_urut);
-		$data = $this->surat_masuk->get_data_byID($no_urut);
+		$cek = $this->surat_undangan->cek($no_urut);
+		$data = $this->surat_undangan->get_data_byID($no_urut);
 		if ($cek) {
 
-			$this->surat_masuk->delete($no_urut);
+			$this->surat_undangan->delete($no_urut);
 
 			$validasi = [
 				'hasil' => 'berhasil',
@@ -84,9 +84,9 @@ class Undangan extends CI_Controller {
 		$this->load->library('form_validation');
 		// Set Rule
 		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
-		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim|callback_cekInput');
-		$this->form_validation->set_rules('id_bidang', 'Asal Surat', 'required|trim|callback_cekInput');
-		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
+		$this->form_validation->set_rules('waktu_undangan', 'Waktu Undangan', 'required|trim');
+		$this->form_validation->set_rules('tempat_undangan', 'Tempat Undangan', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
 
 		$no_urut_L = $this->input->post('no_urut_L', TRUE);
@@ -98,8 +98,8 @@ class Undangan extends CI_Controller {
 				'status' => 'validasi',
 				'no_urut' => form_error('no_urut'),
 				'no_surat' => form_error('no_surat'),
-				'id_bidang' => form_error('id_bidang'),
-				'perihal' => form_error('perihal'),
+				'waktu_undangan' => form_error('waktu_undangan'),
+				'tempat_undangan' => form_error('tempat_undangan'),
 				'tgl_terima' => form_error('tgl_terima'),
 			];
 
@@ -110,16 +110,16 @@ class Undangan extends CI_Controller {
 			$data = [
 				"no_urut" => $this->input->post('no_urut', TRUE),
 				"no_surat" => $this->input->post('no_surat', TRUE),
-				"asal_surat" => $this->input->post('id_bidang', TRUE),
-				"perihal" => $this->input->post('perihal', TRUE),
-				"tgl_terima" => $this->input->post('tgl_terima', TRUE),
+				"waktu_undangan" => date('Y-m-d h:i', strtotime($this->input->post('waktu_undangan', TRUE))),
+				"tempat_undangan" => $this->input->post('tempat_undangan', TRUE),
+				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
 			];
 
-			$cek = $this->surat_masuk->cek($no_urut_L);
+			$cek = $this->surat_undangan->cek($no_urut_L);
 			if ($cek) {
 
-				$suratId = $this->surat_masuk->get_data_byID($no_urut_L);
-				$this->surat_masuk->update($no_urut_L, $data);
+				$suratId = $this->surat_undangan->get_data_byID($no_urut_L);
+				$this->surat_undangan->update($no_urut_L, $data);
 
 				$validasi = [
 					'type' => 'success',
@@ -129,7 +129,7 @@ class Undangan extends CI_Controller {
 				];
 
 			} else {
-				$cek = $this->surat_masuk->cek($no_urut);
+				$cek = $this->surat_undangan->cek($no_urut);
 				if ($cek) {
 
 					$validasi = [
@@ -141,7 +141,7 @@ class Undangan extends CI_Controller {
 
 				} else {
 
-					$this->surat_masuk->insert($data);
+					$this->surat_undangan->insert($data);
 
 					$validasi = [
 						'type' => 'success',
@@ -159,21 +159,26 @@ class Undangan extends CI_Controller {
 
 	function view_data()
 	{
-		$list = $this->surat_masuk->get_data();
+		$list = $this->surat_undangan->get_data();
 		$data = array();
 		$no = 1;
-		foreach ($list as $surat_masuk) {
+		foreach ($list as $surat_undangan) {
 			$row = array();
+
+			$tgl_terima = date('d-m-Y', strtotime($surat_undangan->tgl_terima));
+			$waktu_undangan = date('d-m-Y h:i', strtotime($surat_undangan->waktu_undangan));
 
 			$row[] = "
 			<div align='center'>".$no++.
 			"</div>";
-			$row[] = $surat_masuk->no_surat;
-			$row[] = $surat_masuk->nama_bidang;
-			$row[] = $surat_masuk->tgl_terima;
+			$row[] = $surat_undangan->no_urut;
+			$row[] = $surat_undangan->no_surat;
+			$row[] = $tgl_terima;
+			$row[] = $waktu_undangan;
+			$row[] = $surat_undangan->tempat_undangan;
 
 
-			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_masuk->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_masuk->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_masuk->no_urut."' data-nosurat='".$surat_masuk->no_surat."' data-asal='".$surat_masuk->nama_bidang."' data-tgl_terima='".$surat_masuk->tgl_terima."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_undangan->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_undangan->no_urut."' data-nosurat='".$surat_undangan->no_surat."' data-waktu='".$surat_undangan->waktu_undangan."' data-tempat='".$surat_undangan->tempat_undangan."' data-tanggal='".$surat_undangan->tgl_terima."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

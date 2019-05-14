@@ -28,7 +28,7 @@
 							<th>No. Surat</th>
 							<th>Asal Surat</th>
 							<th>Tgl terima</th>
-							<th width="150px" style="text-align:center;">Aksi</th>
+							<th width="160px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -192,6 +192,7 @@ role="dialog" tabindex="-1">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+				<button type="button" class="btn btn-sm btn-danger disposisi" id="disposisi_data" data-dismiss="modal" onclick="disposisi()">Disposisi</button>
 			</div>
 		</form>
 	</div>
@@ -383,6 +384,7 @@ role="dialog" tabindex="-1">
 				"url": '<?php echo base_url()?>admin/surat_masuk/view_data',
 				"type": "POST",
 			},
+			"processing": true,
 			responsive: true,
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",

@@ -84,7 +84,7 @@ class Surat_masuk extends CI_Controller {
 		$this->load->library('form_validation');
 		// Set Rule
 		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
-		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
 		$this->form_validation->set_rules('id_bidang', 'Asal Surat', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
