@@ -97,6 +97,7 @@ class Login extends CI_Controller {
 
 				$this->session->set_userdata("username",$user->username);
 				$this->session->set_userdata("role",$user->role);
+				$this->session->set_userdata("id",$user->id_bidang);
 
 				if ($user->role == 'Admin') {
 
@@ -139,6 +140,7 @@ class Login extends CI_Controller {
 		$this->session->unset_userdata("username");
 		$this->session->unset_userdata("nama");
 		$this->session->unset_userdata("role");
+		$this->session->unset_userdata("id_bidang");
 
 		$this->session->sess_destroy();
 		redirect('login','refresh'); 

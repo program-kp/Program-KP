@@ -28,7 +28,7 @@ class Login_m extends CI_Model {
 
 	function get_nama_bidang($id_bidang)
 	{
-		$this->db->select('nama_bidang');
+		$this->db->select('id_bidang, nama_bidang');
 		$this->db->from('tbl_bidang');
 		$this->db->where('id_bidang', $id_bidang);
 		$query = $this->db->get();

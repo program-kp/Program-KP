@@ -26,10 +26,10 @@
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
-							<th>No. Urut</th>
-							<th>Unit Pengolah</th>
-							<th>Nomor Surat</th>
-							<th width="150px" style="text-align:center;">Aksi</th>
+							<th>No. Surat</th>
+							<th>Tgl Surat</th>
+							<th>Tujuan Surat</th>
+							<th width="160px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -43,6 +43,58 @@
 	<!-- End Page-Content -->
 </div>
 
+<!-- Modal Info -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_info" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<form action="#" id="form">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title"><span id=judul>Info</span> Surat Keluar</h4>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="id">
+				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+					<tbody>
+						<tr>
+							<td align="right" style="width: 118px">No Urut</td>
+							<td align="center" style="width: 5px">:</td>
+							<td id="info_nourut"></td>
+						</tr>
+						<tr>
+							<td align="right">No Surat</td>
+							<td align="center">:</td>
+							<td id="info_nosurat"></td>
+						</tr>
+						<tr>
+							<td align="right">Asal Surat</td>
+							<td align="center">:</td>
+							<td id="info_asalsurat"></td>
+						</tr>
+						<tr>
+							<td align="right">Perihal</td>
+							<td align="center">:</td>
+							<td id="info_perihal"></td>
+						</tr>
+						<tr>
+							<td align="right">Tanggal Terima</td>
+							<td align="center">:</td>
+							<td id="info_tglterima"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
 
 <!-- END CHANGE -->
 
@@ -59,24 +111,6 @@
 		$('#modal_hapus').modal('show');
 	}
 
-	function hapus()
-	{
-		var id_bidang = $('#id').val();
-		
-		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/datahapus/"+id_bidang,
-			type : 'POST',
-			dataType:'json',
-			success: function(data) {
-				// console.log(data);
-				if (data.hasil == "berhasil") {
-					success();
-					notify(data.title, data.message, data.icon, data.type);
-					table.ajax.reload( null, false );
-				}
-			}
-		});
-	}
 
 	function edit(no)
 	{
@@ -110,46 +144,7 @@
 			}
 		});
 	}
-
-	function simpan()
-	{
-		$(".simpan").html("Processing...");
-		$('.simpan').attr('disabled','disabled');
-
-		var form_data = new FormData(); 
-		form_data.append("no_surat_L", $('#no_surat_L').val());
-		form_data.append("no_urut", $('#no_urut').val());
-		form_data.append("no_surat", $('#no_surat').val());
-		form_data.append("tgl_surat", $('#tgl_surat').val());
-		form_data.append("id_bidang", $('#id_bidang').val());
-		form_data.append("perihal", $('#perihal').val());
-		form_data.append("tujuan_surat", $('#tujuan_surat').val());
-		form_data.append("keterangan", $('#keterangan').val());
-		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/datainput",
-			type : 'POST',
-			processData: false,
-			contentType: false,
-			dataType:'json',
-			data : form_data,
-			success: function(data){
-				console.log(data);
-				if (data.status=="validasi") {
-					$.each(data, function(key, value) {
-						$('#' + key).parents('.data_input').find('#er').addClass('text-danger').html(value);
-					});
-
-				} else {
-					success();
-					notify(data.title, data.message, data.icon, data.type);
-
-					table.ajax.reload( null, false );
-				}
-				$('.simpan').html('Simpan');
-				$('.simpan').removeAttr('disabled');
-			}
-		});
-	}	
+	
 
 	function success()
 	{
@@ -197,14 +192,13 @@
 	{
 		table = $('#tabel-keluar').DataTable({
 			"ajax": {
-				"url": '',
+				"url": '<?php echo base_url()?>bidang/surat_keluar/view_data',
 				"type": "POST",
 			},
 			responsive: true,
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",
 				sSearch: "Pencarian : ",
-				sSearchPlaceholder: "Nama Bidang",
 				sInfo: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
 				sInfoEmpty: "Menampilkan 0 hingga 0 dari 0 data",
 				sEmptyTable: "Tidak ada data",

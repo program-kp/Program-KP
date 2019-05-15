@@ -29,7 +29,7 @@ class Surat extends CI_Controller {
 	{		
 		$data['role'] = 'Bidang';
 		$this->load->view('template/header', $data, FALSE);
-		$this->load->view('surat/undangan/index', FALSE);
+		$this->load->view('undangan/index', FALSE);
 		$this->load->view('template/footer', FALSE);
 	}
 
