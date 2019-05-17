@@ -48,56 +48,54 @@
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> Undangan</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="no_urut_L">
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">No. Urut<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('no_urut', '', ["class" => "form-control", 'id' => 'no_urut']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Waktu Undangan<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('waktu_undangan', '', ["class" => "form-control", 'id' => 'waktu_undangan', 'autocomplate' => 'off']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Tempat Undangan<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('tempat_undangan', '', ["class" => "form-control", 'id' => 'tempat_undangan']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
-						<small id=er>Validasi View</small>
-					</div>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Tambah</span> Undangan</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="no_urut_L">
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">No. Urut<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('no_urut', '', ["class" => "form-control", 'id' => 'no_urut']); ?>
+					<small id=er>Validasi View</small>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat']); ?>
+					<small id=er>Validasi View</small>
+				</div>
 			</div>
-		</form>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Waktu Undangan<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('waktu_undangan', '', ["class" => "form-control", 'id' => 'waktu_undangan', 'autocomplate' => 'off']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Tempat Undangan<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('tempat_undangan', '', ["class" => "form-control", 'id' => 'tempat_undangan']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -108,38 +106,36 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> Surat Keluar</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="id">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<thead>
-						<tr>
-							<th>No. Surat</th>
-							<th>Waktu Undangan</th>
-							<th>Tempat Undangan</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td id="hapus_nosurat"></td>
-							<td id="hapus_waktu"></td>
-							<td id="hapus_tempat"></td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="konfirmasi">Yakin Ingin hapus data ?</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Hapus</span> Surat Keluar</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th>No. Surat</th>
+						<th>Waktu Undangan</th>
+						<th>Tempat Undangan</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="hapus_nosurat"></td>
+						<td id="hapus_waktu"></td>
+						<td id="hapus_tempat"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi">Yakin Ingin hapus data ?</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -150,50 +146,48 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Info</span> Undangan Masuk</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="info">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<tbody>
-						<tr>
-							<td align="right" style="width: 118px">No Urut</td>
-							<td align="center" style="width: 5px">:</td>
-							<td id="info_nourut"></td>
-						</tr>
-						<tr>
-							<td align="right">No Surat</td>
-							<td align="center">:</td>
-							<td id="info_nosurat"></td>
-						</tr>
-						<tr>
-							<td align="right">Tempat Undangan</td>
-							<td align="center">:</td>
-							<td id="info_tempatundangan"></td>
-						</tr>
-						<tr>
-							<td align="right">Waktu Undangan</td>
-							<td align="center">:</td>
-							<td id="info_waktuundangan"></td>
-						</tr>
-						<tr>
-							<td align="right">Tanggal Terima</td>
-							<td align="center">:</td>
-							<td id="info_tglterima"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
-				<button type="button" class="btn btn-sm btn-primary modal_disposisi" data-dismiss="modal" data-toggle="modal" data-target="#modal_disposisi">Disposisi</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Info</span> Undangan Masuk</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="info">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<tbody>
+					<tr>
+						<td align="right" style="width: 118px">No Urut</td>
+						<td align="center" style="width: 5px">:</td>
+						<td id="info_nourut"></td>
+					</tr>
+					<tr>
+						<td align="right">No Surat</td>
+						<td align="center">:</td>
+						<td id="info_nosurat"></td>
+					</tr>
+					<tr>
+						<td align="right">Tempat Undangan</td>
+						<td align="center">:</td>
+						<td id="info_tempatundangan"></td>
+					</tr>
+					<tr>
+						<td align="right">Waktu Undangan</td>
+						<td align="center">:</td>
+						<td id="info_waktuundangan"></td>
+					</tr>
+					<tr>
+						<td align="right">Tanggal Terima</td>
+						<td align="center">:</td>
+						<td id="info_tglterima"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+			<button type="button" class="btn btn-sm btn-primary modal_disposisi" data-dismiss="modal" data-toggle="modal" data-target="#modal_disposisi">Disposisi</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -268,7 +262,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',  
 			data:$('#form_disposisi').serialize(),  
 			success: function(data){
-				console.log(data);
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
 						$('#' + key).parents('.data_input').find('#er').addClass('text-danger').html(value);
@@ -403,7 +396,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',
 			data : form_data,
 			success: function(data){
-				console.log(data);
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
 						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);

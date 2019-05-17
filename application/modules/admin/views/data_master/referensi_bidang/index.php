@@ -49,35 +49,33 @@
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> Referensi Bidang</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="id_bidang">
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Nama Bidang<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_input('nama_bidang', '', ["class" => "form-control", 'id' => 'nama_bidang']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Nama Kepala Bidang<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_input('nama_kabid', '', ["class" => "form-control", 'id' => 'nama_kabid']); ?>
-						<small id=er>Validasi View</small>
-					</div>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Tambah</span> Referensi Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id_bidang">
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Nama Bidang<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_input('nama_bidang', '', ["class" => "form-control", 'id' => 'nama_bidang']); ?>
+					<small id=er>Validasi View</small>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Nama Kepala Bidang<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_input('nama_kabid', '', ["class" => "form-control", 'id' => 'nama_kabid']); ?>
+					<small id=er>Validasi View</small>
+				</div>
 			</div>
-		</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -88,36 +86,34 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> Referensi Bidang</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="id">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<thead>
-						<tr>
-							<th>Nama Bidang</th>
-							<th>Nama Kepala Bidang</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td id="nama"></td>
-							<td id="kabid"></td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="konfirmasi"></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Hapus</span> Referensi Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th>Nama Bidang</th>
+						<th>Nama Kepala Bidang</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="nama"></td>
+						<td id="kabid"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi"></div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -158,7 +154,6 @@ role="dialog" tabindex="-1">
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
-				console.log(data);
 				if (data.hasil == "berhasil") {
 					table.ajax.reload( null, false );
 					success();
@@ -212,7 +207,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',
 			data : form_data,
 			success: function(data){
-				console.log(data);
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
 						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);

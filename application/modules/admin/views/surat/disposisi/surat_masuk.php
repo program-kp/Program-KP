@@ -53,44 +53,42 @@
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> Disposisi Surat Masuk</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="kode_disposisi">
-				<input type="hidden" id="no_urut">
-				<input type="hidden" id="no_surat_E">
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat', 'disabled' => 'disabled']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Tujuan Surat<span required="">*</span></label>
-					<div class="col-sm-8 data_input">
-						<?php echo form_dropdown('tujuan_surat', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'tujuan_surat']); ?>
-						<small id=er>Validasi View</small>
-					</div>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Tambah</span> Disposisi Surat Masuk</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="kode_disposisi">
+			<input type="hidden" id="no_urut">
+			<input type="hidden" id="no_surat_E">
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat', 'disabled' => 'disabled']); ?>
+					<small id=er>Validasi View</small>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi']); ?>
+					<small id=er>Validasi View</small>
+				</div>
 			</div>
-		</form>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Tujuan Surat<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_dropdown('tujuan_surat', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'tujuan_surat']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -101,38 +99,36 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> Disposisi Surat Keluar</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="id">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<thead>
-						<tr>
-							<th style="width:150px">Nomor Surat</th>
-							<th style="width:150px">Tanggal Disposisi</th>
-							<th style="width:100px">Tujuan Surat</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td id="hapus_nosurat"></td>
-							<td id="hapus_tgl"></td>
-							<td id="hapus_tujuan"></td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="konfirmasi">Yakin Ingin hapus data ?</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Hapus</span> Disposisi Surat Keluar</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th style="width:150px">Nomor Surat</th>
+						<th style="width:150px">Tanggal Disposisi</th>
+						<th style="width:100px">Tujuan Surat</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="hapus_nosurat"></td>
+						<td id="hapus_tgl"></td>
+						<td id="hapus_tujuan"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi">Yakin Ingin hapus data ?</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -143,49 +139,47 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Info</span> Surat Masuk</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="info">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<tbody>
-						<tr>
-							<td align="right" style="width: 118px">Nomor Urut</td>
-							<td align="center" style="width: 5px">:</td>
-							<td id="info_nourut"></td>
-						</tr>
-						<tr>
-							<td align="right">Nomor Surat</td>
-							<td align="center">:</td>
-							<td id="info_nosurat"></td>
-						</tr>
-						<tr>
-							<td align="right">Asal Surat</td>
-							<td align="center">:</td>
-							<td id="info_asalsurat"></td>
-						</tr>
-						<tr>
-							<td align="right">Perihal</td>
-							<td align="center">:</td>
-							<td id="info_perihal"></td>
-						</tr>
-						<tr>
-							<td align="right">Tanggal Terima</td>
-							<td align="center">:</td>
-							<td id="info_tglterima"></td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Info</span> Surat Masuk</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="info">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<tbody>
+					<tr>
+						<td align="right" style="width: 118px">Nomor Urut</td>
+						<td align="center" style="width: 5px">:</td>
+						<td id="info_nourut"></td>
+					</tr>
+					<tr>
+						<td align="right">Nomor Surat</td>
+						<td align="center">:</td>
+						<td id="info_nosurat"></td>
+					</tr>
+					<tr>
+						<td align="right">Asal Surat</td>
+						<td align="center">:</td>
+						<td id="info_asalsurat"></td>
+					</tr>
+					<tr>
+						<td align="right">Perihal</td>
+						<td align="center">:</td>
+						<td id="info_perihal"></td>
+					</tr>
+					<tr>
+						<td align="right">Tanggal Terima</td>
+						<td align="center">:</td>
+						<td id="info_tglterima"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -215,7 +209,6 @@ role="dialog" tabindex="-1">
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
-				// console.log(data);
 				if (data.hasil == "berhasil") {
 					success();
 					notify(data.title, data.message, data.icon, data.type);
@@ -311,7 +304,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',
 			data : form_data,
 			success: function(data){
-				console.log(data);
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
 						$('#' + key).parents('.data_input').find('#er').addClass('text-danger').html(value);
