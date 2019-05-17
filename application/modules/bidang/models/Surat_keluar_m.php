@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Surat_keluar_m extends CI_Model {
 
-	function cek($no_surat = null)
+	function cek($no_urut = null)
 	{
-		$this->db->where('no_surat', $no_surat);
+		$this->db->where('no_urut', $no_urut);
 		$jumlah = $this->db->count_all_results('tbl_surat_keluar');
 
 		if ($jumlah == 1)
@@ -24,11 +24,11 @@ class Surat_keluar_m extends CI_Model {
 		return $query->result();
 	}
 
-	function get_data_byID($no_surat)
+	function get_data_byID($no_urut)
 	{
 		$this->db->select('*');
 		$this->db->from('tbl_surat_keluar');
-		$this->db->where('no_surat', $no_surat);
+		$this->db->where('no_urut', $no_urut);
 		$query = $this->db->get();
 		return $query->row();
 	}

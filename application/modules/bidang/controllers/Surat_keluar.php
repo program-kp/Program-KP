@@ -32,12 +32,12 @@ class Surat_keluar extends CI_Controller {
 		}
 	}
 
-	function dataedit($no_surat)
+	function dataedit($no_urut)
 	{
-		$cek = $this->bidang->cek($no_surat);
+		$cek = $this->surat_keluar->cek($no_urut);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->bidang->get_data_byID($no_surat);
+			$data = $this->surat_keluar->get_data_byID($no_urut);
 			echo json_encode($data);
 
 		} else {

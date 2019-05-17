@@ -28,7 +28,6 @@
 							<th>Tanggal Terima</th>
 							<th>Tanggal Undangan</th>
 							<th>Tempat Undangan</th>
-							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -108,44 +107,7 @@
 			}
 		});
 	}
-
-	function simpan()
-	{
-		$(".simpan").html("Processing...");
-		$('.simpan').attr('disabled','disabled');
-
-		var form_data = new FormData(); 
-		form_data.append("no_urut_L", $('#no_urut_L').val());
-		form_data.append("no_urut", $('#no_urut').val());
-		form_data.append("no_surat", $('#no_surat').val());
-		form_data.append("waktu_undangan", $('#waktu_undangan').val());
-		form_data.append("tempat_undangan", $('#tempat_undangan').val());
-		form_data.append("tgl_terima", $('#tgl_terima').val());
-		$.ajax({
-			url : "<?php echo base_url()?>admin/undangan/datainput",
-			type : 'POST',
-			processData: false,
-			contentType: false,
-			dataType:'json',
-			data : form_data,
-			success: function(data){
-				console.log(data);
-				if (data.status=="validasi") {
-					$.each(data, function(key, value) {
-						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);
-					});
-
-				} else {
-					success();
-					notify(data.title, data.message, data.icon, data.type);
-
-					table.ajax.reload( null, false );
-				}
-				$('.simpan').html('Simpan');
-				$('.simpan').removeAttr('disabled');
-			}
-		});
-	}	
+	
 
 	function success()
 	{
@@ -192,10 +154,10 @@
 	function dataTable()
 	{
 		table = $('#tabel').DataTable({
-			// "ajax": {
-			// 	"url": '<?php //echo base_url()?>admin/undangan/view_data',
-			// 	"type": "POST",
-			// },
+			"ajax": {
+				"url": '<?php echo base_url()?>bidang/undangan/view_data',
+				"type": "POST",
+			},
 			serverside: true,
 			responsive: true,
 			oLanguage: {

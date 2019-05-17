@@ -70,9 +70,9 @@ role="dialog" tabindex="-1">
 							<td id="info_nosurat"></td>
 						</tr>
 						<tr>
-							<td align="right">Asal Surat</td>
+							<td align="right">Tgl Surat</td>
 							<td align="center">:</td>
-							<td id="info_asalsurat"></td>
+							<td id="info_tglsurat"></td>
 						</tr>
 						<tr>
 							<td align="right">Perihal</td>
@@ -80,9 +80,14 @@ role="dialog" tabindex="-1">
 							<td id="info_perihal"></td>
 						</tr>
 						<tr>
-							<td align="right">Tanggal Terima</td>
+							<td align="right">Tujuan Surat</td>
 							<td align="center">:</td>
-							<td id="info_tglterima"></td>
+							<td id="info_tujuan"></td>
+						</tr>
+						<tr>
+							<td align="right">Keterangan</td>
+							<td align="center">:</td>
+							<td id="info_ket"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -112,12 +117,12 @@ role="dialog" tabindex="-1">
 	}
 
 
-	function edit(no)
+	function info(no)
 	{
 		success();
-		var username = $('#edit'+no).data().value;
+		var username = $('#info'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+username,
+			url : "<?php echo base_url()?>bidang/surat_keluar/dataedit/"+username,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -128,18 +133,25 @@ role="dialog" tabindex="-1">
 
 				} else {
 
-					$('input').val('');
-					$('#modal').modal('show');
-					$('#judul').html('Edit');
+					$('#modal_info').modal('show');
 
-					$('#no_surat_L').val(data.no_surat);
-					$('#no_surat').val(data.no_surat);
-					$('#no_urut').val(data.no_urut);
-					$('#tgl_surat').val(data.tgl_surat);
-					$('#id_bidang').val(data.id_bidang);
-					$('#perihal').val(data.perihal);
-					$('#tujuan_surat').val(data.tujuan_surat);
-					$('#keterangan').val(data.keterangan);
+					// $('#no_surat_L').val(data.no_surat);
+					// $('#info_nosurat').val(data.no_surat);
+					// $('#_urut').val(data.no_urut);
+					// $('#tgl_surat').val(data.tgl_surat);
+					// $('#id_bidang').val(data.id_bidang);
+					// $('#perihal').val(data.perihal);
+					// $('#tujuan_surat').val(data.tujuan_surat);
+					// $('#keterangan').val(data.keterangan);
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
+
+					$('#info_nourut').html(data.no_urut);
+					$('#info_nosurat').html(data.no_surat);
+					$('#info_tglsurat').html(tgl_surat);
+					$('#info_perihal').html(data.perihal);
+					$('#info_tujuan').html(data.tujuan_surat);
+					$('#info_ket').html(data.keterangan);
+					
 				}
 			}
 		});
@@ -149,7 +161,7 @@ role="dialog" tabindex="-1">
 	function success()
 	{
 		$('#modal').modal('hide');
-		$('#judul').html('Tambah');
+		$('#judul').html('Info');
 		$('small').html('');
 		$('input').val('');
 		$('select').val('');
