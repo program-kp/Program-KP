@@ -29,7 +29,7 @@
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nama Bidang</th>
 							<th>Username</th>
-							<th width="150px" style="text-align:center;">Aksi</th>
+							<th width="200px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -140,11 +140,76 @@ role="dialog" tabindex="-1">
 </div>
 <!-- End Modal -->
 
+<!-- Modal Reset -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_reset" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title">Reset Password User Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id_reset">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th>Nama Bidang</th>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="reset_nama"></td>
+						<td id="reset_user"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi">Password baru sama dengan Username. Yakin Ingin reset password ?</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="reset()">Hapus</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
+
 <!-- END CHANGE -->
 
 
 <!-- SCRIPT -->
 <script>
+
+	function confirm_reset(no)
+	{
+		$('#id_reset').val($('#reset'+no).data().value);
+		$('#reset_nama').html($('#reset'+no).data().nama);
+		$('#reset_user').html($('#reset'+no).data().user);
+		$('#modal_reset').modal('show');
+	}
+
+	function reset()
+	{
+		var id_reset = $('#id_reset').val();
+		
+		$.ajax({
+			url : "<?php echo base_url()?>admin/user_bidang/reset_pass/"+id_reset,
+			type : 'POST',
+			dataType:'json',
+			success: function(data) {
+				// console.log(data);
+				if (data.hasil == "berhasil") {
+					table.ajax.reload( null, false );
+				}				
+				success();
+				notify(data.title, data.message, data.icon, data.type);	
+			}
+		});
+	}
 
 	function confirm(no)
 	{

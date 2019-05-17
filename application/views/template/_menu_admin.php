@@ -58,7 +58,7 @@
 		<ul class="site-menu-sub">
 			<li class="site-menu-item" id="referensi_bidang">
 				<a class="animsition-link" href="<?php echo base_url()?>admin/master/referensi_bidang">
-					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Referensi Bidang</span>
+					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Data Referensi</span>
 				</a>
 			</li>
 			<li class="site-menu-item" id="user_bidang">
