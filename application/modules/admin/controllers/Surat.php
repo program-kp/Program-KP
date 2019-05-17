@@ -39,6 +39,7 @@ class Surat extends CI_Controller {
 	public function surat_keluar()
 	{		
 		$data['role'] = 'Admin';
+		$data['ar_bidang'] = $this->bidang->ar_bidang_admin();
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('surat/surat_keluar/index', FALSE);
 		$this->load->view('template/footer', FALSE);

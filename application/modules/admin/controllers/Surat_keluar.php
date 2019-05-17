@@ -32,12 +32,12 @@ class Surat_keluar extends CI_Controller {
 		}
 	}
 
-	function dataedit($no_surat)
+	function dataedit($no_urut)
 	{
-		$cek = $this->surat_keluar->cek($no_surat);
+		$cek = $this->surat_keluar->cek($no_urut);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->surat_keluar->get_data_byID($no_surat);
+			$data = $this->surat_keluar->get_data_byID($no_urut);
 
 			echo json_encode($data);
 
@@ -53,13 +53,13 @@ class Surat_keluar extends CI_Controller {
 		}
 	}
 
-	function datahapus($no_surat)
+	function datahapus($no_urut)
 	{
-		$cek = $this->surat_keluar->cek($no_surat);
-		$data = $this->surat_keluar->get_data_byID($no_surat);
+		$cek = $this->surat_keluar->cek($no_urut);
+		$data = $this->surat_keluar->get_data_byID($no_urut);
 		if ($cek) {
 
-			$this->surat_keluar->delete($no_surat);
+			$this->surat_keluar->delete($no_urut);
 
 			$validasi = [
 				'hasil' => 'berhasil',
@@ -84,10 +84,10 @@ class Surat_keluar extends CI_Controller {
 	{		
 		$this->load->library('form_validation');
 		// Set Rule
-		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
+		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|numeric|trim|callback_cekInput|numeric');
 		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
-		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim|callback_cekInput');
-		$this->form_validation->set_rules('id_bidang', 'Unit Pengolah', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim');
+		$this->form_validation->set_rules('unit_pengolah', 'Unit Pengolah', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('tujuan_surat', 'Tujuan Surat', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|callback_cekInput');
@@ -101,8 +101,8 @@ class Surat_keluar extends CI_Controller {
 				'status' => 'validasi',
 				'no_urut' => form_error('no_urut'),
 				'no_surat' => form_error('no_surat'),
-				'tgl-surat' => form_error('tgl-surat'),
-				'id_bidang' => form_error('id_bidang'),
+				'tgl_surat' => form_error('tgl_surat'),
+				'unit_pengolah' => form_error('unit_pengolah'),
 				'perihal' => form_error('perihal'),
 				'tujuan_surat' => form_error('tujuan_surat'),
 				'keterangan' => form_error('keterangan'),
@@ -115,8 +115,8 @@ class Surat_keluar extends CI_Controller {
 			$data = [
 				"no_urut" => $this->input->post('no_urut', TRUE),
 				"no_surat" => $this->input->post('no_surat', TRUE),
-				"tgl-surat" => $this->input->post('tgl-surat', TRUE),
-				"unit_pengolah" => $this->input->post('id_bidang', TRUE),
+				"tgl_surat" => date('Y-m-d', strtotime($this->input->post('tgl_surat', TRUE))),
+				"unit_pengolah" => $this->input->post('unit_pengolah', TRUE),
 				"perihal" => $this->input->post('perihal', TRUE),
 				"tujuan_surat" => $this->input->post('tujuan_surat', TRUE),
 				"keterangan" => $this->input->post('keterangan', TRUE),
@@ -126,17 +126,17 @@ class Surat_keluar extends CI_Controller {
 			if ($cek) {
 
 				$suratId = $this->surat_keluar->get_data_byID($no_urut_L);
-				$this->surat_keluar->update($no_surat, $data);
+				$this->surat_keluar->update($no_urut_L, $data);
 
 				$validasi = [
 					'type' => 'success',
 					'icon' => 'fa fa-check',
 					'title' => 'Berhasil',
-					'message' => 'Data <b>'.$suratId->no_surat.'</b> Berhasil diedit.'
+					'message' => 'Data <b>'.$suratId->no_urut.'</b> Berhasil diedit.'
 				];
 
 			} else {
-				$cek = $this->surat_keluar->cek($no_surat);
+				$cek = $this->surat_keluar->cek($no_urut);
 				if ($cek) {
 
 					$validasi = [
@@ -172,12 +172,14 @@ class Surat_keluar extends CI_Controller {
 		foreach ($list as $surat_keluar) {
 			$row = array();
 
+			$tgl_surat = date('d-m-Y', strtotime($surat_keluar->tgl_surat));
+
 			$row[] = "
 			<div align='center'>".$no++.
 			"</div>";
 			$row[] = $surat_keluar->no_surat;
 			$row[] = $surat_keluar->nama_bidang;
-			$row[] = $surat_keluar->tgl_surat;
+			$row[] = $tgl_surat;
 
 
 			$row[] = "

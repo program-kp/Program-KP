@@ -2,19 +2,19 @@
 <!-- Page -->
 <div class="page">
 	<div class="page-header">
-		<h1 class="page-title">Surat Keluar</h1>
+		<h1 class="page-title">Disposisi</h1>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="<?php echo base_url()?>admin/dashboard">Home</a></li>
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Surat</a></li>
-			<li class="breadcrumb-item active">Surat Keluar</li>
+			<li class="breadcrumb-item active">Disposisi</li>
 		</ol>
 	</div>
 	<div class="page-content container-fluid">
 		<div class="panel">
 			<!-- CHANGE -->
 			<div class="panel-heading">
-				<h3 class="panel-title">Surat Keluar
-					<small>Berisi Data Surat Keluar yang ada di DKP3 Kota Banjarbaru</small>
+				<h3 class="panel-title">Disposisi
+					<small>Berisi Data Disposisi Surat yang ada di DKP3 Kota Banjarbaru</small>
 				</h3>
 			</div>
 			
@@ -449,7 +449,7 @@ role="dialog" tabindex="-1">
 			event.preventDefault();
 		});
 
-		$('#tgl_surat').datetimepicker({		
+		$('#tgl_surat').datetAimepicker({		
 			format: "DD-MM-YYYY",
 		});	
 

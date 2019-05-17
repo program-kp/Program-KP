@@ -202,9 +202,8 @@ role="dialog" tabindex="-1">
 <!-- End Modal -->
 
 <!-- Modal Disposisi -->
-<div class="modal fade modal-fade-in-scale-up" id="modal_disposisi" aria-hidden="true" aria-labelledby="exampleMultipleOne"
-role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center">
+<div class="modal fade modal-fade-in-scale-up" id="modal_disposisi" aria-hidden="true" aria-labelledby="exampleMultipleOne" role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center" role="dialog" >
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -218,12 +217,12 @@ role="dialog" tabindex="-1">
 			<form action="#" id="form_disposisi">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
-					<div class="col-sm-4 data_input">
+					<div class="col-sm-6 data_input">
 						<input type="hidden" name="nosurat_disposisi" id="nosurat_disposisi">
 						<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi', 'autocomplate' => 'off']); ?>
 						<small id=er>Validasi View</small>
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-2">
 						<a style="color: white" class="btn btn-primary btn-sm float-right add_disposisi"><i class="fa fa-plus"></i></a>
 					</div>
 				</div>

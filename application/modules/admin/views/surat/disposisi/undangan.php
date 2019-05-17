@@ -2,32 +2,41 @@
 <!-- Page -->
 <div class="page">
 	<div class="page-header">
-		<h1 class="page-title">Surat Keluar</h1>
+		<h1 class="page-title">Disposisi Undangan Masuk</h1>
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a href="<?php echo base_url()?>admin/dashboard">Home</a></li>
 			<li class="breadcrumb-item"><a href="javascript:void(0)">Surat</a></li>
-			<li class="breadcrumb-item active">Surat Keluar</li>
+			<li class="breadcrumb-item active">Disposisi Undangan Masuk</li>
 		</ol>
 	</div>
 	<div class="page-content container-fluid">
 		<div class="panel">
 			<!-- CHANGE -->
 			<div class="panel-heading">
-				<h3 class="panel-title">Surat Keluar
-					<small>Berisi Data Surat Keluar yang ada di DKP3 Kota Banjarbaru</small>
+				<h3 class="panel-title">Disposisi Undangan Masuk
+					<small>Berisi Data Disposisi Undangan Masuk yang ada di DKP3 Kota Banjarbaru</small>
 				</h3>
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Surat Keluar</button><hr>
+				<div class="form-group row">
+					<label class="col-sm-2 form-label">Filter Data</label>
+					<div class="col-sm-4">
+						<?php echo form_dropdown('bidang_filter',$ar_bidang,'',['class'=>'form-control', 'id' => 'bidang_filter']);?>
+					</div>
+					<div class="col-sm-2">
+						<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Filter</button>
+					</div>
+				</div>
+				<hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nomor Surat</th>
-							<th>Unit Pengolah</th>
-							<th>Tanggal Surat</th>
+							<th>Tanggal Terima</th>
+							<th>Bidang</th>
 							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
@@ -407,7 +416,7 @@ role="dialog" tabindex="-1">
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/surat_keluar/view_data',
+				"url": '<?php echo base_url()?>admin/disposisi/view_data_surat',
 				"type": "POST",
 			},
 			responsive: true,
@@ -441,7 +450,8 @@ role="dialog" tabindex="-1">
 
 		//Active Menu
 		$('#surat').addClass('active open');
-		$('#surat_keluar').addClass('active hover');
+		$('#disposisi').addClass('active open');
+		$('#dis_undangan').addClass('active hover');
 
 		dataTable();
 
@@ -449,7 +459,7 @@ role="dialog" tabindex="-1">
 			event.preventDefault();
 		});
 
-		$('#tgl_surat').datetimepicker({		
+		$('#tgl_surat').datetAimepicker({		
 			format: "DD-MM-YYYY",
 		});	
 

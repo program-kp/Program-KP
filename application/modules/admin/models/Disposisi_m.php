@@ -3,9 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Disposisi_m extends CI_Model {
 
-	function cek($kode_disposisi = null)
+	function cek($tujuan_surat, $no_urut_surat = null, $no_urut_undangan = null)
 	{
-		$this->db->where('kode_disposisi', $kode_disposisi);
+		if ($no_urut_surat!=null)
+			$this->db->where('no_urut_surat', $no_urut_surat);
+		else $this->db->where('no_urut_undangan', $no_urut_undangan);
+
+		$this->db->where('tujuan_surat', $tujuan_surat);
 		$jumlah = $this->db->count_all_results('tbl_disposisi');
 
 		if ($jumlah == 1)
@@ -14,13 +18,18 @@ class Disposisi_m extends CI_Model {
 			return false;
 	}
 
-	function get_data($get= null)
+	function get_data($id_bidang = null)
 	{
-		$this->db->order_by('nama_bidang', 'asc');
-		if ($get!=null) {
-			$this->db->where('status_user', 0);
+		$this->db->select('tbl_surat_undangan.no_surat, tbl_surat_undangan.tgl_terima, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi');
+		$this->db->from('tbl_disposisi');
+		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
+		$this->db->join('tbl_surat_undangan','tbl_disposisi.no_urut_undangan = tbl_surat_undangan.no_urut');
+		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
+		if ($id_bidang!=null) {
+			$this->db->where('tbl_disposisi.tujuan_surat', $id_bidang);
 		}
-		$query = $this->db->get('tbl_disposisi');
+		$this->db->where('tbl_disposisi.tipe_surat', 'Undangan');
+		$query = $this->db->get();
 		return $query->result();
 	}
 

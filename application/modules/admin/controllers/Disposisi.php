@@ -15,6 +15,24 @@ class Disposisi extends CI_Controller {
 			redirect('/login/');
 	}
 
+	function surat_masuk()
+	{
+		$data['ar_bidang'] = $this->bidang->ar_bidang_admin();
+		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('surat/disposisi/surat_masuk', FALSE);
+		$this->load->view('template/footer', FALSE);
+
+	}
+
+	function undangan()
+	{
+		$data['ar_bidang'] = $this->bidang->ar_bidang_admin();
+		$this->load->view('template/header', $data, FALSE);
+		$this->load->view('surat/disposisi/undangan', FALSE);
+		$this->load->view('template/footer', FALSE);
+
+	}
+
 	function datainput()
 	{
 		echo "<pre>";
@@ -23,7 +41,6 @@ class Disposisi extends CI_Controller {
 	}
 
 	// SURAT MASUK
-
 	function getWord_surat($no_urut)
 	{
 		$data = $this->surat_masuk->get_data_byID($no_urut);
@@ -41,7 +58,7 @@ class Disposisi extends CI_Controller {
 
 		$this->load->helper('download');
 		force_download('fileWord/disposisi.docx', NULL);
-		unlink('fileWord/result.docx');
+		unlink('fileWord/disposisi.docx');
 	}
 
 	function datainput_surat()
@@ -69,16 +86,27 @@ class Disposisi extends CI_Controller {
 
 			$data = array();
 			$validasi = array();
-
+			$total = 0;
+			$gagal = 0;
+			$berhasil = 0;
 			foreach ($tujuan as $datatujuan) {
-				$data = [
-					'no_urut_surat' => $no_urut,
-					'tipe_surat' => 'Surat Masuk',
-					'tgl_disposisi' => date('Y-m-d', strtotime($tgl_disposisi)),
-					'tujuan_surat' => $datatujuan,
-				];
 
-				$this->disposisi->insert($data);
+				if ($this->disposisi->cek($datatujuan, $no_urut, '')) $gagal+=1;					
+				else {
+
+					$data = [
+						'no_urut_surat' => $no_urut,
+						'tipe_surat' => 'Surat Masuk',
+						'tgl_disposisi' => date('Y-m-d', strtotime($tgl_disposisi)),
+						'tujuan_surat' => $datatujuan,
+					];
+
+					$this->disposisi->insert($data);
+					$berhasil+=1;
+
+				}
+				$total++;
+
 			}
 
 
@@ -86,11 +114,39 @@ class Disposisi extends CI_Controller {
 				'type' => 'success',
 				'icon' => 'fa fa-check',
 				'title' => 'Berhasil',
-				'message' => 'Data '.$this->input->post('nama_bidang', TRUE).' Berhasil ditambah.'
+				'message' => $berhasil.' dari '.$total.' data Disposisi berhasil ditambahkan, '.$gagal.' data Gagal'
 			];
 
 			echo json_encode($validasi);
 		}
+	}
+
+	function view_data_surat($id_bidang = null)
+	{
+		$list = $this->disposisi->get_data($id_bidang);
+		$data = array();
+		$no = 1;
+		foreach ($list as $disposisi) {
+			$row = array();
+
+			$tgl_terima = date('d-m-Y', strtotime($disposisi->tgl_terima));
+
+			$row[] = "<div align='center'>".$no++."</div>";
+			$row[] = $disposisi->no_surat;
+			$row[] = $tgl_terima;
+			$row[] = $disposisi->nama_bidang;
+
+
+			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$disposisi->kode_disposisi."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$disposisi->kode_disposisi."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$disposisi->kode_disposisi."' data-nosurat='".$disposisi->no_surat."' data-tgl_terima='".$tgl_terima."' data-bidang='".$disposisi->nama_bidang."' onClick='confirm(".$no.")'>Hapus</button></div>";
+
+			$data[] = $row;
+		}
+
+		$output = [
+			"data" => $data,
+		];
+
+		echo json_encode($output);
 	}
 	// END SURAT MASUK
 
@@ -120,16 +176,27 @@ class Disposisi extends CI_Controller {
 
 			$data = array();
 			$validasi = array();
+			$total = 0;
+			$gagal = 0;
+			$berhasil = 0;
 
 			foreach ($tujuan as $datatujuan) {
-				$data = [
-					'no_urut_undangan' => $no_urut,
-					'tipe_surat' => 'Undangan',
-					'tgl_disposisi' => date('Y-m-d', strtotime($tgl_disposisi)),
-					'tujuan_surat' => $datatujuan,
-				];
 
-				$this->disposisi->insert($data);
+				if ($this->disposisi->cek($datatujuan, '', $no_urut)) $gagal+=1;					
+				else {
+
+					$data = [
+						'no_urut_undangan' => $no_urut,
+						'tipe_surat' => 'Undangan',
+						'tgl_disposisi' => date('Y-m-d', strtotime($tgl_disposisi)),
+						'tujuan_surat' => $datatujuan,
+					];
+
+					$this->disposisi->insert($data);
+					$berhasil+=1;
+
+				}
+				$total++;
 			}
 
 
@@ -137,7 +204,7 @@ class Disposisi extends CI_Controller {
 				'type' => 'success',
 				'icon' => 'fa fa-check',
 				'title' => 'Berhasil',
-				'message' => 'Data '.$this->input->post('nama_bidang', TRUE).' Berhasil ditambah.'
+				'message' => $berhasil.' dari '.$total.' data Disposisi berhasil ditambahkan, '.$gagal.' data Gagal'
 			];
 
 			echo json_encode($validasi);

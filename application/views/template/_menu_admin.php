@@ -28,10 +28,25 @@
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Keluar</span>
 				</a>
 			</li>
-			<li class="site-menu-item" id="disposisi">
-				<a class="animsition-link" href="<?php echo base_url()?>admin/surat/disposisi">
-					<span class="site-menu-title"><i class="fa fa-mail-forward" aria-hidden="true"></i>&ensp;Disposisi</span>
-				</a>
+			<li class="site-menu-item">
+				<li class="site-menu-item has-sub" id="disposisi">
+					<a href="javascript:void(0)">
+						<span class="site-menu-title"><i class="fa fa-mail-forward" aria-hidden="true"></i>&ensp;Disposisi</span></span>
+						<span class="site-menu-arrow"></span>
+					</a>
+					<ul class="site-menu-sub">
+						<li class="site-menu-item" id="dis_surat">
+							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/surat_masuk">
+								<span class="site-menu-title">Surat Masuk</span>
+							</a>
+						</li>
+						<li class="site-menu-item" id="dis_undangan">
+							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/undangan">
+								<span class="site-menu-title">Undangan Masuk</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 			</li>
 		</ul>
 	</li><li class="site-menu-item has-sub" id="data_master">

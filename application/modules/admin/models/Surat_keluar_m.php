@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Surat_keluar_m extends CI_Model {
 
-	function cek($no_surat = null)
+	function cek($no_urut = null)
 	{
-		$this->db->where('no_surat', $no_surat);
+		$this->db->where('no_urut', $no_urut);
 		$jumlah = $this->db->count_all_results('tbl_surat_keluar');
 
 		if ($jumlah == 1)
@@ -24,31 +24,31 @@ class Surat_keluar_m extends CI_Model {
 		return $query->result();
 	}
 
-	function get_data_byID($no_surat)
+	function get_data_byID($no_urut)
 	{
 		$this->db->select('tbl_surat_keluar.*, tbl_bidang.*');
 		$this->db->from('tbl_surat_keluar');
 		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.unit_pengolah');
-		$this->db->where('no_surat', $no_surat);
+		$this->db->where('tbl_surat_keluar.no_urut', $no_urut);
 		$query = $this->db->get();
 		return $query->row();
 	}
 
-	function count_data_bySurat($no_surat, $id_bidang)
+	function count_data_bySurat($no_urut, $id_bidang)
 	{
 		$this->db->select('COUNT(*) AS jumlah_data');
 		$this->db->from('tbl_bidang');
 		$this->db->join('tbl_surat_keluar','tbl_surat_keluar.unit_pengolah=tbl_bidang.id_bidang');
 		$this->db->order_by('tbl_surat_keluar.no_urut', 'asc');
-		$this->db->where('tbl_bidang.no_surat', $no_surat);
+		$this->db->where('tbl_bidang.no_urut', $no_urut);
 		$this->db->where('tbl_bidang.id_bidang', $id_bidang);
 		$query = $this->db->get();
 		return $query->row();
 	}
 
-	function update($no_surat, $data)
+	function update($no_urut, $data)
 	{
-		$this->db->where("no_surat", $no_surat);
+		$this->db->where("no_urut", $no_urut);
 		$this->db->update('tbl_surat_keluar', $data);
 	}
 
@@ -57,9 +57,9 @@ class Surat_keluar_m extends CI_Model {
 		$this->db->insert('tbl_surat_keluar', $data);
 	}
 
-	function delete($no_surat)
+	function delete($no_urut)
 	{       
-		$this->db->where('no_surat', $no_surat);
+		$this->db->where('no_urut', $no_urut);
 		$query = $this->db->delete('tbl_surat_keluar');
 		return $query;
 	}
