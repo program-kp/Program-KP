@@ -30,16 +30,26 @@ class Referensi_bidang_m extends CI_Model {
 		if ($a == null) {
 			$list[''] = "-- Pilih --";
 			foreach ($data as $row){
-				$list[$row->id_bidang] = $row->id_bidang." - ".$row->nama_bidang;
+				$list[$row->id_bidang] = $row->nama_bidang;
 			}
 			return $list;
 		} else {
 			$list="<option value=''>-- Pilih --</option>";
 			foreach ($data as $row){
-				$list.="<option value='".$row->id_bidang."'>".$row->id_bidang." - ".$row->nama_bidang."</option>";
+				$list.="<option value='".$row->id_bidang."'>".$row->nama_bidang."</option>";
 			}
 			return $list;
 		}
+	}
+
+	function ar_bidang_admin()
+	{
+		$data = $this->get_data();
+		$list[''] = "-- Pilih --";
+		foreach ($data as $row){
+			$list[$row->id_bidang] = $row->nama_bidang;
+		}
+		return $list;
 	}
 
 	function get_data_byID($id_bidang)

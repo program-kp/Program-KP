@@ -16,7 +16,7 @@ class Surat_keluar extends CI_Controller {
 	function getdata()
 	{
 		echo "<pre>";
-		print_r ($this->bidang->get_data());
+		print_r ($this->surat_keluar->get_data());
 		echo "</pre>";
 	}
 
@@ -34,10 +34,11 @@ class Surat_keluar extends CI_Controller {
 
 	function dataedit($no_surat)
 	{
-		$cek = $this->bidang->cek($no_surat);
+		$cek = $this->surat_keluar->cek($no_surat);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->bidang->get_data_byID($no_surat);
+			$data = $this->surat_keluar->get_data_byID($no_surat);
+
 			echo json_encode($data);
 
 		} else {
@@ -54,19 +55,18 @@ class Surat_keluar extends CI_Controller {
 
 	function datahapus($no_surat)
 	{
-		$cek = $this->bidang->cek($no_surat);
-		$data = $this->bidang->get_data_byID($no_surat);
+		$cek = $this->surat_keluar->cek($no_surat);
+		$data = $this->surat_keluar->get_data_byID($no_surat);
 		if ($cek) {
 
-			$this->bidang->delete($no_surat);
-			$this->bidang->delete_user($no_surat);
+			$this->surat_keluar->delete($no_surat);
 
 			$validasi = [
 				'hasil' => 'berhasil',
 				'type' => 'success',
 				'icon' => 'fa fa-check',
 				'title' => 'Berhasil',
-				'message' => 'Data <b>'.$data->nama_bidang.'</b> Berhasil dihapus.'
+				'message' => 'Data <b>'.$data->no_surat.'</b> Berhasil dihapus.'
 			];
 		} else {
 			$validasi = [
@@ -74,7 +74,7 @@ class Surat_keluar extends CI_Controller {
 				'type' => 'danger',
 				'icon' => 'fa fa-ban',
 				'title' => 'Gagal',
-				'message' => 'Data <b>'.$data->nama_bidang.'</b> tidak Tersedia.'
+				'message' => 'Data <b>'.$data->no_surat.'</b> tidak Tersedia.'
 			];
 		}
 		echo json_encode($validasi);
@@ -84,17 +84,28 @@ class Surat_keluar extends CI_Controller {
 	{		
 		$this->load->library('form_validation');
 		// Set Rule
-		$this->form_validation->set_rules('nama_bidang', 'Nama Bidang', 'required|trim|callback_cekInput');
-		$this->form_validation->set_rules('nama_kabid', 'Nama Kepala Bidang', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
+		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
+		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('id_bidang', 'Unit Pengolah', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('tujuan_surat', 'Tujuan Surat', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('keterangan', 'Keterangan', 'trim|callback_cekInput');
 
-		$no_surat = $this->input->post('id_bidang', TRUE);
+		$no_urut_L = $this->input->post('no_urut_L', TRUE);
+		$no_urut = $this->input->post('no_urut', TRUE);
 
 		if ($this->form_validation->run() == FALSE) {
 
 			$validasi = [
 				'status' => 'validasi',
-				'nama_bidang' => form_error('nama_bidang'),
-				'nama_kabid' => form_error('nama_kabid'),
+				'no_urut' => form_error('no_urut'),
+				'no_surat' => form_error('no_surat'),
+				'tgl-surat' => form_error('tgl-surat'),
+				'id_bidang' => form_error('id_bidang'),
+				'perihal' => form_error('perihal'),
+				'tujuan_surat' => form_error('tujuan_surat'),
+				'keterangan' => form_error('keterangan'),
 			];
 
 			echo json_encode($validasi);
@@ -102,25 +113,30 @@ class Surat_keluar extends CI_Controller {
 		} else {
 
 			$data = [
-				"nama_bidang" => $this->input->post('nama_bidang', TRUE),
-				"nama_kabid" => $this->input->post('nama_kabid', TRUE),
+				"no_urut" => $this->input->post('no_urut', TRUE),
+				"no_surat" => $this->input->post('no_surat', TRUE),
+				"tgl-surat" => $this->input->post('tgl-surat', TRUE),
+				"unit_pengolah" => $this->input->post('id_bidang', TRUE),
+				"perihal" => $this->input->post('perihal', TRUE),
+				"tujuan_surat" => $this->input->post('tujuan_surat', TRUE),
+				"keterangan" => $this->input->post('keterangan', TRUE),
 			];
 
-			$cek = $this->bidang->cek($no_surat);
+			$cek = $this->surat_keluar->cek($no_urut_L);
 			if ($cek) {
 
-				$nama = $this->bidang->get_data_byID($no_surat);
-				$this->bidang->update($no_surat, $data);
+				$suratId = $this->surat_keluar->get_data_byID($no_urut_L);
+				$this->surat_keluar->update($no_surat, $data);
 
 				$validasi = [
 					'type' => 'success',
 					'icon' => 'fa fa-check',
 					'title' => 'Berhasil',
-					'message' => 'Data <b>'.$nama->nama_bidang.'</b> Berhasil diedit.'
+					'message' => 'Data <b>'.$suratId->no_surat.'</b> Berhasil diedit.'
 				];
 
 			} else {
-				$cek = $this->bidang->cek($no_surat);
+				$cek = $this->surat_keluar->cek($no_surat);
 				if ($cek) {
 
 					$validasi = [
@@ -132,13 +148,13 @@ class Surat_keluar extends CI_Controller {
 
 				} else {
 
-					$this->bidang->insert($data);
+					$this->surat_keluar->insert($data);
 
 					$validasi = [
 						'type' => 'success',
 						'icon' => 'fa fa-check',
 						'title' => 'Berhasil',
-						'message' => 'Data '.$this->input->post('nama_bidang', TRUE).' Berhasil ditambah.'
+						'message' => 'Data '.$this->input->post('no_surat', TRUE).' Berhasil ditambah.'
 					];
 
 				}
@@ -150,26 +166,22 @@ class Surat_keluar extends CI_Controller {
 
 	function view_data()
 	{
-		$list = $this->bidang->get_data();
+		$list = $this->surat_keluar->get_data();
 		$data = array();
 		$no = 1;
-		foreach ($list as $bidang) {
+		foreach ($list as $surat_keluar) {
 			$row = array();
 
 			$row[] = "
 			<div align='center'>".$no++.
 			"</div>";
-			$row[] = $bidang->nama_bidang;
-			$row[] = $bidang->nama_kabid;
-
-			$jumlah = $this->bidang->count_data_byBidang($bidang->id_bidang);
-
-			if ($bidang->status_user==1) $row[] = 'Ada';
-			else $row[] = 'Belum Ada';
+			$row[] = $surat_keluar->no_surat;
+			$row[] = $surat_keluar->nama_bidang;
+			$row[] = $surat_keluar->tgl_surat;
 
 
 			$row[] = "
-			<div align='center'><button class='btn btn-sm btn-info edit' name='edit' id='edit".$no."' data-value='".$bidang->id_bidang."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$bidang->id_bidang."' data-nama='".$bidang->nama_bidang."' data-kabid='".$bidang->nama_kabid."' data-jumlah='".$jumlah->jumlah_data."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_keluar->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_keluar->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_keluar->no_urut."' data-nosurat='".$surat_keluar->no_surat."' data-unit='".$surat_keluar->nama_bidang."' data-tgl='".$tgl_surat."' data-perihal='".$surat_keluar->perihal."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

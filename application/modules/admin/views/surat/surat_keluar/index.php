@@ -25,9 +25,9 @@
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
-							<th>No. Urut</th>
-							<th>Unit Pengolah</th>
 							<th>Nomor Surat</th>
+							<th>Unit Pengolah</th>
+							<th>Tanggal Surat</th>
 							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
@@ -55,7 +55,7 @@ role="dialog" tabindex="-1">
 				<h4 class="modal-title"><span id=judul>Tambah</span> Surat Keluar</h4>
 			</div>
 			<div class="modal-body">
-				<input type="hidden" id="no_surat_L">
+				<input type="hidden" id="no_urut_L">
 				<div class="form-group row">
 					<label class="col-sm-2 form-label">No. Urut<span required="">*</span></label>
 					<div class="col-sm-4 data_input">
@@ -115,7 +115,7 @@ role="dialog" tabindex="-1">
 <!-- Modal Hapus -->
 <div class="modal fade modal-fade-in-scale-up" id="modal_hapus" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center">
+<div class="modal-dialog modal-simple modal-center modal-lg">
 	<div class="modal-content">
 		<form action="#" id="form">
 			<div class="modal-header">
@@ -129,16 +129,18 @@ role="dialog" tabindex="-1">
 				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
 						<tr>
-							<th>No. Urut</th>
-							<th>Unit Pengolah</th>
-							<th>Nomor Surat</th>
+							<th style="width:150px">No. Surat</th>
+							<th style="width:150px">Unit Pengolah</th>
+							<th style="width:100px">Tanggal Surat</th>
+							<th>Perihal</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
-							<td id="nourut"></td>
-							<td id="unit"></td>
-							<td id="nosurat"></td>
+							<td id="hapus_nosurat"></td>
+							<td id="hapus_unit"></td>
+							<td id="hapus_tgl"></td>
+							<td id="hapus_perihal"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -147,6 +149,69 @@ role="dialog" tabindex="-1">
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
 				<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
+
+<!-- Modal Info -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_info" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<form action="#" id="form">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title"><span id=judul>Info</span> Surat Keluar</h4>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="info">
+				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+					<tbody>
+						<tr>
+							<td align="right" style="width: 118px">No Urut</td>
+							<td align="center" style="width: 5px">:</td>
+							<td id="info_nourut"></td>
+						</tr>
+						<tr>
+							<td align="right">No Surat</td>
+							<td align="center">:</td>
+							<td id="info_nosurat"></td>
+						</tr>
+						<tr>
+							<td align="right">Unit Pengolah</td>
+							<td align="center">:</td>
+							<td id="info_unit"></td>
+						</tr>
+						<tr>
+							<td align="right">Tanggal Surat</td>
+							<td align="center">:</td>
+							<td id="info_tgl"></td>
+						</tr>
+						<tr>
+							<td align="right">Perihal</td>
+							<td align="center">:</td>
+							<td id="info_perihal"></td>
+						</tr>
+						<tr>
+							<td align="right">Tujuan</td>
+							<td align="center">:</td>
+							<td id="info_tujuan"></td>
+						</tr>
+						<tr>
+							<td align="right">Keterangan</td>
+							<td align="center">:</td>
+							<td id="info_ker"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
 			</div>
 		</form>
 	</div>
@@ -163,18 +228,19 @@ role="dialog" tabindex="-1">
 	function confirm(no)
 	{
 		$('#id').val($('#confirm'+no).data().value);
-		$('#nourut').html($('#confirm'+no).data().nourut);
-		$('#unit').html($('#confirm'+no).data().unit);
-		$('#nosurat').html($('#confirm'+no).data().nosurat);
+		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
+		$('#hapus_unit').html($('#confirm'+no).data().unit);
+		$('#hapus_tgl').html($('#confirm'+no).data().tgl);
+		$('#hapus_perihal').html($('#confirm'+no).data().perihal);
 		$('#modal_hapus').modal('show');
 	}
 
 	function hapus()
 	{
-		var id_bidang = $('#id').val();
+		var no_urut = $('#id').val();
 		
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/datahapus/"+id_bidang,
+			url : "<?php echo base_url()?>admin/surat_keluar/datahapus/"+no_urut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
@@ -188,12 +254,42 @@ role="dialog" tabindex="-1">
 		});
 	}
 
+	function info(no)
+	{
+		success();
+		var no_urut = $('#edit'+no).data().value;
+		$.ajax({
+			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+no_urut,
+			type : 'POST',
+			dataType:'json',
+			success: function(data){
+				if (data.hasil=='error') {
+
+					success();					
+					notify(data.title, data.message, data.icon, data.type);
+
+				} else {
+
+					$('#modal_info').modal('show');
+
+					$('#info_nourut').val(data.no_urut);
+					$('#info_nosurat').val(data.no_surat);
+					$('#info_unit').val(data.unit_pengolah);
+					$('#info_tgl').val(data.tgl_surat);
+					$('#info_perihal').val(data.perihal);
+					$('#info_tujuan').val(data.tujuan_surat);
+					$('#info_ket').val(data.keterangan);
+				}
+			}
+		});
+	}
+
 	function edit(no)
 	{
 		success();
-		var username = $('#edit'+no).data().value;
+		var no_urut = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+username,
+			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+no_urut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -212,7 +308,7 @@ role="dialog" tabindex="-1">
 					$('#no_surat').val(data.no_surat);
 					$('#no_urut').val(data.no_urut);
 					$('#tgl_surat').val(data.tgl_surat);
-					$('#id_bidang').val(data.id_bidang);
+					$('#id_bidang').val(data.unit_pengolah);
 					$('#perihal').val(data.perihal);
 					$('#tujuan_surat').val(data.tujuan_surat);
 					$('#keterangan').val(data.keterangan);
@@ -265,7 +361,7 @@ role="dialog" tabindex="-1">
 	{
 		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
-		$('small').html('');
+		$('small#er').html('');
 		$('input').val('');
 		$('select').val('');
 	}

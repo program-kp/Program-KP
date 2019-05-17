@@ -16,7 +16,7 @@ class Undangan_m extends CI_Model {
 
 	function get_data()
 	{
-		$this->db->select('*');
+		$this->db->select('tbl_surat_undangan.*, (SELECT COUNT(*) FROM tbl_disposisi where tbl_disposisi.no_urut_undangan=tbl_surat_undangan.no_urut) as jumlah');
 		$this->db->from('tbl_surat_undangan');
 		$this->db->order_by('no_urut', 'desc');
 		$query = $this->db->get();

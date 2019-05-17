@@ -42,17 +42,26 @@ DROP TABLE IF EXISTS `tbl_disposisi`;
 
 CREATE TABLE `tbl_disposisi` (
   `kode_disposisi` int(11) NOT NULL AUTO_INCREMENT,
-  `no_urut` int(11) DEFAULT NULL,
+  `no_urut_surat` int(11) DEFAULT NULL,
+  `no_urut_undangan` int(11) DEFAULT NULL,
   `tipe_surat` varchar(30) DEFAULT NULL,
-  `keterangan` text,
+  `tujuan_surat` int(11) DEFAULT NULL,
   `tgl_disposisi` date DEFAULT NULL,
   PRIMARY KEY (`kode_disposisi`),
-  KEY `Surat Undangan` (`no_urut`),
-  CONSTRAINT `Surat Masuk` FOREIGN KEY (`no_urut`) REFERENCES `tbl_surat_masuk` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Surat Undangan` FOREIGN KEY (`no_urut`) REFERENCES `tbl_surat_undangan` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `Bidang` (`tujuan_surat`),
+  KEY `Surat` (`no_urut_surat`),
+  KEY `Undangan` (`no_urut_undangan`),
+  CONSTRAINT `Bidang` FOREIGN KEY (`tujuan_surat`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Surat` FOREIGN KEY (`no_urut_surat`) REFERENCES `tbl_surat_masuk` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Undangan` FOREIGN KEY (`no_urut_undangan`) REFERENCES `tbl_surat_undangan` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_disposisi` */
+
+insert  into `tbl_disposisi`(`kode_disposisi`,`no_urut_surat`,`no_urut_undangan`,`tipe_surat`,`tujuan_surat`,`tgl_disposisi`) values 
+(14,34242,NULL,'Surat Masuk',65,'2019-05-23'),
+(15,34242,NULL,'Surat Masuk',63,'2019-05-23'),
+(16,34242,NULL,'Surat Masuk',66,'2019-05-23');
 
 /*Table structure for table `tbl_surat_keluar` */
 
@@ -73,6 +82,9 @@ CREATE TABLE `tbl_surat_keluar` (
 
 /*Data for the table `tbl_surat_keluar` */
 
+insert  into `tbl_surat_keluar`(`no_urut`,`no_surat`,`tgl_surat`,`perihal`,`tujuan_surat`,`keterangan`,`id_bidang`) values 
+(NULL,'',NULL,NULL,NULL,NULL,NULL);
+
 /*Table structure for table `tbl_surat_masuk` */
 
 DROP TABLE IF EXISTS `tbl_surat_masuk`;
@@ -91,8 +103,8 @@ CREATE TABLE `tbl_surat_masuk` (
 /*Data for the table `tbl_surat_masuk` */
 
 insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_terima`) values 
-(1,'123',65,'2341','1970-01-14'),
-(34242,'qwerty',65,'auihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wyauihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wy','2019-05-26');
+(1,'800/015-PP/DKP3/2019',65,'2341','2019-05-16'),
+(34242,'800/015-PP/DKP3/2015',66,'auihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wyauihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wy','2019-05-14');
 
 /*Table structure for table `tbl_surat_undangan` */
 
@@ -108,6 +120,10 @@ CREATE TABLE `tbl_surat_undangan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_undangan` */
+
+insert  into `tbl_surat_undangan`(`no_urut`,`no_surat`,`tgl_terima`,`waktu_undangan`,`tempat_undangan`) values 
+(12312,'3123123','2016-06-23','2015-02-17 08:00:00','QWERTY'),
+(123412,'800/012-PP/DKP3/2019','2017-07-26','2016-07-07 09:35:00','3242342');
 
 /*Table structure for table `tbl_user` */
 

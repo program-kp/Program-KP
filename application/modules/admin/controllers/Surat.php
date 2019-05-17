@@ -16,7 +16,7 @@ class Surat extends CI_Controller {
 	public function index()
 	{		
 		$data['role'] = 'Admin';
-		$data['ar_bidang'] = $this->bidang->ar_bidang();
+		$data['ar_bidang'] = $this->bidang->ar_bidang_admin();
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('surat/surat_masuk/index', FALSE);
 		$this->load->view('template/footer', FALSE);
@@ -30,6 +30,7 @@ class Surat extends CI_Controller {
 	public function undangan()
 	{		
 		$data['role'] = 'Admin';
+		$data['ar_bidang'] = $this->bidang->ar_bidang_admin();
 		$this->load->view('template/header', $data, FALSE);
 		$this->load->view('surat/undangan/index', FALSE);
 		$this->load->view('template/footer', FALSE);

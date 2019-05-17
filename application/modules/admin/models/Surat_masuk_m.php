@@ -16,9 +16,8 @@ class Surat_masuk_m extends CI_Model {
 
 	function get_data()
 	{
-		$this->db->select('tbl_surat_masuk.*, tbl_bidang.*');
+		$this->db->select('tbl_surat_masuk.*, (SELECT COUNT(*) FROM tbl_disposisi where tbl_disposisi.no_urut_surat=tbl_surat_masuk.no_urut) as jumlah');
 		$this->db->from('tbl_surat_masuk');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_masuk.asal_surat');
 		$this->db->order_by('tbl_surat_masuk.no_urut', 'desc');
 		$query = $this->db->get();
 		return $query->result();
@@ -26,10 +25,8 @@ class Surat_masuk_m extends CI_Model {
 
 	function get_data_byID($no_urut)
 	{
-		$this->db->select('tbl_surat_masuk.*, tbl_bidang.*');
+		$this->db->select('tbl_surat_masuk.*');
 		$this->db->from('tbl_surat_masuk');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_masuk.asal_surat');
-		$this->db->order_by('tbl_surat_masuk.no_urut', 'desc');
 		$this->db->where('no_urut', $no_urut);
 		$query = $this->db->get();
 		return $query->row();

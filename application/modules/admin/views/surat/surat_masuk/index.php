@@ -27,8 +27,9 @@
 							<th width="50px" style="text-align:center;">#</th>
 							<th>No. Surat</th>
 							<th>Asal Surat</th>
-							<th>Tgl terima</th>
-							<th width="160px" style="text-align:center;">Aksi</th>
+							<th>Tanggal Terima</th>
+							<th width="70px" style="text-align:center;">Disposisi</th>
+							<th width="200px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -73,7 +74,7 @@ role="dialog" tabindex="-1">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Asal Surat<span required="">*</span></label>
 					<div class="col-sm-8 data_input">
-						<?php echo form_dropdown('id_bidang', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'id_bidang']); ?>
+						<?php echo form_input('asal_surat', '', ["class" => "form-control", 'id' => 'asal_surat']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
@@ -87,7 +88,7 @@ role="dialog" tabindex="-1">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
 					<div class="col-sm-8 data_input">
-						<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima']); ?>
+						<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
@@ -159,7 +160,7 @@ role="dialog" tabindex="-1">
 				<h4 class="modal-title"><span id=judul>Info</span> Surat Masuk</h4>
 			</div>
 			<div class="modal-body">
-				<input type="hidden" id="id">
+				<input type="hidden" id="info">
 				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<tbody>
 						<tr>
@@ -192,7 +193,59 @@ role="dialog" tabindex="-1">
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
-				<button type="button" class="btn btn-sm btn-danger disposisi" id="disposisi_data" data-dismiss="modal" onclick="disposisi()">Disposisi</button>
+				<button type="button" class="btn btn-sm btn-primary modal_disposisi" data-dismiss="modal" data-toggle="modal" data-target="#modal_disposisi">Disposisi</button>
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
+
+<!-- Modal Disposisi -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_disposisi" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Disposisi</span> Surat Masuk</h4>
+		</div>
+
+		<div class="modal-body">
+
+			<form action="#" id="form_disposisi">
+				<div class="form-group row">
+					<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
+					<div class="col-sm-4 data_input">
+						<input type="hidden" name="nosurat_disposisi" id="nosurat_disposisi">
+						<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi', 'autocomplate' => 'off']); ?>
+						<small id=er>Validasi View</small>
+					</div>
+					<div class="col-sm-4">
+						<a style="color: white" class="btn btn-primary btn-sm float-right add_disposisi"><i class="fa fa-plus"></i></a>
+					</div>
+				</div>
+				<div class="panel-group panel-group-continuous m-0 " id="exampleAccrodion1" aria-multiselectable="true" role="tablist">
+					<hr>
+					<div class="panel" id="panel">
+						<div class="panel-heading" id="add_panel">
+							<div class="form-group row">
+								<label class="col-sm-4 form-label">Tujuan Surat</label>
+								<div class="col-sm-8 data_input">
+									<?php echo form_dropdown('tujuan[]', $ar_bidang, '', ['class' => 'form-control input_data', 'id' => 'tujuan']); ?>
+								</div>
+							</div>
+							<hr>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+				<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="cetak_disposisi()">Cetak Disposisi</button>
+				<button type="button" class="btn btn-sm btn-primary disposisi" id="disposisi_data" onclick="disposisi()">Simpan Disposisi</button>
 			</div>
 		</form>
 	</div>
@@ -205,6 +258,39 @@ role="dialog" tabindex="-1">
 
 <!-- SCRIPT -->
 <script>
+
+	function disposisi()
+	{
+		$(".disposisi").html("Processing...");
+		$('.disposisi').attr('disabled','disabled');
+
+		$.ajax({
+			url : "<?php echo base_url()?>admin/disposisi/datainput_surat",
+			type : 'POST',
+			dataType:'json',  
+			data:$('#form_disposisi').serialize(),  
+			success: function(data){
+				console.log(data);
+				if (data.status=="validasi") {
+					$.each(data, function(key, value) {
+						$('#' + key).parents('.data_input').find('#er').addClass('text-danger').html(value);
+					});
+
+				} else {
+
+					$('#modal_disposisi').modal('hide');
+					$('small#er').html('');
+					$('#tujuan').val('');
+
+					table.ajax.reload( null, false );
+					notify(data.title, data.message, data.icon, data.type);
+				}
+
+				$('.disposisi').html('Simpan');
+				$('.disposisi').removeAttr('disabled');
+			}
+		});
+	}
 
 	function confirm(no)
 	{
@@ -254,9 +340,10 @@ role="dialog" tabindex="-1">
 
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
 
+					$('#info').val(data.no_urut);
 					$('#info_nourut').html(data.no_urut);
 					$('#info_nosurat').html(data.no_surat);
-					$('#info_asalsurat').html(data.nama_bidang);
+					$('#info_asalsurat').html(data.asal_surat);
 					$('#info_perihal').html(data.perihal);
 					$('#info_tglterima').html(tgl_terima);
 				}
@@ -267,9 +354,9 @@ role="dialog" tabindex="-1">
 	function edit(no)
 	{
 		success();
-		var username = $('#edit'+no).data().value;
+		var nourut = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_masuk/dataedit/"+username,
+			url : "<?php echo base_url()?>admin/surat_masuk/dataedit/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -289,7 +376,7 @@ role="dialog" tabindex="-1">
 					$('#no_urut_L').val(data.no_urut);
 					$('#no_urut').val(data.no_urut);
 					$('#no_surat').val(data.no_surat);
-					$('#id_bidang').val(data.asal_surat);
+					$('#asal_surat').val(data.asal_surat);
 					$('textarea#perihal').val(data.perihal);
 					$('#tgl_terima').val(tgl_terima);
 				}
@@ -306,7 +393,7 @@ role="dialog" tabindex="-1">
 		form_data.append("no_urut_L", $('#no_urut_L').val());
 		form_data.append("no_urut", $('#no_urut').val());
 		form_data.append("no_surat", $('#no_surat').val());
-		form_data.append("id_bidang", $('#id_bidang').val());
+		form_data.append("asal_surat", $('#asal_surat').val());
 		form_data.append("perihal", $('textarea#perihal').val());
 		form_data.append("tgl_terima", $('#tgl_terima').val());
 		$.ajax({
@@ -389,7 +476,7 @@ role="dialog" tabindex="-1">
 			oLanguage: {
 				sProcessing: "<div style='margin-top: -10px'>Processing...</div>",
 				sSearch: "Pencarian : ",
-				sSearchPlaceholder: "Nama Bidang",
+				sSearchPlaceholder: "",
 				sInfo: "Menampilkan _START_ hingga _END_ dari _TOTAL_ data",
 				sInfoEmpty: "Menampilkan 0 hingga 0 dari 0 data",
 				sEmptyTable: "Tidak ada data",
@@ -403,7 +490,7 @@ role="dialog" tabindex="-1">
 				searchPlaceholder: "Search..."
 			},
 			"columnDefs": [ {
-				"targets": [ 0, 2, 3 ],
+				"targets": [ 0, 2, 3, 4, 5 ],
 				"orderable": false,
 				"searchable": false
 			} ]
@@ -413,6 +500,13 @@ role="dialog" tabindex="-1">
 	$(document).ready(function(){
 
 		var table;
+		var nourut;
+		var panel_manipulation = $('#panel').html();
+
+		$('.modal_disposisi').on('click', function(){
+			$('#panel').html(panel_manipulation);
+			$('#nosurat_disposisi').val($('#info').val());
+		});
 
 		//Active Menu
 		$('#surat').addClass('active open');
@@ -420,14 +514,12 @@ role="dialog" tabindex="-1">
 
 		dataTable();
 
-		$("#tgl_terima").keypress(function(event) {
+		$("#tgl_terima, #tgl_disposisi").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_terima').datepicker({
-			format: 'dd-mm-yyyy',
-			autoclose: true,
-
+		$('#tgl_terima, #tgl_disposisi').datetimepicker({		
+			format: "DD-MM-YYYY",
 		});
 
 		$('.tambah').on('click', function(){
@@ -435,8 +527,13 @@ role="dialog" tabindex="-1">
 			$('#judul').html('Tambah');
 			$('small#er').html('');
 			$('input').val('');
+			$('textarea').val('');
 			$('select').val('');
-		})
+		});
+
+		$('.add_disposisi').click(function(){
+			$('#panel').append($('#add_panel').html());
+		});
 	});
 </script>
 <!-- END SCRIPT -->
