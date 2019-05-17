@@ -28,28 +28,28 @@
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Keluar</span>
 				</a>
 			</li>
-			<li class="site-menu-item">
-				<li class="site-menu-item has-sub" id="disposisi">
-					<a href="javascript:void(0)">
-						<span class="site-menu-title"><i class="fa fa-mail-forward" aria-hidden="true"></i>&ensp;Disposisi</span></span>
-						<span class="site-menu-arrow"></span>
-					</a>
-					<ul class="site-menu-sub">
-						<li class="site-menu-item" id="dis_surat">
-							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/surat_masuk">
-								<span class="site-menu-title">Surat Masuk</span>
-							</a>
-						</li>
-						<li class="site-menu-item" id="dis_undangan">
-							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/undangan">
-								<span class="site-menu-title">Undangan Masuk</span>
-							</a>
-						</li>
-					</ul>
-				</li>
+		</ul>
+	</li>	
+	<li class="site-menu-item has-sub" id="disposisi">
+		<a href="javascript:void(0)">
+			<i class="site-menu-icon fa fa-mail-forward" aria-hidden="true"></i>
+			<span class="site-menu-title">Disposisi</span>
+			<span class="site-menu-arrow"></span>
+		</a>
+		<ul class="site-menu-sub">
+			<li class="site-menu-item" id="dis_surat">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/surat_masuk">
+					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Masuk</span>
+				</a>
+			</li>
+			<li class="site-menu-item" id="dis_undangan">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/undangan">
+					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Undangan Masuk</span>
+				</a>
 			</li>
 		</ul>
-	</li><li class="site-menu-item has-sub" id="data_master">
+	</li>
+	<li class="site-menu-item has-sub" id="data_master">
 		<a href="javascript:void(0)">
 			<i class="site-menu-icon fa fa-gear" aria-hidden="true"></i>
 			<span class="site-menu-title">Data Master</span>

@@ -25,7 +25,7 @@
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
-							<th>No. Surat</th>
+							<th>Nomor Surat</th>
 							<th>Asal Surat</th>
 							<th>Tanggal Terima</th>
 							<th width="70px" style="text-align:center;">Disposisi</th>
@@ -58,7 +58,7 @@ role="dialog" tabindex="-1">
 			<div class="modal-body">
 				<input type="hidden" id="no_urut_L">
 				<div class="form-group row">
-					<label class="col-sm-4 form-label">No. Urut<span required="">*</span></label>
+					<label class="col-sm-4 form-label">Nomor Urut<span required="">*</span></label>
 					<div class="col-sm-8 data_input">
 						<?php echo form_input('no_urut', '', ["class" => "form-control", 'id' => 'no_urut']); ?>
 						<small id=er>Validasi View</small>
@@ -120,7 +120,7 @@ role="dialog" tabindex="-1">
 				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
 						<tr>
-							<th style="width:150px">No. Surat</th>
+							<th style="width:150px">Nomor Surat</th>
 							<th style="width:150px">Asal Surat</th>
 							<th style="width:100px">Tanggal Terima</th>
 							<th>Perihal</th>
@@ -164,12 +164,12 @@ role="dialog" tabindex="-1">
 				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<tbody>
 						<tr>
-							<td align="right" style="width: 118px">No Urut</td>
+							<td align="right" style="width: 118px">Nomor Urut</td>
 							<td align="center" style="width: 5px">:</td>
 							<td id="info_nourut"></td>
 						</tr>
 						<tr>
-							<td align="right">No Surat</td>
+							<td align="right">Nomor Surat</td>
 							<td align="center">:</td>
 							<td id="info_nosurat"></td>
 						</tr>
@@ -505,6 +505,7 @@ role="dialog" tabindex="-1">
 		$('.modal_disposisi').on('click', function(){
 			$('#panel').html(panel_manipulation);
 			$('#nosurat_disposisi').val($('#info').val());
+			$('#tgl_disposisi').attr('autocomplete', 'off');
 		});
 
 		//Active Menu

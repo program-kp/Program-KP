@@ -323,8 +323,8 @@ role="dialog" tabindex="-1">
 
 	function simpan()
 	{
-		// $(".simpan").html("Processing...");
-		// $('.simpan').attr('disabled','disabled');
+		$(".simpan").html("Processing...");
+		$('.simpan').attr('disabled','disabled');
 
 		var form_data = new FormData(); 
 		form_data.append("no_urut_L", $('#no_urut_L').val());

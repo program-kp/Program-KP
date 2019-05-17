@@ -33,11 +33,150 @@ class Disposisi extends CI_Controller {
 
 	}
 
+	function getdata($id_bidang = null)
+	{
+		echo "<pre>";
+		print_r ($this->disposisi->get_data($id_bidang));
+		echo "</pre>";
+	}
+
 	function datainput()
 	{
 		echo "<pre>";
 		print_r ($this->input->post());
 		echo "</pre>";
+	}
+
+	function datahapus($kode_disposisi)
+	{
+		$cek = $this->disposisi->cek_kode($kode_disposisi);
+		if ($cek) {
+			$this->disposisi->delete($kode_disposisi);
+
+			$validasi = [
+				'hasil' => 'berhasil',
+				'type' => 'success',
+				'icon' => 'fa fa-check',
+				'title' => 'Berhasil',
+				'message' => 'Data <b>Berhasil</b> dihapus.'
+			];
+		} else {
+			$validasi = [
+				'hasil' => 'gagal',
+				'type' => 'danger',
+				'icon' => 'fa fa-ban',
+				'title' => 'Gagal',
+				'message' => 'Data tidak Tersedia.'
+			];
+		}
+		echo json_encode($validasi);
+	}
+
+	function dataedit($kode_disposisi)
+	{
+		$cek = $this->disposisi->cek_kode($kode_disposisi);
+		if ($cek) {
+			$data['hasil'] = 'berhasil';
+			$data = $this->disposisi->get_data_byID($kode_disposisi);
+			echo json_encode($data);
+
+		} else {
+			$validasi = [
+				'hasil' => 'error',
+				'type' => 'danger',
+				'icon' => 'fa fa-ban',
+				'title' => 'Gagal',
+				'message' => 'Terdapat Kesalahan pada Data yang ingin diedit.'
+			];
+			echo json_encode($validasi);
+		}
+	}
+
+	function edit()
+	{
+		$this->load->library('form_validation');
+		// Set Rule
+		$this->form_validation->set_rules('tgl_disposisi', 'Tanggal Disposisi', 'required|trim');
+		$this->form_validation->set_rules('tujuan_surat', 'Tanggal Disposisi', 'required|trim');
+
+		$kode_disposisi = $this->input->post('kode_disposisi', TRUE);
+
+		if ($this->form_validation->run() == FALSE) {
+
+			$validasi = [
+				'status' => 'validasi',
+				'tgl_disposisi' => form_error('tgl_disposisi'),
+				'tujuan_surat' => form_error('tujuan_surat'),
+			];
+
+			echo json_encode($validasi);
+
+		} else {
+
+			$no_urut = $this->input->post('no_urut', TRUE);
+			$tgl_disposisi = $this->input->post('tgl_disposisi', TRUE);
+			$tujuan_surat = $this->input->post('tujuan_surat', TRUE);
+
+			$cek = $this->disposisi->cek_kode($kode_disposisi);
+			if ($cek) {
+
+				$data = $this->disposisi->get_data_byID($kode_disposisi);
+
+				if ($tujuan_surat == $data->tujuan_surat) {
+
+					$data = [
+						"tgl_disposisi" => date('Y-m-d', strtotime($tgl_disposisi)),
+					];
+
+					$this->disposisi->update($kode_disposisi, $data);
+
+					$validasi = [
+						'type' => 'success',
+						'icon' => 'fa fa-check',
+						'title' => 'Berhasil',
+						'message' => 'Data dengan Nomor Surat <b>'.$this->input->post('no_surat_E', TRUE).'</b> berhasil diedit.'
+					];
+
+				} else {
+
+					$data = [
+						"tgl_disposisi" => date('Y-m-d', strtotime($tgl_disposisi)),
+						"tujuan_surat" => $tujuan_surat,
+					];
+
+					if ($this->disposisi->cek($tujuan_surat, '', $no_urut)) {
+
+						$validasi = [
+							'type' => 'danger',
+							'icon' => 'fa fa-ban',
+							'title' => 'Gagal',
+							'message' => 'Data gagal dirubah karena sudah terdapat disposisi dengan tujuan yang sama.'
+						];
+
+					} else {
+
+						$this->disposisi->update($kode_disposisi, $data);
+
+						$validasi = [
+							'type' => 'success',
+							'icon' => 'fa fa-check',
+							'title' => 'Berhasil',
+							'message' => 'Data dengan Nomor Surat <b>'.$this->input->post('no_surat_E', TRUE).'</b> berhasil diedit.'
+						];
+					}
+				}
+			} else {
+
+				$validasi = [
+					'type' => 'danger',
+					'icon' => 'fa fa-ban',
+					'title' => 'Gagal',
+					'message' => 'Terdapat kesalahan pada Inputan Anda'
+				];
+			}
+
+			echo json_encode($validasi);
+		}
 	}
 
 	// SURAT MASUK
@@ -123,21 +262,21 @@ class Disposisi extends CI_Controller {
 
 	function view_data_surat($id_bidang = null)
 	{
-		$list = $this->disposisi->get_data($id_bidang);
+		$list = $this->disposisi->get_data_surat($id_bidang);
 		$data = array();
 		$no = 1;
 		foreach ($list as $disposisi) {
 			$row = array();
 
-			$tgl_terima = date('d-m-Y', strtotime($disposisi->tgl_terima));
+			$tgl_disposisi = date('d-m-Y', strtotime($disposisi->tgl_disposisi));
 
 			$row[] = "<div align='center'>".$no++."</div>";
-			$row[] = $disposisi->no_surat;
-			$row[] = $tgl_terima;
+			$row[] = "<a href='javascript:void(0)' onclick='info(".$no.")' name='info' id='info".$no."' data-value='".$disposisi->no_urut."'>".$disposisi->no_surat."</a>";
+			$row[] = $tgl_disposisi;
 			$row[] = $disposisi->nama_bidang;
 
 
-			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$disposisi->kode_disposisi."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$disposisi->kode_disposisi."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$disposisi->kode_disposisi."' data-nosurat='".$disposisi->no_surat."' data-tgl_terima='".$tgl_terima."' data-bidang='".$disposisi->nama_bidang."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$disposisi->kode_disposisi."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$disposisi->kode_disposisi."' data-nosurat='".$disposisi->no_surat."' data-tgl='".$tgl_disposisi."' data-tujuan='".$disposisi->nama_bidang."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}
@@ -209,6 +348,34 @@ class Disposisi extends CI_Controller {
 
 			echo json_encode($validasi);
 		}
+	}
+
+	function view_data_undangan($id_bidang = null)
+	{
+		$list = $this->disposisi->get_data_undangan($id_bidang);
+		$data = array();
+		$no = 1;
+		foreach ($list as $disposisi) {
+			$row = array();
+
+			$tgl_disposisi = date('d-m-Y', strtotime($disposisi->tgl_disposisi));
+
+			$row[] = "<div align='center'>".$no++."</div>";
+			$row[] = "<a href='javascript:void(0)' onclick='info(".$no.")' name='info' id='info".$no."' data-value='".$disposisi->no_urut."'>".$disposisi->no_surat."</a>";
+			$row[] = $tgl_disposisi;
+			$row[] = $disposisi->nama_bidang;
+
+
+			$row[] = "<div align='center'><button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$disposisi->kode_disposisi."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$disposisi->kode_disposisi."' data-nosurat='".$disposisi->no_surat."' data-tgl='".$tgl_disposisi."' data-tujuan='".$disposisi->nama_bidang."' onClick='confirm(".$no.")'>Hapus</button></div>";
+
+			$data[] = $row;
+		}
+
+		$output = [
+			"data" => $data,
+		];
+
+		echo json_encode($output);
 	}
 	// END UNDANGAN
 

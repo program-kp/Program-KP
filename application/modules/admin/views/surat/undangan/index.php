@@ -155,7 +155,7 @@ role="dialog" tabindex="-1">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Info</span> Surat Masuk</h4>
+				<h4 class="modal-title"><span id=judul>Info</span> Undangan Masuk</h4>
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="info">
