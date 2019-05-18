@@ -87,6 +87,7 @@ class Undangan extends CI_Controller {
 		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
 		$this->form_validation->set_rules('waktu_undangan', 'Waktu Undangan', 'required|trim');
 		$this->form_validation->set_rules('tempat_undangan', 'Tempat Undangan', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('uraian', 'Tempat Undangan', 'required|trim');
 		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
 
 		$no_urut_L = $this->input->post('no_urut_L', TRUE);
@@ -100,6 +101,7 @@ class Undangan extends CI_Controller {
 				'no_surat' => form_error('no_surat'),
 				'waktu_undangan' => form_error('waktu_undangan'),
 				'tempat_undangan' => form_error('tempat_undangan'),
+				'uraian' => form_error('uraian'),
 				'tgl_terima' => form_error('tgl_terima'),
 			];
 
@@ -112,6 +114,7 @@ class Undangan extends CI_Controller {
 				"no_surat" => $this->input->post('no_surat', TRUE),
 				"waktu_undangan" => date('Y-m-d H:i', strtotime($this->input->post('waktu_undangan', TRUE))),
 				"tempat_undangan" => $this->input->post('tempat_undangan', TRUE),
+				"uraian" => $this->input->post('uraian', TRUE),
 				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
 			];
 

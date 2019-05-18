@@ -72,12 +72,16 @@ class Disposisi extends CI_Controller {
 		echo json_encode($validasi);
 	}
 
-	function dataedit($kode_disposisi)
+	function dataedit($tipe, $kode_disposisi)
 	{
 		$cek = $this->disposisi->cek_kode($kode_disposisi);
 		if ($cek) {
 			$data['hasil'] = 'berhasil';
-			$data = $this->disposisi->get_data_byID($kode_disposisi);
+			if ($tipe == 's') {
+				$data = $this->disposisi->get_data_byID_surat($kode_disposisi);
+			} else if ($tipe == 'u') {
+				$data = $this->disposisi->get_data_byID_undangan($kode_disposisi);
+			}
 			echo json_encode($data);
 
 		} else {

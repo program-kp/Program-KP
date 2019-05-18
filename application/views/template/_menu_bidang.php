@@ -41,7 +41,7 @@
 <script>
 	$(document).ready(function(){
 		$('#logout').on('click', function(){
-			$('#modal').modal('show');
+			$('#modal_logout').modal('show');
 		})
 	});
 	

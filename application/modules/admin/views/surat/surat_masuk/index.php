@@ -19,7 +19,8 @@
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Surat Masuk</button><hr>
+				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Surat Masuk</button>
+				<button type="button" class="btn btn-primary btn-sm cetak" data-toggle="modal" data-target="#modal_cetak">Cetak Surat Keluar</button><hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
@@ -42,6 +43,36 @@
 	</div>
 	<!-- End Page-Content -->
 </div>
+
+<!-- Modal -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_cetak" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title">Cetak Surat Masuk</h4>
+		</div>
+		<div class="modal-body">
+			<div class="form-group row text-center">
+				<div class="col-sm-5 data_input">
+					<?php echo form_input('tgl_mulai', '', ["class" => "form-control", 'id' => 'tgl_mulai', 'autocomplate' => 'off']); ?>
+				</div>&nbsp;-&nbsp;
+				<div class="col-sm-5 data_input float-right">
+					<?php echo form_input('tgl_akhir', '', ["class" => "form-control", 'id' => 'tgl_akhir', 'autocomplate' => 'off']); ?>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="cetak()">Simpan</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
 
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"

@@ -21,7 +21,7 @@ class Referensi_bidang extends CI_Controller {
 
 	function cekInput($string)
 	{
-		$regex = '/[-!$%^&*()_+|~=`{}\[\]:";<>?,.\/]/';
+		$regex = '/[-!$%^&*()_+|~=`{}\[\]:";<>?\/]/';
 		
 		if (preg_match($regex, $string, $match)) {
 			$this->form_validation->set_message('cekInput', 'Terdapat karakter yang tidak diperbolehkan.');
@@ -168,7 +168,7 @@ class Referensi_bidang extends CI_Controller {
 
 
 			$row[] = "
-			<div align='center'><button class='btn btn-sm btn-info edit' name='edit' id='edit".$no."' data-value='".$bidang->id_bidang."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$bidang->id_bidang."' data-nama='".$bidang->nama_bidang."' data-kabid='".$bidang->nama_kabid."' data-jumlah='".$jumlah->jumlah_data."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			<div align='center'><button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$bidang->id_bidang."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$bidang->id_bidang."' data-nama='".$bidang->nama_bidang."' data-kabid='".$bidang->nama_kabid."' data-jumlah='".$jumlah->jumlah_data."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

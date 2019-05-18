@@ -8,7 +8,7 @@
 	</footer>
 
 <!-- Modal -->
-<div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+<div class="modal fade modal-fade-in-scale-up" id="modal_logout" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center modal-sm">
     <div class="modal-content">

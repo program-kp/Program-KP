@@ -85,6 +85,13 @@ role="dialog" tabindex="-1">
 				</div>
 			</div>
 			<div class="form-group row">
+				<label class="col-sm-4 form-label">Uraian<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<textarea name="" id="uraian" rows="3" class="form-control"></textarea>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
 				<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
 				<div class="col-sm-8 data_input">
 					<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
@@ -175,6 +182,11 @@ role="dialog" tabindex="-1">
 						<td align="right">Waktu Undangan</td>
 						<td align="center">:</td>
 						<td id="info_waktuundangan"></td>
+					</tr>
+					<tr>
+						<td align="right">Uraian</td>
+						<td align="center">:</td>
+						<td id="info_uraian"></td>
 					</tr>
 					<tr>
 						<td align="right">Tanggal Terima</td>
@@ -336,6 +348,7 @@ role="dialog" tabindex="-1">
 					$('#info_nosurat').html(data.no_surat);
 					$('#info_waktuundangan').html(waktu_undangan);
 					$('#info_tempatundangan').html(data.tempat_undangan);
+					$('#info_uraian').html(data.uraian);
 					$('#info_tglterima').html(tgl_terima);
 				}
 			}
@@ -370,6 +383,7 @@ role="dialog" tabindex="-1">
 					$('#no_surat').val(data.no_surat);
 					$('#waktu_undangan').val(waktu_undangan);
 					$('#tempat_undangan').val(data.tempat_undangan);
+					$('#uraian').val(data.uraian);
 					$('#tgl_terima').val(tgl_terima);
 				}
 			}
@@ -387,6 +401,7 @@ role="dialog" tabindex="-1">
 		form_data.append("no_surat", $('#no_surat').val());
 		form_data.append("waktu_undangan", $('#waktu_undangan').val());
 		form_data.append("tempat_undangan", $('#tempat_undangan').val());
+		form_data.append("uraian", $('#uraian').val());
 		form_data.append("tgl_terima", $('#tgl_terima').val());
 		$.ajax({
 			url : "<?php echo base_url()?>admin/undangan/datainput",
@@ -524,6 +539,7 @@ role="dialog" tabindex="-1">
 			$('small#er').html('');
 			$('input').val('');
 			$('select').val('');
+			$('textarea').val('');
 		});
 
 

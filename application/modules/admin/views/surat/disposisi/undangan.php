@@ -264,7 +264,7 @@ role="dialog" tabindex="-1">
 		success();
 		var kode_disposisi = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/disposisi/dataedit/"+kode_disposisi,
+			url : "<?php echo base_url()?>admin/disposisi/dataedit/u/"+kode_disposisi,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){

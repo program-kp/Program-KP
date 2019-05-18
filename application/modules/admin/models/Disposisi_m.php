@@ -44,6 +44,19 @@ class Disposisi_m extends CI_Model {
 		return $query->result();
 	}
 
+	function get_data_undangan_dash($nourut = null)
+	{
+		$this->db->select('tbl_surat_undangan.no_surat, tbl_surat_undangan.no_urut, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi, tbl_disposisi.tgl_disposisi');
+		$this->db->from('tbl_disposisi');
+		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
+		$this->db->join('tbl_surat_undangan','tbl_disposisi.no_urut_undangan = tbl_surat_undangan.no_urut');
+		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
+		$this->db->where('tbl_disposisi.no_urut_undangan', $nourut);
+		$this->db->where('tbl_disposisi.tipe_surat', 'Undangan');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	function get_data_surat($id_bidang = null)
 	{
 		$this->db->select('tbl_surat_masuk.no_surat, tbl_surat_masuk.no_urut, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi, tbl_disposisi.tgl_disposisi');
@@ -59,13 +72,37 @@ class Disposisi_m extends CI_Model {
 		return $query->result();
 	}
 
-	function get_data_byID($kode_disposisi)
+	function get_data_surat_dash($nourut = null)
+	{
+		$this->db->select('tbl_surat_masuk.no_surat, tbl_surat_masuk.no_urut, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi, tbl_disposisi.tgl_disposisi');
+		$this->db->from('tbl_disposisi');
+		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
+		$this->db->join('tbl_surat_masuk','tbl_disposisi.no_urut_surat = tbl_surat_masuk.no_urut');
+		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
+		$this->db->where('tbl_disposisi.no_urut_surat', $nourut);
+		$this->db->where('tbl_disposisi.tipe_surat', 'Surat Masuk');
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function get_data_byID_undangan($kode_disposisi)
 	{
 		$this->db->select('tbl_disposisi.*, tbl_surat_undangan.no_surat');
 		$this->db->from('tbl_disposisi');
 		$this->db->join('tbl_surat_undangan','tbl_disposisi.no_urut_undangan = tbl_surat_undangan.no_urut');
 		$this->db->where('tbl_disposisi.kode_disposisi', $kode_disposisi);
 		$this->db->where('tbl_disposisi.tipe_surat', 'Undangan');
+		$query = $this->db->get();
+		return $query->row();
+	}
+
+	function get_data_byID_surat($kode_disposisi)
+	{
+		$this->db->select('tbl_disposisi.*, tbl_surat_masuk.no_surat');
+		$this->db->from('tbl_disposisi');
+		$this->db->join('tbl_surat_masuk','tbl_disposisi.no_urut_surat = tbl_surat_masuk.no_urut');
+		$this->db->where('tbl_disposisi.kode_disposisi', $kode_disposisi);
+		$this->db->where('tbl_disposisi.tipe_surat', 'Surat Masuk');
 		$query = $this->db->get();
 		return $query->row();
 	}
