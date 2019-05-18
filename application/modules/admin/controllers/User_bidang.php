@@ -39,6 +39,43 @@ class User_bidang extends CI_Controller {
 		}
 	}
 
+	function reset_pass($username)
+	{
+		$cek = $this->user->cek($username);
+		if ($cek) {
+
+			$data_user = $this->user->get_data_byID($username);
+
+			$pass_md5 = md5($username);
+			$data = [
+				"password" => $pass_md5,
+				"tpass_user" => $username."_".$pass_md5,
+			];
+
+			$this->user->update($username, $data);
+
+			$validasi = [
+				'hasil' => 'berhasil',
+				'type' => 'success',
+				'icon' => 'fa fa-check',
+				'title' => 'Berhasil',
+				'message' => 'Password User Bidang <b>'.$data_user->nama_bidang.'</b> Berhasil direset.',
+			];
+
+		} else {
+
+			$validasi = [
+				'hasil' => 'error',
+				'type' => 'danger',
+				'icon' => 'fa fa-ban',
+				'title' => 'Gagal',
+				'message' => 'Terdapat Kesalahan pada Data yang ingin direset.'
+			];
+		}
+
+		echo json_encode($validasi);
+	}
+
 	function dataedit($username)
 	{
 		$cek = $this->user->cek($username);
@@ -199,7 +236,7 @@ class User_bidang extends CI_Controller {
 			$row[] = $user->username;
 
 			$row[] = "
-			<div align='center'><button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$user->username."' data-nama='".$user->nama_bidang."' data-user='".$user->username."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			<div align='center'><button class='btn btn-sm btn-secondary reset' name='reset' id='reset".$no."'  data-value='".$user->username."' data-nama='".$user->nama_bidang."' data-user='".$user->username."' onClick='confirm_reset(".$no.")'>Reset Password</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$user->username."' data-nama='".$user->nama_bidang."' data-user='".$user->username."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

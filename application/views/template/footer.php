@@ -6,6 +6,29 @@
 			Crafted with <i class="red-600 icon md-favorite"></i> by <a href="#">Bootstrap Themes</a>
 		</div>
 	</footer>
+
+<!-- Modal -->
+<div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center modal-sm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Logout</h4>
+        </div>
+        <div class="modal-body">
+            <div id="konfirmasi">Anda yakin untuk keluar dari aplikasi ini ?</div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tidak</button>
+            <button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="logout()">Ya</button>
+        </div>
+    </div>
+</div>
+</div>
+<!-- End Modal -->
 	<!-- Core  -->
     <script src="<?php echo base_url() ?>assets/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
     <script src="<?php echo base_url() ?>assets/global/vendor/popper-js/umd/popper.min.js"></script>

@@ -29,7 +29,7 @@
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nama Bidang</th>
 							<th>Username</th>
-							<th width="150px" style="text-align:center;">Aksi</th>
+							<th width="200px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -49,52 +49,50 @@
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> User Bidang</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="username_L">
-				<input type="hidden" id="id_bidang_edit">
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Nama Bidang<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_dropdown('id_bidang', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'id_bidang']); ?>
-						<small id=er>Validasi View</small>
-						<?php echo form_input('nama_bidang', '', ["class" => "form-control edit_data d-none", 'id' => 'nama_bidang']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Username<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_input('username', '', ["class" => "form-control", 'id' => 'username']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Password<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_password('password', '', ["class" => "form-control", 'id' => 'password']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-4 form-label">Konfirmasi Password<span required="">*</span></label>
-					<div class="col-sm-8">
-						<?php echo form_password('c_password', '', ["class" => "form-control", 'id' => 'c_password']); ?>
-						<small id=er>Validasi View</small>
-					</div>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Tambah</span> User Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="username_L">
+			<input type="hidden" id="id_bidang_edit">
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Nama Bidang<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_dropdown('id_bidang', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'id_bidang']); ?>
+					<small id=er>Validasi View</small>
+					<?php echo form_input('nama_bidang', '', ["class" => "form-control edit_data d-none", 'id' => 'nama_bidang']); ?>
+					<small id=er>Validasi View</small>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Username<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_input('username', '', ["class" => "form-control", 'id' => 'username']); ?>
+					<small id=er>Validasi View</small>
+				</div>
 			</div>
-		</form>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Password<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_password('password', '', ["class" => "form-control", 'id' => 'password']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Konfirmasi Password<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_password('c_password', '', ["class" => "form-control", 'id' => 'c_password']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -105,36 +103,72 @@ role="dialog" tabindex="-1">
 role="dialog" tabindex="-1">
 <div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
-		<form action="#" id="form">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> User Bidang</h4>
-			</div>
-			<div class="modal-body">
-				<input type="hidden" id="id">
-				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
-					<thead>
-						<tr>
-							<th>Nama Bidang</th>
-							<th>Username</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td id="nama"></td>
-							<td id="user"></td>
-						</tr>
-					</tbody>
-				</table>
-				<div id="konfirmasi">Yakin Ingin hapus data ?</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-				<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
-			</div>
-		</form>
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Hapus</span> User Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th>Nama Bidang</th>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="nama"></td>
+						<td id="user"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi">Yakin Ingin hapus data ?</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="hapus()">Hapus</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
+
+<!-- Modal Reset -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_reset" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title">Reset Password User Bidang</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id_reset">
+			<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+				<thead>
+					<tr>
+						<th>Nama Bidang</th>
+						<th>Username</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td id="reset_nama"></td>
+						<td id="reset_user"></td>
+					</tr>
+				</tbody>
+			</table>
+			<div id="konfirmasi">Password baru sama dengan Username. Yakin Ingin reset password ?</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="reset()">Hapus</button>
+		</div>
 	</div>
 </div>
 </div>
@@ -145,6 +179,33 @@ role="dialog" tabindex="-1">
 
 <!-- SCRIPT -->
 <script>
+
+	function confirm_reset(no)
+	{
+		$('#id_reset').val($('#reset'+no).data().value);
+		$('#reset_nama').html($('#reset'+no).data().nama);
+		$('#reset_user').html($('#reset'+no).data().user);
+		$('#modal_reset').modal('show');
+	}
+
+	function reset()
+	{
+		var id_reset = $('#id_reset').val();
+		
+		$.ajax({
+			url : "<?php echo base_url()?>admin/user_bidang/reset_pass/"+id_reset,
+			type : 'POST',
+			dataType:'json',
+			success: function(data) {
+				// console.log(data);
+				if (data.hasil == "berhasil") {
+					table.ajax.reload( null, false );
+				}				
+				success();
+				notify(data.title, data.message, data.icon, data.type);	
+			}
+		});
+	}
 
 	function confirm(no)
 	{
@@ -226,7 +287,6 @@ role="dialog" tabindex="-1">
 			dataType:'json',
 			data : form_data,
 			success: function(data){
-				console.log(data);
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
 						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);

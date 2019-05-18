@@ -28,28 +28,28 @@
 					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Keluar</span>
 				</a>
 			</li>
-			<li class="site-menu-item">
-				<li class="site-menu-item has-sub" id="disposisi">
-					<a href="javascript:void(0)">
-						<span class="site-menu-title"><i class="fa fa-mail-forward" aria-hidden="true"></i>&ensp;Disposisi</span></span>
-						<span class="site-menu-arrow"></span>
-					</a>
-					<ul class="site-menu-sub">
-						<li class="site-menu-item" id="dis_surat">
-							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/surat_masuk">
-								<span class="site-menu-title">Surat Masuk</span>
-							</a>
-						</li>
-						<li class="site-menu-item" id="dis_undangan">
-							<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/undangan">
-								<span class="site-menu-title">Undangan Masuk</span>
-							</a>
-						</li>
-					</ul>
-				</li>
+		</ul>
+	</li>	
+	<li class="site-menu-item has-sub" id="disposisi">
+		<a href="javascript:void(0)">
+			<i class="site-menu-icon fa fa-mail-forward" aria-hidden="true"></i>
+			<span class="site-menu-title">Disposisi</span>
+			<span class="site-menu-arrow"></span>
+		</a>
+		<ul class="site-menu-sub">
+			<li class="site-menu-item" id="dis_surat">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/surat_masuk">
+					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Surat Masuk</span>
+				</a>
+			</li>
+			<li class="site-menu-item" id="dis_undangan">
+				<a class="animsition-link" href="<?php echo base_url()?>admin/disposisi/undangan">
+					<span class="site-menu-title"><i class="fa fa-envelope-o" aria-hidden="true"></i>&ensp;Undangan Masuk</span>
+				</a>
 			</li>
 		</ul>
-	</li><li class="site-menu-item has-sub" id="data_master">
+	</li>
+	<li class="site-menu-item has-sub" id="data_master">
 		<a href="javascript:void(0)">
 			<i class="site-menu-icon fa fa-gear" aria-hidden="true"></i>
 			<span class="site-menu-title">Data Master</span>
@@ -58,7 +58,7 @@
 		<ul class="site-menu-sub">
 			<li class="site-menu-item" id="referensi_bidang">
 				<a class="animsition-link" href="<?php echo base_url()?>admin/master/referensi_bidang">
-					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Referensi Bidang</span>
+					<span class="site-menu-title"><i class="fa fa-share-alt" aria-hidden="true"></i>&ensp;Data Referensi</span>
 				</a>
 			</li>
 			<li class="site-menu-item" id="user_bidang">
@@ -69,7 +69,7 @@
 		</ul>
 	</li>
 	<li class="site-menu-item">
-		<a class="animsition-link" href="javascript:logout()">
+		<a class="animsition-link" id="logout">
 			<i class="site-menu-icon fa fa-sign-out" aria-hidden="true"></i>
 			<span class="site-menu-title">Logout</span>
 		</a>
@@ -77,40 +77,15 @@
 </ul>
 
 <script>
+	$(document).ready(function(){
+		$('#logout').on('click', function(){
+			$('#modal').modal('show');
+		})
+	});
+	
 	function logout()
 	{
-		bootbox.confirm({
-			// size: "small",
-			centerVertical: true,
-			message: "Anda yakin untuk keluar dari aplikasi ini ?",
-			buttons: {
-				confirm: {
-					label: 'Ya',
-					className: 'btn-danger',
-				},
-				cancel: {
-					label: 'Tidak',
-					className: 'btn-default',
-
-				}
-			},
-			callback: function (result) {
-				if (result==true) {
-					window.location = "<?php echo base_url() ?>login/logout";
-				}
-			}
-		}).find('.modal-dialog').css({
-			'width' : '450px'
-		}).find('.modal-content').css({
-			'font-size': '20px',
-			'margin-top': function (){
-				var w = $( window ).height();
-				var b = $(".modal-dialog").height();
-        		// should not be (w-h)/2
-        		var h = (w-b)/3;
-        		return h+"px";
-        	}
-        });
+		window.location = "<?php echo base_url() ?>login/logout";
 	}
 </script>
 

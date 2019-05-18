@@ -25,7 +25,6 @@ class User_bidang_m extends CI_Model {
 		$this->db->from('tbl_user');
 		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_user.id_bidang');
 		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
-		// $this->db->where('tbl_user.id_bidang', $id_kel);
 		$query = $this->db->get();
 		return $query->result();
 	}

@@ -12,7 +12,7 @@
 	<title>Login | SMSK&D DKP-3</title>
 
 	<link rel="apple-touch-icon" href="<?php echo base_url() ?>assets/images/apple-touch-icon.png">
-	<link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/favicon.ico">
+    <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/logo-dkp3.png">
 
 	<!-- Stylesheets -->
 	<link rel="stylesheet" href="<?php echo base_url() ?>assets/global/css/bootstrap.min.css">

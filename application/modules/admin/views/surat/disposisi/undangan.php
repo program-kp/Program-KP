@@ -24,9 +24,6 @@
 					<div class="col-sm-4">
 						<?php echo form_dropdown('bidang_filter',$ar_bidang,'',['class'=>'form-control', 'id' => 'bidang_filter']);?>
 					</div>
-					<div class="col-sm-2">
-						<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Filter</button>
-					</div>
 				</div>
 				<hr>
 				<!-- <button id="notify">Tes</button> -->
@@ -35,7 +32,7 @@
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
 							<th>Nomor Surat</th>
-							<th>Tanggal Terima</th>
+							<th>Tanggal Disposisi</th>
 							<th>Bidang</th>
 							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
@@ -54,59 +51,37 @@
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center modal-lg">
+<div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
 		<form action="#" id="form">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Tambah</span> Surat Keluar</h4>
+				<h4 class="modal-title"><span id=judul>Tambah</span> Disposisi Undangan Masuk</h4>
 			</div>
 			<div class="modal-body">
-				<input type="hidden" id="no_urut_L">
+				<input type="hidden" id="kode_disposisi">
+				<input type="hidden" id="no_urut">
+				<input type="hidden" id="no_surat_E">
 				<div class="form-group row">
-					<label class="col-sm-2 form-label">No. Urut<span required="">*</span></label>
-					<div class="col-sm-4 data_input">
-						<?php echo form_input('no_urut', '', ["class" => "form-control", 'id' => 'no_urut']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-					<label class="col-sm-2 form-label">Nomor Surat<span required="">*</span></label>
-					<div class="col-sm-4 data_input">
-						<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat']); ?>
+					<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
+					<div class="col-sm-8 data_input">
+						<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat', 'disabled' => 'disabled']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 form-label">Tanggal Surat<span required="">*</span></label>
-					<div class="col-sm-4 data_input">
-						<?php echo form_input('tgl_surat', '', ["class" => "form-control", 'id' => 'tgl_surat']); ?>
-						<small id=er>Validasi View</small>
-					</div>
-					<label class="col-sm-2 form-label">Unit Pengolah<span required="">*</span></label>
-					<div class="col-sm-4 data_input">
-						<?php echo form_dropdown('unit_pengolah', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'unit_pengolah']); ?>
+					<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
+					<div class="col-sm-8 data_input">
+						<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-2 form-label">Perihal<span required="">*</span></label>
-					<div class="col-sm-10 data_input">
-						<textarea name="" id="perihal" rows="3" class="form-control"></textarea>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-2 form-label">Tujuan Surat<span required="">*</span></label>
-					<div class="col-sm-10 data_input">
-						<textarea name="" id="tujuan_surat" rows="3" class="form-control"></textarea>
-						<small id=er>Validasi View</small>
-					</div>
-				</div>
-				<div class="form-group row">
-					<label class="col-sm-2 form-label">Keterangan</label>
-					<div class="col-sm-10 data_input">
-						<textarea name="" id="keterangan" rows="3" class="form-control"></textarea>
+					<label class="col-sm-4 form-label">Tujuan Surat<span required="">*</span></label>
+					<div class="col-sm-8 data_input">
+						<?php echo form_dropdown('tujuan_surat', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'tujuan_surat']); ?>
 						<small id=er>Validasi View</small>
 					</div>
 				</div>
@@ -124,32 +99,30 @@ role="dialog" tabindex="-1">
 <!-- Modal Hapus -->
 <div class="modal fade modal-fade-in-scale-up" id="modal_hapus" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center modal-lg">
+<div class="modal-dialog modal-simple modal-center">
 	<div class="modal-content">
 		<form action="#" id="form">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Hapus</span> Surat Keluar</h4>
+				<h4 class="modal-title"><span id=judul>Hapus</span> Disposisi Surat Keluar</h4>
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="id">
 				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
 						<tr>
-							<th style="width:150px">No. Surat</th>
-							<th style="width:150px">Unit Pengolah</th>
-							<th style="width:100px">Tanggal Surat</th>
-							<th>Perihal</th>
+							<th style="width:150px">Nomor Surat</th>
+							<th style="width:150px">Tanggal Disposisi</th>
+							<th style="width:100px">Tujuan Surat</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr>
 							<td id="hapus_nosurat"></td>
-							<td id="hapus_unit"></td>
 							<td id="hapus_tgl"></td>
-							<td id="hapus_perihal"></td>
+							<td id="hapus_tujuan"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -175,7 +148,7 @@ role="dialog" tabindex="-1">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">×</span>
 				</button>
-				<h4 class="modal-title"><span id=judul>Info</span> Surat Keluar</h4>
+				<h4 class="modal-title"><span id=judul>Info</span> Undangan Masuk</h4>
 			</div>
 			<div class="modal-body">
 				<input type="hidden" id="info">
@@ -192,29 +165,19 @@ role="dialog" tabindex="-1">
 							<td id="info_nosurat"></td>
 						</tr>
 						<tr>
-							<td align="right">Unit Pengolah</td>
+							<td align="right">Tempat Undangan</td>
 							<td align="center">:</td>
-							<td id="info_unit"></td>
+							<td id="info_tempatundangan"></td>
 						</tr>
 						<tr>
-							<td align="right">Tanggal Surat</td>
+							<td align="right">Waktu Undangan</td>
 							<td align="center">:</td>
-							<td id="info_tgl"></td>
+							<td id="info_waktuundangan"></td>
 						</tr>
 						<tr>
-							<td align="right">Perihal</td>
+							<td align="right">Tanggal Terima</td>
 							<td align="center">:</td>
-							<td id="info_perihal"></td>
-						</tr>
-						<tr>
-							<td align="right">Tujuan</td>
-							<td align="center">:</td>
-							<td id="info_tujuan"></td>
-						</tr>
-						<tr>
-							<td align="right">Keterangan</td>
-							<td align="center">:</td>
-							<td id="info_ket"></td>
+							<td id="info_tglterima"></td>
 						</tr>
 					</tbody>
 				</table>
@@ -238,18 +201,17 @@ role="dialog" tabindex="-1">
 	{
 		$('#id').val($('#confirm'+no).data().value);
 		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
-		$('#hapus_unit').html($('#confirm'+no).data().unit);
 		$('#hapus_tgl').html($('#confirm'+no).data().tgl);
-		$('#hapus_perihal').html($('#confirm'+no).data().perihal);
+		$('#hapus_tujuan').html($('#confirm'+no).data().tujuan);
 		$('#modal_hapus').modal('show');
 	}
 
 	function hapus()
 	{
-		var no_urut = $('#id').val();
+		var nourut = $('#id').val();
 		
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/datahapus/"+no_urut,
+			url : "<?php echo base_url()?>admin/disposisi/datahapus/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data) {
@@ -258,6 +220,9 @@ role="dialog" tabindex="-1">
 					success();
 					notify(data.title, data.message, data.icon, data.type);
 					table.ajax.reload( null, false );
+				} else {
+					success();
+					notify(data.title, data.message, data.icon, data.type);
 				}
 			}
 		});
@@ -266,9 +231,9 @@ role="dialog" tabindex="-1">
 	function info(no)
 	{
 		success();
-		var no_urut = $('#info'+no).data().value;
+		var nourut = $('#info'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+no_urut,
+			url : "<?php echo base_url()?>admin/undangan/dataedit/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -278,18 +243,17 @@ role="dialog" tabindex="-1">
 					notify(data.title, data.message, data.icon, data.type);
 
 				} else {
-
 					$('#modal_info').modal('show');
 
-					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
+					waktu_undangan = "Jam <b>"+moment(new Date(data.waktu_undangan)).format('HH:mm')+"</b>, Tanggal <b>"+moment(new Date(data.waktu_undangan)).format('DD-MM-YYYY')+"</b>";
+					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
 
+					$('#info').val(data.no_urut);
 					$('#info_nourut').html(data.no_urut);
 					$('#info_nosurat').html(data.no_surat);
-					$('#info_unit').html(data.unit_pengolah);
-					$('#info_tgl').html(tgl_surat);
-					$('#info_perihal').html(data.perihal);
-					$('#info_tujuan').html(data.tujuan_surat);
-					$('#info_ket').html(data.keterangan);
+					$('#info_waktuundangan').html(waktu_undangan);
+					$('#info_tempatundangan').html(data.tempat_undangan);
+					$('#info_tglterima').html(tgl_terima);
 				}
 			}
 		});
@@ -298,9 +262,9 @@ role="dialog" tabindex="-1">
 	function edit(no)
 	{
 		success();
-		var no_urut = $('#edit'+no).data().value;
+		var kode_disposisi = $('#edit'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/dataedit/"+no_urut,
+			url : "<?php echo base_url()?>admin/disposisi/dataedit/"+kode_disposisi,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -315,16 +279,14 @@ role="dialog" tabindex="-1">
 					$('#modal').modal('show');
 					$('#judul').html('Edit');
 
-					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
+					tgl_disposisi = moment(new Date(data.tgl_disposisi)).format('DD-MM-YYYY');
 
-					$('#no_urut_L').val(data.no_urut);
+					$('#kode_disposisi').val(data.kode_disposisi);
 					$('#no_surat').val(data.no_surat);
-					$('#no_urut').val(data.no_urut);
-					$('#tgl_surat').val(tgl_surat);
-					$('#unit_pengolah').val(data.unit_pengolah);
-					$('#perihal').val(data.perihal);
+					$('#no_surat_E').val(data.no_surat);
+					$('#no_urut').val(data.no_urut_undangan);
+					$('#tgl_disposisi').val(tgl_disposisi);
 					$('#tujuan_surat').val(data.tujuan_surat);
-					$('#keterangan').val(data.keterangan);
 				}
 			}
 		});
@@ -332,20 +294,17 @@ role="dialog" tabindex="-1">
 
 	function simpan()
 	{
-		// $(".simpan").html("Processing...");
-		// $('.simpan').attr('disabled','disabled');
+		$(".simpan").html("Processing...");
+		$('.simpan').attr('disabled','disabled');
 
 		var form_data = new FormData(); 
-		form_data.append("no_urut_L", $('#no_urut_L').val());
-		form_data.append("no_urut", $('#no_urut').val());
-		form_data.append("no_surat", $('#no_surat').val());
-		form_data.append("tgl_surat", $('#tgl_surat').val());
-		form_data.append("unit_pengolah", $('#unit_pengolah').val());
-		form_data.append("perihal", $('#perihal').val());
+		form_data.append("kode_disposisi", $('#kode_disposisi').val());
+		form_data.append("tgl_disposisi", $('#tgl_disposisi').val());
 		form_data.append("tujuan_surat", $('#tujuan_surat').val());
-		form_data.append("keterangan", $('#keterangan').val());
+		form_data.append("no_surat_E", $('#no_surat_E').val());
+		form_data.append("no_urut", $('#no_urut').val());
 		$.ajax({
-			url : "<?php echo base_url()?>admin/surat_keluar/datainput",
+			url : "<?php echo base_url()?>admin/disposisi/edit",
 			type : 'POST',
 			processData: false,
 			contentType: false,
@@ -359,10 +318,18 @@ role="dialog" tabindex="-1">
 					});
 
 				} else {
+					var tujuan = $('#tujuan_surat').val();
 					success();
 					notify(data.title, data.message, data.icon, data.type);
 
-					table.ajax.reload( null, false );
+					if (tujuan==$('#bidang_filter').val())
+						table.ajax.reload( null, false );
+					else {
+						$('#tabel').dataTable().fnDestroy();
+						dataTable($('#tujuan_surat').val());
+
+						$('#bidang_filter').val(tujuan);
+					}
 				}
 				$('.simpan').html('Simpan');
 				$('.simpan').removeAttr('disabled');
@@ -376,7 +343,7 @@ role="dialog" tabindex="-1">
 		$('#judul').html('Tambah');
 		$('small#er').html('');
 		$('input').val('');
-		$('select').val('');
+		$('select#tujuan_surat').val('');
 	}
 
 	function notify(title, message, icon, type)
@@ -412,11 +379,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable()
+	function dataTable($bidang = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/disposisi/view_data_surat',
+				"url": '<?php echo base_url()?>admin/disposisi/view_data_undangan/'+$bidang,
 				"type": "POST",
 			},
 			responsive: true,
@@ -449,17 +416,16 @@ role="dialog" tabindex="-1">
 		var table;
 
 		//Active Menu
-		$('#surat').addClass('active open');
 		$('#disposisi').addClass('active open');
 		$('#dis_undangan').addClass('active hover');
 
-		dataTable();
+		dataTable('');
 
-		$("#tgl_surat").keypress(function(event) {
+		$("#tgl_disposisi").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_surat').datetAimepicker({		
+		$('#tgl_disposisi').datetimepicker({		
 			format: "DD-MM-YYYY",
 		});	
 
@@ -471,7 +437,12 @@ role="dialog" tabindex="-1">
 			$('input').val('');
 			$('select').val('');
 			$('textarea').val('');
-		})
+		});
+
+		$('#bidang_filter').on('change', function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#bidang_filter').val());
+		});
 	});
 </script>
 <!-- END SCRIPT -->
