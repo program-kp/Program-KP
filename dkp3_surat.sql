@@ -25,16 +25,17 @@ CREATE TABLE `tbl_bidang` (
   `nama_kabid` varchar(100) DEFAULT NULL,
   `status_user` char(1) DEFAULT '0',
   PRIMARY KEY (`id_bidang`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_bidang` */
 
 insert  into `tbl_bidang`(`id_bidang`,`nama_bidang`,`nama_kabid`,`status_user`) values 
-(1,'Pertanian dan Perkebunan',NULL,'1'),
-(27,'Penyuluhan',NULL,'1'),
-(63,'123','436341','0'),
-(65,'34242','2342342','0'),
-(66,'Kepala Dinas','qwerty','0');
+(1,'Perikanan','M. Aminudin Said, STP., MM','1'),
+(27,'Ketahanan Pangan','Ir. H. Nefo Djumantoro','1'),
+(65,'Pertanian dan Perkebunan','Muhlan, SP., MM','0'),
+(66,'Kepala Dinas','Siti Hamdah, SP., MT','0'),
+(67,'Peternakan','Ir. Madya Irawan Madu, MM','0'),
+(68,'Penyuluhan','Ir. Azidin Noor, M.AP','0');
 
 /*Table structure for table `tbl_disposisi` */
 
@@ -54,14 +55,21 @@ CREATE TABLE `tbl_disposisi` (
   CONSTRAINT `Bidang` FOREIGN KEY (`tujuan_surat`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Surat` FOREIGN KEY (`no_urut_surat`) REFERENCES `tbl_surat_masuk` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Undangan` FOREIGN KEY (`no_urut_undangan`) REFERENCES `tbl_surat_undangan` (`no_urut`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_disposisi` */
 
 insert  into `tbl_disposisi`(`kode_disposisi`,`no_urut_surat`,`no_urut_undangan`,`tipe_surat`,`tujuan_surat`,`tgl_disposisi`) values 
-(14,34242,NULL,'Surat Masuk',65,'2019-05-23'),
-(15,34242,NULL,'Surat Masuk',63,'2019-05-23'),
-(16,34242,NULL,'Surat Masuk',66,'2019-05-23');
+(64,2147483647,NULL,'Surat Masuk',65,'2019-05-17'),
+(66,2432,NULL,'Surat Masuk',65,'2019-05-17'),
+(67,2432,NULL,'Surat Masuk',27,'2019-05-17'),
+(68,2432,NULL,'Surat Masuk',1,'2019-05-17'),
+(70,NULL,123412,'Undangan',1,'2019-05-16'),
+(71,NULL,123412,'Undangan',27,'2019-05-23'),
+(74,NULL,4,'Undangan',65,'2019-05-15'),
+(75,NULL,4,'Undangan',66,'2019-05-15'),
+(76,NULL,4,'Undangan',27,'2019-05-15'),
+(78,NULL,1,'Undangan',66,'2019-05-18');
 
 /*Table structure for table `tbl_surat_keluar` */
 
@@ -74,16 +82,19 @@ CREATE TABLE `tbl_surat_keluar` (
   `perihal` text,
   `tujuan_surat` text,
   `keterangan` text,
-  `id_bidang` int(11) DEFAULT NULL COMMENT 'unit pengolah',
+  `unit_pengolah` int(11) DEFAULT NULL COMMENT 'unit pengolah',
+  `tahun` int(11) DEFAULT NULL,
   PRIMARY KEY (`no_surat`),
-  KEY `ID Bidang` (`id_bidang`),
-  CONSTRAINT `ID Bidang` FOREIGN KEY (`id_bidang`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `ID Bidang` (`unit_pengolah`),
+  CONSTRAINT `ID Bidang` FOREIGN KEY (`unit_pengolah`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_keluar` */
 
-insert  into `tbl_surat_keluar`(`no_urut`,`no_surat`,`tgl_surat`,`perihal`,`tujuan_surat`,`keterangan`,`id_bidang`) values 
-(NULL,'',NULL,NULL,NULL,NULL,NULL);
+insert  into `tbl_surat_keluar`(`no_urut`,`no_surat`,`tgl_surat`,`perihal`,`tujuan_surat`,`keterangan`,`unit_pengolah`,`tahun`) values 
+(12,'200/012-PP/DKP3/2019','2019-05-18','12 vhngiaue hgikduhzjgiuaer uiewhft iuWEHR NCiuweh iLWE\nEU FT098weutn oWJFD ur984uwT VAOEWJFSLJR 0','12W9UT','ewrvqw345tq3456eqr12',1,NULL),
+(21312,'213123','2019-05-17','12312','3123','12312',66,NULL),
+(213,'21321','2019-05-17','12321','3123','1231',68,NULL);
 
 /*Table structure for table `tbl_surat_masuk` */
 
@@ -92,19 +103,22 @@ DROP TABLE IF EXISTS `tbl_surat_masuk`;
 CREATE TABLE `tbl_surat_masuk` (
   `no_urut` int(11) NOT NULL,
   `no_surat` varchar(30) DEFAULT NULL,
-  `asal_surat` int(11) DEFAULT NULL,
+  `asal_surat` varchar(50) DEFAULT NULL,
   `perihal` text,
   `tgl_terima` date DEFAULT NULL,
+  `tahun` int(11) DEFAULT NULL,
   PRIMARY KEY (`no_urut`),
-  KEY `Asal Surat` (`asal_surat`),
-  CONSTRAINT `Asal Surat` FOREIGN KEY (`asal_surat`) REFERENCES `tbl_bidang` (`id_bidang`) ON DELETE NO ACTION ON UPDATE CASCADE
+  KEY `Asal Surat` (`asal_surat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_masuk` */
 
-insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_terima`) values 
-(1,'800/015-PP/DKP3/2019',65,'2341','2019-05-16'),
-(34242,'800/015-PP/DKP3/2015',66,'auihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wyauihf ciuwehgtfiuwhgtiuasefhdi2u4eyhtfg o EWO8ITRUY W98yt98w ytw98 yt9p8wy','2019-05-14');
+insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_terima`,`tahun`) values 
+(123,'123','1231231','12321312312','2019-05-18',NULL),
+(1234,'12312','12312','231213123','2019-05-17',2019),
+(2432,'eqwe','qweqw','eqweq','2019-05-18',NULL),
+(123333,'12344','21312','31231','2019-05-18',NULL),
+(2147483647,'qwerty','65qwertyuiop','324324234','2019-05-18',NULL);
 
 /*Table structure for table `tbl_surat_undangan` */
 
@@ -116,14 +130,18 @@ CREATE TABLE `tbl_surat_undangan` (
   `tgl_terima` date DEFAULT NULL,
   `waktu_undangan` datetime DEFAULT NULL,
   `tempat_undangan` varchar(100) DEFAULT NULL,
+  `tahun` int(11) DEFAULT NULL,
+  `uraian` text,
+  `keterangan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`no_urut`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_undangan` */
 
-insert  into `tbl_surat_undangan`(`no_urut`,`no_surat`,`tgl_terima`,`waktu_undangan`,`tempat_undangan`) values 
-(12312,'3123123','2016-06-23','2015-02-17 08:00:00','QWERTY'),
-(123412,'800/012-PP/DKP3/2019','2017-07-26','2016-07-07 09:35:00','3242342');
+insert  into `tbl_surat_undangan`(`no_urut`,`no_surat`,`tgl_terima`,`waktu_undangan`,`tempat_undangan`,`tahun`,`uraian`,`keterangan`) values 
+(1,'3123123','2019-05-18','2019-05-18 14:23:00','QWERTY',NULL,'Rapat pulang',NULL),
+(4,'2131231','2019-05-18','2019-05-19 14:23:00','1231',NULL,'Rapat Tarus',NULL),
+(123412,'800/012-PP/DKP3/2019','2017-07-26','2019-05-21 14:24:00','3242342',NULL,'Rapat Anu',NULL);
 
 /*Table structure for table `tbl_user` */
 
@@ -143,7 +161,7 @@ CREATE TABLE `tbl_user` (
 insert  into `tbl_user`(`username`,`password`,`tpass_user`,`role`,`id_bidang`) values 
 ('1','c4ca4238a0b923820dcc509a6f75849b','1_c4ca4238a0b923820dcc509a6f75849b','Admin',NULL),
 ('12','c20ad4d76fe97759aa27a0c99bff6710','12_c20ad4d76fe97759aa27a0c99bff6710','Bidang',1),
-('123','e4da3b7fbbce2345d7772b0674a318d5','5_e4da3b7fbbce2345d7772b0674a318d5','Bidang',27),
+('123','202cb962ac59075b964b07152d234b70','123_202cb962ac59075b964b07152d234b70','Bidang',27),
 ('admin_dkp3','5c286801d84ea4efd3d294c0d3688eb9','adm1ndkp3_5c286801d84ea4efd3d294c0d3688eb9','Admin',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
