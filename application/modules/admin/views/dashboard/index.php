@@ -72,7 +72,7 @@
 					<div class="card-block p-20 pt-10">
 						<div class="clearfix">
 							<div class="grey-800 float-left py-10">
-								<i class="icon fa fa-envelope-o grey-600 font-size-24 vertical-align-bottom mr-5"></i>
+								<i class="icon fa fa-mail-forward grey-600 font-size-24 vertical-align-bottom mr-5"></i>
 								Disposisi
 							</div>
 							<span class="float-right grey-700 font-size-30"><?php echo $disposisi_now; ?></span>
