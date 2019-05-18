@@ -23,11 +23,10 @@
 					<thead>
 						<tr>
 							<th width="50px" style="text-align:center;">#</th>
-							<th>No. Urut</th>
 							<th>No. Surat</th>
-							<th>Tanggal Terima</th>
-							<th>Tanggal Undangan</th>
+							<th>Waktu Undangan</th>
 							<th>Tempat Undangan</th>
+							<th width="150px" style="text-align:center;">Aksi</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -40,6 +39,60 @@
 	</div>
 	<!-- End Page-Content -->
 </div>
+
+<!-- Modal Info -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_info" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<form action="#" id="form">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+				<h4 class="modal-title"><span id=judul>Info</span> Undangan</h4>
+			</div>
+			<div class="modal-body">
+				<input type="hidden" id="info">
+				<table id="tabel_hapus" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
+					<tbody>
+						<tr>
+							<td align="right" style="width: 118px">No Urut</td>
+							<td align="center" style="width: 5px">:</td>
+							<td id="info_nourut"></td>
+						</tr>
+						<tr>
+							<td align="right">No Surat</td>
+							<td align="center">:</td>
+							<td id="info_nosurat"></td>
+						</tr>
+						<tr>
+							<td align="right">Tempat Undangan</td>
+							<td align="center">:</td>
+							<td id="info_tempatundangan"></td>
+						</tr>
+						<tr>
+							<td align="right">Waktu Undangan</td>
+							<td align="center">:</td>
+							<td id="info_waktuundangan"></td>
+						</tr>
+						<tr>
+							<td align="right">Tanggal Terima</td>
+							<td align="center">:</td>
+							<td id="info_tglterima"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tutup</button>
+				<!-- <button type="button" class="btn btn-sm btn-primary modal_disposisi" data-dismiss="modal" data-toggle="modal" data-target="#modal_disposisi">Disposisi</button> -->
+			</div>
+		</form>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
 
 <!-- END CHANGE -->
 
@@ -77,12 +130,12 @@
 		});
 	}
 
-	function edit(no)
+	function info(no)
 	{
 		success();
-		var nourut = $('#edit'+no).data().value;
+		var nourut = $('#info'+no).data().value;
 		$.ajax({
-			url : "<?php echo base_url()?>admin/undangan/dataedit/"+nourut,
+			url : "<?php echo base_url()?>bidang/undangan/dataedit/"+nourut,
 			type : 'POST',
 			dataType:'json',
 			success: function(data){
@@ -92,17 +145,17 @@
 					notify(data.title, data.message, data.icon, data.type);
 
 				} else {
+					$('#modal_info').modal('show');
 
-					$('input').val('');
-					$('#modal').modal('show');
-					$('#judul').html('Edit');
+					waktu_undangan = "Jam <b>"+moment(new Date(data.waktu_undangan)).format('HH:mm')+"</b>, Tanggal <b>"+moment(new Date(data.waktu_undangan)).format('DD-MM-YYYY')+"</b>";
+					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
 
-					$('#no_urut_L').val(data.no_urut);
-					$('#no_urut').val(data.no_urut);
-					$('#no_surat').val(data.no_surat);
-					$('#waktu_undangan').val(data.waktu_undangan);
-					$('#tempat_undangan').val(data.tempat_undangan);
-					$('#tgl_terima').val(data.tgl_terima);
+					$('#info').val(data.no_urut);
+					$('#info_nourut').html(data.no_urut);
+					$('#info_nosurat').html(data.no_surat);
+					$('#info_waktuundangan').html(waktu_undangan);
+					$('#info_tempatundangan').html(data.tempat_undangan);
+					$('#info_tglterima').html(tgl_terima);
 				}
 			}
 		});
@@ -112,7 +165,7 @@
 	function success()
 	{
 		$('#modal').modal('hide');
-		$('#judul').html('Tambah');
+		// $('#judul').html('Tambah');
 		$('small#er').html('');
 		$('input').val('');
 		$('select').val('');

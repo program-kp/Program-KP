@@ -25,10 +25,25 @@
 		</a>
 	</li>
 	<li class="site-menu-item" id="disposisi">
-		<a class="animsition-link" href="<?php echo base_url()?>bidang/surat/disposisi">
+	<li class="site-menu-item has-sub" id="disposisi">
+		<a class="animsition-link" href="javascript:void(0)">
 			<i class="site-menu-icon fa fa-mail-forward" aria-hidden="true"></i>
 			<span class="site-menu-title">Disposisi</span>
+			<span class="site-menu-arrow"></span>
 		</a>
+		<ul class="site-menu-sub">
+			<li class="site-menu-item" id="dis_surat">
+				<a class="animsition-link" href="<?php echo base_url()?>bidang/disposisi/surat_masuk">
+					<span class="site-menu-title">Surat Masuk</span>
+				</a>
+			</li>
+			<li class="site-menu-item" id="dis_undangan">
+				<a class="animsition-link" href="<?php echo base_url()?>bidang/disposisi/undangan">
+					<span class="site-menu-title">Undangan Masuk</span>
+				</a>
+			</li>
+		</ul>
+		</li>
 	</li>
 	<li class="site-menu-item" id="logout">
 		<a class="animsition-link" href="javascript:logout()">

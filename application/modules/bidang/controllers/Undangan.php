@@ -166,19 +166,17 @@ class Undangan extends CI_Controller {
 			$row = array();
 
 			$tgl_terima = date('d-m-Y', strtotime($surat_undangan->tgl_terima));
-			$waktu_undangan = date('d-m-Y h:i', strtotime($surat_undangan->waktu_undangan));
+			$waktu_undangan = "Jam <b>".date('h:i', strtotime($surat_undangan->waktu_undangan))."</b>, Tanggal <b>".date('d-m-Y', strtotime($surat_undangan->waktu_undangan))."</b>";
 
 			$row[] = "
 			<div align='center'>".$no++.
 			"</div>";
-			$row[] = $surat_undangan->no_urut;
 			$row[] = $surat_undangan->no_surat;
-			$row[] = $tgl_terima;
 			$row[] = $waktu_undangan;
 			$row[] = $surat_undangan->tempat_undangan;
 
 
-			// $row[] = "<div align='center'><button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_undangan->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_undangan->no_urut."' data-nosurat='".$surat_undangan->no_surat."' data-waktu='".$surat_undangan->waktu_undangan."' data-tempat='".$surat_undangan->tempat_undangan."' data-tanggal='".$surat_undangan->tgl_terima."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_undangan->no_urut."' onClick='info(".$no.")'>Info</button>";
 
 			$data[] = $row;
 		}
