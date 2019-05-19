@@ -29,6 +29,50 @@ role="dialog" tabindex="-1">
 </div>
 </div>
 <!-- End Modal -->
+
+<!-- Modal -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_pw" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title"><span id=judul>Ubah</span> Password</h4>
+		</div>
+		<div class="modal-body">
+			<input type="hidden" id="id_bidang">
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Password Lama<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_password('pass_lama', '', ["class" => "form-control", 'id' => 'pass_lama']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-4 form-label">Password Baru<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_password('pass_baru', '', ["class" => "form-control", 'id' => 'pass_baru']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+            <div class="form-group row">
+				<label class="col-sm-4 form-label">Konfirmasi Password<span required="">*</span></label>
+				<div class="col-sm-8">
+					<?php echo form_password('c_pass', '', ["class" => "form-control", 'id' => 'c_pass']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="simpan()">Simpan</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
 	<!-- Core  -->
     <script src="<?php echo base_url() ?>assets/global/vendor/babel-external-helpers/babel-external-helpers.js"></script>
     <script src="<?php echo base_url() ?>assets/global/vendor/popper-js/umd/popper.min.js"></script>

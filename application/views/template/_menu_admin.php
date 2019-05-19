@@ -68,26 +68,14 @@
 			</li>
 		</ul>
 	</li>
-	<li class="site-menu-item">
+	<!-- <li class="site-menu-item">
 		<a class="animsition-link" id="logout">
 			<i class="site-menu-icon fa fa-sign-out" aria-hidden="true"></i>
 			<span class="site-menu-title">Logout</span>
 		</a>
-	</li>
+	</li> -->
 </ul>
 
-<script>
-	$(document).ready(function(){
-		$('#logout').on('click', function(){
-			$('#modal_logout').modal('show');
-		})
-	});
-	
-	function logout()
-	{
-		window.location = "<?php echo base_url() ?>login/logout";
-	}
-</script>
 
 <!-- <ul id="menu-navigation" class="site-menu" data-plugin="menu">
 	<li class="site-menu-category">General</li>

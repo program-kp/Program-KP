@@ -24,23 +24,10 @@
 			<span class="site-menu-title">Surat Keluar</span>
 		</a>
 	</li>
-	<li class="site-menu-item" id="logout">
+	<!-- <li class="site-menu-item" id="logout">
 		<a class="animsition-link" id="logout">
 			<i class="site-menu-icon fa fa-sign-out" aria-hidden="true"></i>
 			<span class="site-menu-title">Logout</span>
 		</a>
-	</li>
+	</li> -->
 </ul>
-
-<script>
-	$(document).ready(function(){
-		$('#logout').on('click', function(){
-			$('#modal_logout').modal('show');
-		})
-	});
-	
-	function logout()
-	{
-		window.location = "<?php echo base_url() ?>login/logout";
-	}
-</script>

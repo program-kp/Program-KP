@@ -89,10 +89,22 @@
 
 				<!-- Navbar Toolbar Right -->
 				<ul class="nav navbar-toolbar navbar-right navbar-toolbar-right">
-					<li class="nav-item">
+					<!-- <li class="nav-item">
 						<label class="nav-link waves-effect waves-light waves-round">
 							<?php echo $this->session->userdata("nama") ?>
 						</label>		
+					</li> -->
+					<li class="nav-item dropdown">
+						<label class="nav-link waves-effect waves-light waves-round" data-toggle="dropdown" href="#" aria-expanded="true" data-animation="scale-up" role="button">
+							<!-- <label class="nav-link waves-effect waves-light waves-round"> -->
+								<?php echo $this->session->userdata("nama") ?>
+							<!-- </label>	 -->
+						</label>
+						<div class="dropdown-menu" role="menu">
+							<a class="dropdown-item waves-effect waves-light waves-round" id="ubah_pass" href="javascript:void(0)" role="menuitem"><i class="icon md-settings" aria-hidden="true"></i> Ubah Password</a>
+							<div class="dropdown-divider" role="presentation"></div>
+							<a class="dropdown-item waves-effect waves-light waves-round" id="logout" href="javascript:void(0)" role="menuitem"><i class="icon md-power" aria-hidden="true"></i> Logout</a>
+						</div>
 					</li>
 				</ul>
 				<!-- End Navbar Toolbar Right -->
@@ -120,6 +132,27 @@
 			</div>
 		</div>
 	</div>
+
+<script>
+	$(document).ready(function(){
+		$('#logout').on('click', function(){
+			$('#modal_logout').modal('show');
+		})
+
+		$('#ubah_pass').on('click', function(){
+			$('er').html('');
+			$('small').html('');
+			$('input').val('');
+			$('select').val('');	
+			$('#modal_pw').modal('show');
+		})
+	});
+
+	function logout()
+	{
+		window.location = "<?php echo base_url() ?>login/logout";
+	}
+</script>
 
 
 	
