@@ -558,6 +558,7 @@ role="dialog" tabindex="-1">
 		$('.modal_disposisi').on('click', function(){
 			$('#panel').html(panel_manipulation);
 			$('#nourut_disposisi').val($('#info').val());
+			$('#tgl_disposisi').attr('autocomplate','off');
 		});
 
 		//Active Menu

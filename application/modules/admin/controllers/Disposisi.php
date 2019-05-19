@@ -368,7 +368,7 @@ class Disposisi extends CI_Controller {
 
 			$tgl_disposisi = $this->input->post('tgl_disposisi', TRUE);
 			$tujuan = $this->input->post('tujuan', TRUE);
-			$no_urut = $this->input->post('nosurat_disposisi', TRUE);
+			$no_urut = $this->input->post('nourut_disposisi', TRUE);
 
 			$data_surat = $this->surat_masuk->get_data_byID($no_urut);
 
