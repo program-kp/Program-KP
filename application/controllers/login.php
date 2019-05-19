@@ -66,6 +66,20 @@ class Login extends CI_Controller {
 		}
 	}
 
+	function cekPass($password)
+	{
+		$uname = $this->session->userdata('username');
+		$pw = md5($password);
+		$result = $this->login->cek($uname, $pw);
+		if($result == 0)
+		{
+			$this->form_validation->set_message('cekPass', 'Password Lama tidak cocok.');
+			return FALSE;
+		} else {
+			return TRUE;
+		}
+	}
+
 	function datainput()
 	{		
 			
@@ -127,6 +141,54 @@ class Login extends CI_Controller {
 					'type_alert' => 'alert-danger',
 					'icon' => 'fa fa-ban',
 					'text' => 'Anda belum terdaftar.'
+				];
+
+			}
+
+			echo json_encode($validasi);
+		}
+	}
+
+	function ubah_pass()
+	{
+		$username = $this->session->userdata('username');
+		
+		$this->load->library('form_validation');
+		// Set Rule
+		$this->form_validation->set_rules('pass_lama', 'Password Lama', 'required|trim|callback_cekPass');
+		$this->form_validation->set_rules('pass_baru', 'Password Baru', 'required|trim|callback_cekInput');
+		$this->form_validation->set_rules('c_pass', 'Konfirmasi Password', 'required|trim|callback_cekInput|matches[pass_baru]');
+
+		if ($this->form_validation->run() == FALSE) {
+
+			$validasi = [
+				'status' => 'validasi',
+				'pass_lama' => form_error('pass_lama'),
+				'pass_baru' => form_error('pass_baru'),
+				'c_pass' => form_error('c_pass'),				
+			];
+
+			echo json_encode($validasi);
+
+		} else {
+			
+			$password = $this->input->post('pass_baru', TRUE);
+			$pass_md5 = md5($password);
+
+			$data = array(
+				"password" => $pass_md5,
+				"tpass_user" => $password."_".$pass_md5,
+			);
+
+			$cek = $this->login->updatePass($username, $data, 'tbl_user');
+
+			if ($cek > 0) {
+
+				$validasi = [
+					'type' => 'success',
+					'icon' => 'fa fa-check',
+					'title' => 'Berhasil',
+					'message' => 'Password berhasil diubah.'
 				];
 
 			}

@@ -41,6 +41,13 @@ class Login_m extends CI_Model {
 		return $query->result();
 	}
 
+	function updatePass($where, $data, $table)
+	{
+		$this->db->where('username', $where);
+		$this->db->update($table,$data);
+		return $this->db->affected_rows();
+	}
+
 }
 
 /* End of file Login_m.php */

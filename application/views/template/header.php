@@ -148,10 +148,88 @@
 		})
 	});
 
+	function success()
+	{
+		$('#modal_pw').modal('hide');
+		$('small').html('');
+		$('input').val('');
+		$('select').val('');
+	}
+
+	function notify(title, message, icon, type)
+	{
+		$.notify({
+			title: title,
+			message: message,
+		}, {
+			allow_dismiss: false,
+			placement: {
+				from: 'bottom',
+				align: 'right'
+			},
+			newest_on_top: true,
+			delay: 3000,
+			mouse_over: 'pause',
+			animate: {
+				enter: 'animated fadeInRight',
+				exit: 'animated fadeOutRight'
+			},
+			icon_type: 'class',
+			template: '<div class="alert dark alert-dismissible alert-'+type+'">'+
+			'<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>'+
+			'<h4><i class="'+icon+'"></i>&nbsp;{1}</h4>'+
+			'<div>{2}</div>'+
+			'</div>'
+
+			// {0} = type
+			// {1} = title
+			// {2} = message
+			// {3} = url
+			// {4} = target
+		});
+	}
+
 	function logout()
 	{
 		window.location = "<?php echo base_url() ?>login/logout";
 	}
+
+	function simpan()
+	{
+		$(".simpan").html("Processing...");
+		$('.simpan').attr('disabled','disabled');
+
+		var form_data = new FormData();
+		form_data.append("pass_lama", $('#pass_lama').val());
+		form_data.append("pass_baru", $('#pass_baru').val());
+		form_data.append("c_pass", $('#c_pass').val());
+		$.ajax({
+			url : "<?php echo base_url()?>login/ubah_pass",
+			type : 'POST',
+			processData: false,
+			contentType: false,
+			dataType:'json',
+			data : form_data,
+			success: function(data){
+				if (data.status=="validasi") {
+					$.each(data, function(key, value) {
+						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);
+					});
+
+				} else {
+					success();
+					notify(data.title, data.message, data.icon, data.type);
+
+					// table.ajax.reload( null, false );					
+					// $('#id_bidang').html('');
+					// $('#id_bidang').append(data.ar_bidang);
+				}
+				// alert(data);
+				$('.simpan').html('Simpan');
+				$('.simpan').removeAttr('disabled');
+			}
+		});
+	}	
 </script>
 
 

@@ -23,7 +23,7 @@ role="dialog" tabindex="-1">
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Tidak</button>
-            <button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="logout()">Ya</button>
+            <button type="button" class="btn btn-sm btn-primary confirm" data-dismiss="modal" onclick="logout()">Ya</button>
         </div>
     </div>
 </div>
