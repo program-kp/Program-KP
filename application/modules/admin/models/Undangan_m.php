@@ -37,13 +37,15 @@ class Undangan_m extends CI_Model {
 		return $query->result();
 	}
 
-	function get_data($dash = null)
+	function get_data($date = null)
 	{
-		$date = date("Y-m-d");
+		$date_now = date("Y-m-d");
 		$this->db->select('tbl_surat_undangan.*, (SELECT COUNT(*) FROM tbl_disposisi where tbl_disposisi.no_urut_undangan=tbl_surat_undangan.no_urut) as jumlah');
 		$this->db->from('tbl_surat_undangan');
 		$this->db->order_by('no_urut', 'desc');
-		if ($dash != null) {
+		if ($date == null) {
+			$this->db->where('tbl_surat_undangan.tgl_terima', $date_now);
+		} else {
 			$this->db->where('tbl_surat_undangan.tgl_terima', $date);
 		}
 		$query = $this->db->get();

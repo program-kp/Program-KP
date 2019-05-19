@@ -14,12 +14,18 @@ class Surat_keluar_m extends CI_Model {
 			return false;
 	}
 
-	function get_data()
+	function get_data($date = null)
 	{
+		$date_now = date("Y-m-d");
 		$this->db->select('tbl_surat_keluar.*, tbl_bidang.*');
 		$this->db->from('tbl_surat_keluar');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.id_bidang');
+		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.unit_pengolah');
 		$this->db->order_by('tbl_surat_keluar.no_urut', 'desc');
+		if ($date == null) {
+			$this->db->where('tbl_surat_keluar.tgl_terima', $date_now);
+		} else {
+			$this->db->where('tbl_surat_keluar.tgl_terima', $date);
+		}
 		$query = $this->db->get();
 		return $query->result();
 	}
@@ -28,7 +34,7 @@ class Surat_keluar_m extends CI_Model {
 	{
 		$this->db->select('tbl_surat_keluar.*, tbl_bidang.*');
 		$this->db->from('tbl_surat_keluar');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.id_bidang');
+		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.unit_pengolah');
 		$this->db->where('tbl_surat_keluar.no_urut', $no_urut);
 		$query = $this->db->get();
 		return $query->row();
@@ -38,7 +44,7 @@ class Surat_keluar_m extends CI_Model {
 	{
 		$this->db->select('COUNT(*) AS jumlah_data');
 		$this->db->from('tbl_bidang');
-		$this->db->join('tbl_surat_keluar','tbl_surat_keluar.id_bidang=tbl_bidang.id_bidang');
+		$this->db->join('tbl_surat_keluar','tbl_surat_keluar.unit_pengolah=tbl_bidang.id_bidang');
 		$this->db->order_by('tbl_surat_keluar.no_urut', 'asc');
 		$this->db->where('tbl_bidang.no_urut', $no_urut);
 		$this->db->where('tbl_bidang.id_bidang', $id_bidang);

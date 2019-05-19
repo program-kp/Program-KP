@@ -85,10 +85,12 @@ class Undangan extends CI_Controller {
 		// Set Rule
 		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
 		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
+		$this->form_validation->set_rules('asal_surat', 'Asal Surat', 'required|trim');
 		$this->form_validation->set_rules('waktu_undangan', 'Waktu Undangan', 'required|trim');
 		$this->form_validation->set_rules('tempat_undangan', 'Tempat Undangan', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('uraian', 'Tempat Undangan', 'required|trim');
 		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
+		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim');
 
 		$no_urut_L = $this->input->post('no_urut_L', TRUE);
 		$no_urut = $this->input->post('no_urut', TRUE);
@@ -99,10 +101,12 @@ class Undangan extends CI_Controller {
 				'status' => 'validasi',
 				'no_urut' => form_error('no_urut'),
 				'no_surat' => form_error('no_surat'),
+				'asal_surat' => form_error('asal_surat'),
 				'waktu_undangan' => form_error('waktu_undangan'),
 				'tempat_undangan' => form_error('tempat_undangan'),
 				'uraian' => form_error('uraian'),
 				'tgl_terima' => form_error('tgl_terima'),
+				'tgl_surat' => form_error('tgl_surat'),
 			];
 
 			echo json_encode($validasi);
@@ -112,10 +116,12 @@ class Undangan extends CI_Controller {
 			$data = [
 				"no_urut" => $this->input->post('no_urut', TRUE),
 				"no_surat" => $this->input->post('no_surat', TRUE),
+				"asal_surat" => $this->input->post('asal_surat', TRUE),
 				"waktu_undangan" => date('Y-m-d H:i', strtotime($this->input->post('waktu_undangan', TRUE))),
 				"tempat_undangan" => $this->input->post('tempat_undangan', TRUE),
 				"uraian" => $this->input->post('uraian', TRUE),
 				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
+				"tgl_surat" => date('Y-m-d', strtotime($this->input->post('tgl_surat', TRUE))),
 			];
 
 			$cek = $this->surat_undangan->cek($no_urut_L);
@@ -160,9 +166,10 @@ class Undangan extends CI_Controller {
 		}
 	}
 
-	function view_data()
+	function view_data($date = null)
 	{
-		$list = $this->surat_undangan->get_data();
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_undangan->get_data($tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_undangan) {
@@ -181,7 +188,7 @@ class Undangan extends CI_Controller {
 			else $row[] = "<div align='center'>".$surat_undangan->jumlah."</div>";
 
 
-			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_undangan->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_undangan->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_undangan->no_urut."' data-nosurat='".$surat_undangan->no_surat."' data-waktu='".$waktu_undangan."' data-tempat='".$surat_undangan->tempat_undangan."' data-tanggal='".$surat_undangan->tgl_terima."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_undangan->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_undangan->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_undangan->no_urut."' data-nosurat='".$surat_undangan->no_surat."' data-asalsurat='".$surat_undangan->asal_surat."' data-waktu='".$waktu_undangan."' data-tempat='".$surat_undangan->tempat_undangan."' data-tglsurat='".$surat_undangan->tgl_surat."' data-tglterima='".$surat_undangan->tgl_terima."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

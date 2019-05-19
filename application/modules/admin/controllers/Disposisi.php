@@ -3,14 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Disposisi extends CI_Controller {
 
+	// define('PHPWORD_BASE_DIR', realpath(__DIR__));
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
 		$this->load->model("surat_masuk_m", "surat_masuk");
+		$this->load->model("undangan_m", "undangan");
 		$this->load->model("disposisi_m", "disposisi");
 		$this->load->library('Word');
+		// $this->load->library('Pdf');
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -184,24 +188,42 @@ class Disposisi extends CI_Controller {
 	}
 
 	// SURAT MASUK
-	function getWord_surat($no_urut)
+
+	function test()
+	{
+		echo __Dir__;
+	}
+
+	function getword_surat($no_urut)
 	{
 		$data = $this->surat_masuk->get_data_byID($no_urut);
-		if (file_exists("fileWord/disposisi.docx")) unlink("fileWord/disposisi.docx");
+		if (file_exists("fileWord/disposisi_surat.docx")) unlink("fileWord/disposisi_surat.docx");
+
+		$tgl_terima = date('d-m-Y', strtotime($data->tgl_terima));
+		$tgl_surat = date('d-m-Y', strtotime($data->tgl_surat));
 
 		$word = new \PhpOffice\PhpWord\TemplateProcessor('fileWord/template_disposisi.docx'); 
 		$word->setValue('perihal', $data->perihal);
 		$word->setValue('surat_dari', $data->asal_surat);
-		$word->setValue('tgl_surat', $data->tgl_terima);
+		$word->setValue('tgl_surat', $tgl_surat);
 		$word->setValue('nosurat', $data->no_surat);
-		$word->setValue('tgl_terima', 'Tanggal Terima');
-		$word->setValue('nourut', 'Nomor Urut');
-		$word->saveAs('fileWord/disposisi.docx');
+		$word->setValue('tgl_terima', $tgl_terima);
+		$word->setValue('nourut', $data->no_urut);
+		$word->saveAs('fileWord/disposisi_surat.docx');
+		// $word->ExportAsFixedFormat('fileWord/disposisi.pdf');
 
+		// $TCPDFPath = realpath(__DIR__ . '/../../../third_party/tcpdf/tcpdf');
+		// \PhpOffice\PhpWord\Settings::setPdfRendererPath($TCPDFPath);
+		// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
+
+		// $phpWord = \PhpOffice\PhpWord\IOFactory::load('fileWord/disposisi.docx'); 
+
+		// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+		// $xmlWriter->save('result.pdf', true);
 
 		$this->load->helper('download');
-		force_download('fileWord/disposisi.docx', NULL);
-		unlink('fileWord/disposisi.docx');
+		force_download('fileWord/disposisi_surat.docx', NULL);
+		unlink('fileWord/disposisi_surat.docx');
 	}
 
 	function datainput_surat()
@@ -223,7 +245,7 @@ class Disposisi extends CI_Controller {
 
 			$tgl_disposisi = $this->input->post('tgl_disposisi', TRUE);
 			$tujuan = $this->input->post('tujuan', TRUE);
-			$no_urut = $this->input->post('nosurat_disposisi', TRUE);
+			$no_urut = $this->input->post('nourut_disposisi', TRUE);
 
 			$data_surat = $this->surat_masuk->get_data_byID($no_urut);
 
@@ -294,6 +316,38 @@ class Disposisi extends CI_Controller {
 	// END SURAT MASUK
 
 	// UNDANGAN	
+
+	function getword_undangan($no_urut)
+	{
+		$data = $this->undangan->get_data_byID($no_urut);
+		if (file_exists("fileWord/disposisi_undangan.docx")) unlink("fileWord/disposisi_undangan.docx");
+
+		$tgl_terima = date('d-m-Y', strtotime($data->tgl_terima));
+		$tgl_surat = date('d-m-Y', strtotime($data->tgl_surat));
+
+		$word = new \PhpOffice\PhpWord\TemplateProcessor('fileWord/template_disposisi.docx'); 
+		$word->setValue('perihal', $data->uraian);
+		$word->setValue('surat_dari', $data->asal_surat);
+		$word->setValue('tgl_surat', $tgl_surat);
+		$word->setValue('nosurat', $data->no_surat);
+		$word->setValue('tgl_terima', $tgl_terima);
+		$word->setValue('nourut', $data->no_urut);
+		$word->saveAs('fileWord/disposisi_undangan.docx');
+		// $word->ExportAsFixedFormat('fileWord/disposisi.pdf');
+
+		// $TCPDFPath = realpath(__DIR__ . '/../../../third_party/tcpdf/tcpdf');
+		// \PhpOffice\PhpWord\Settings::setPdfRendererPath($TCPDFPath);
+		// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
+
+		// $phpWord = \PhpOffice\PhpWord\IOFactory::load('fileWord/disposisi.docx'); 
+
+		// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
+		// $xmlWriter->save('result.pdf', true);
+
+		$this->load->helper('download');
+		force_download('fileWord/disposisi_undangan.docx', NULL);
+		unlink('fileWord/disposisi_undangan.docx');
+	}
 	function datainput_undangan()
 	{
 		$this->load->library('form_validation');

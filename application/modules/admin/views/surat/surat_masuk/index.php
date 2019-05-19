@@ -19,8 +19,19 @@
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Surat Masuk</button>
-				<button type="button" class="btn btn-primary btn-sm cetak" data-toggle="modal" data-target="#modal_cetak">Cetak Surat Keluar</button><hr>
+				<div class="row">
+					<div class="col-md-4">
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button>
+					</div>
+					<div class="col-md-2"></div>
+					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
+					<div class="col-md-4 col-sm-12">
+						<input type="text" class="form-control" id="tgl_filter">
+					</div>
+					<div class="col-md-1 col-sm-12">
+						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
+					</div>
+				</div>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
@@ -116,6 +127,13 @@ role="dialog" tabindex="-1">
 				</div>
 			</div>
 			<div class="form-group row">
+				<label class="col-sm-4 form-label">Tanggal Surat<span required="">*</span></label>
+				<div class="col-sm-8 data_input">
+					<?php echo form_input('tgl_surat', '', ["class" => "form-control", 'id' => 'tgl_surat', 'autocomplate' => 'off']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
 				<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
 				<div class="col-sm-8 data_input">
 					<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
@@ -150,6 +168,7 @@ role="dialog" tabindex="-1">
 					<tr>
 						<th style="width:150px">Nomor Surat</th>
 						<th style="width:150px">Asal Surat</th>
+						<th style="width:100px">Tanggal Surat</th>
 						<th style="width:100px">Tanggal Terima</th>
 						<th>Perihal</th>
 					</tr>
@@ -158,7 +177,8 @@ role="dialog" tabindex="-1">
 					<tr>
 						<td id="nosurat"></td>
 						<td id="asal"></td>
-						<td id="tgl"></td>
+						<td id="tglsurat"></td>
+						<td id="tglterima"></td>
 						<td id="perihal"></td>
 					</tr>
 				</tbody>
@@ -210,6 +230,11 @@ role="dialog" tabindex="-1">
 						<td id="info_perihal"></td>
 					</tr>
 					<tr>
+						<td align="right">Tanggal Surat</td>
+						<td align="center">:</td>
+						<td id="info_tglsurat"></td>
+					</tr>
+					<tr>
 						<td align="right">Tanggal Terima</td>
 						<td align="center">:</td>
 						<td id="info_tglterima"></td>
@@ -241,7 +266,7 @@ role="dialog" tabindex="-1">
 					<div class="form-group row">
 						<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
 						<div class="col-sm-6 data_input">
-							<input type="hidden" name="nosurat_disposisi" id="nosurat_disposisi">
+							<input type="hidden" name="nourut_disposisi" id="nourut_disposisi">
 							<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi', 'autocomplate' => 'off']); ?>
 							<small id=er>Validasi View</small>
 						</div>
@@ -281,6 +306,11 @@ role="dialog" tabindex="-1">
 <!-- SCRIPT -->
 <script>
 
+    function cetak_disposisi()
+    {
+        location.href = '<?php echo base_url() ?>admin/disposisi/getword_surat/'+$('#nourut_disposisi').val();
+    }
+
 	function disposisi()
 	{
 		$(".disposisi").html("Processing...");
@@ -318,7 +348,8 @@ role="dialog" tabindex="-1">
 		$('#id').val($('#confirm'+no).data().value);
 		$('td#nosurat').html($('#confirm'+no).data().nosurat);
 		$('td#asal').html($('#confirm'+no).data().asal);
-		$('td#tgl').html($('#confirm'+no).data().tgl_terima);
+		$('td#tglsurat').html($('#confirm'+no).data().tgl_surat);
+		$('td#tglterima').html($('#confirm'+no).data().tgl_terima);
 		$('td#perihal').html($('#confirm'+no).data().perihal);
 		$('#modal_hapus').modal('show');
 	}
@@ -360,6 +391,7 @@ role="dialog" tabindex="-1">
 					$('#modal_info').modal('show');
 
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
 
 					$('#info').val(data.no_urut);
 					$('#info_nourut').html(data.no_urut);
@@ -367,6 +399,7 @@ role="dialog" tabindex="-1">
 					$('#info_asalsurat').html(data.asal_surat);
 					$('#info_perihal').html(data.perihal);
 					$('#info_tglterima').html(tgl_terima);
+					$('#info_tglsurat').html(tgl_surat);
 				}
 			}
 		});
@@ -393,6 +426,7 @@ role="dialog" tabindex="-1">
 					$('#judul').html('Edit');
 
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
 
 					$('#no_urut_L').val(data.no_urut);
 					$('#no_urut').val(data.no_urut);
@@ -400,6 +434,7 @@ role="dialog" tabindex="-1">
 					$('#asal_surat').val(data.asal_surat);
 					$('textarea#perihal').val(data.perihal);
 					$('#tgl_terima').val(tgl_terima);
+					$('#tgl_surat').val(tgl_surat);
 				}
 			}
 		});
@@ -417,6 +452,7 @@ role="dialog" tabindex="-1">
 		form_data.append("asal_surat", $('#asal_surat').val());
 		form_data.append("perihal", $('textarea#perihal').val());
 		form_data.append("tgl_terima", $('#tgl_terima').val());
+		form_data.append("tgl_surat", $('#tgl_surat').val());
 		$.ajax({
 			url : "<?php echo base_url()?>admin/surat_masuk/datainput",
 			type : 'POST',
@@ -447,7 +483,7 @@ role="dialog" tabindex="-1">
 		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
 		$('small#er').html('');
-		$('input').val('');
+		$('input:not(#tgl_filter)').val('');
 		$('select').val('');
 	}
 
@@ -484,11 +520,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable()
+	function dataTable($date = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/surat_masuk/view_data',
+				"url": '<?php echo base_url()?>admin/surat_masuk/view_data/'+$date,
 				"type": "POST",
 			},
 			"processing": true,
@@ -525,7 +561,7 @@ role="dialog" tabindex="-1">
 
 		$('.modal_disposisi').on('click', function(){
 			$('#panel').html(panel_manipulation);
-			$('#nosurat_disposisi').val($('#info').val());
+			$('#nourut_disposisi').val($('#info').val());
 			$('#tgl_disposisi').attr('autocomplete', 'off');
 		});
 
@@ -533,23 +569,33 @@ role="dialog" tabindex="-1">
 		$('#surat').addClass('active open');
 		$('#surat_masuk').addClass('active hover');
 
-		dataTable();
-
-		$("#tgl_terima, #tgl_disposisi").keypress(function(event) {
+		$("#tgl_terima, #tgl_disposisi, #tgl_surat, #tgl_filter").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_terima, #tgl_disposisi').datetimepicker({		
+		$('#tgl_surat').datetimepicker({		
 			format: "DD-MM-YYYY",
+		});
+
+		$('#tgl_terima, #tgl_disposisi, #tgl_surat, #tgl_filter').datetimepicker({		
+			format: "DD-MM-YYYY",
+			date: new Date()
 		});
 
 		$('.tambah').on('click', function(){
 
 			$('#judul').html('Tambah');
 			$('small#er').html('');
-			$('input').val('');
+			$('input:not(#tgl_filter)').val('');
 			$('textarea').val('');
 			$('select').val('');
+		});
+
+		dataTable($('#tgl_filter').val());
+
+		$('#filter').click(function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#tgl_filter').val());
 		});
 
 		$('.add_disposisi').click(function(){

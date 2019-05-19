@@ -2,7 +2,7 @@
 
 require_once APPPATH."/third_party/vendor/autoload.php";
 
-class Word extends  \PhpOffice\PhpWord\PhpWord {
+class Word extends \PhpOffice\PhpWord\PhpWord {
     public function __construct() { 
         parent::__construct(); 
     } 

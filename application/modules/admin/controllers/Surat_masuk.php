@@ -9,7 +9,6 @@ class Surat_masuk extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
 		$this->load->model("surat_masuk_m", "surat_masuk");
-		$this->load->library('Word');
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -89,6 +88,7 @@ class Surat_masuk extends CI_Controller {
 		$this->form_validation->set_rules('asal_surat', 'Asal Surat', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
+		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim');
 
 		$no_urut_L = $this->input->post('no_urut_L', TRUE);
 		$no_urut = $this->input->post('no_urut', TRUE);
@@ -102,6 +102,7 @@ class Surat_masuk extends CI_Controller {
 				'asal_surat' => form_error('asal_surat'),
 				'perihal' => form_error('perihal'),
 				'tgl_terima' => form_error('tgl_terima'),
+				'tgl_surat' => form_error('tgl_surat'),
 			];
 
 			echo json_encode($validasi);
@@ -114,6 +115,7 @@ class Surat_masuk extends CI_Controller {
 				"asal_surat" => $this->input->post('asal_surat', TRUE),
 				"perihal" => $this->input->post('perihal', TRUE),
 				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
+				"tgl_surat" => date('Y-m-d', strtotime($this->input->post('tgl_surat', TRUE))),
 			];
 
 			$cek = $this->surat_masuk->cek($no_urut_L);
@@ -158,14 +160,16 @@ class Surat_masuk extends CI_Controller {
 		}
 	}
 
-	function view_data()
+	function view_data($date = null)
 	{
-		$list = $this->surat_masuk->get_data();
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_masuk->get_data($tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_masuk) {
 			$row = array();
 
+			$tgl_surat = date('d-m-Y', strtotime($surat_masuk->tgl_surat));
 			$tgl_terima = date('d-m-Y', strtotime($surat_masuk->tgl_terima));
 
 			$row[] = "<div align='center'>".$no++."</div>";
@@ -176,7 +180,7 @@ class Surat_masuk extends CI_Controller {
 			else $row[] = "<div align='center'>".$surat_masuk->jumlah."</div>";
 
 
-			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_masuk->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_masuk->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_masuk->no_urut."' data-nosurat='".$surat_masuk->no_surat."' data-asal='".$surat_masuk->asal_surat."' data-tgl_terima='".$tgl_terima."' data-perihal='".$surat_masuk->perihal."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_masuk->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_masuk->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_masuk->no_urut."' data-nosurat='".$surat_masuk->no_surat."' data-asal='".$surat_masuk->asal_surat."' data-tgl_surat='".$tgl_surat."' data-tgl_terima='".$tgl_terima."' data-perihal='".$surat_masuk->perihal."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}

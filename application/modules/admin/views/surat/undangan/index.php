@@ -19,7 +19,20 @@
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button><hr>
+				<div class="row">
+					<div class="col-md-4">
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button>
+					</div>
+					<div class="col-md-2"></div>
+					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
+					<div class="col-md-4 col-sm-12">
+						<input type="text" class="form-control" id="tgl_filter">
+					</div>
+					<div class="col-md-1 col-sm-12">
+						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
+					</div>
+				</div>
+				<hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
@@ -46,7 +59,7 @@
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple">
+<div class="modal-dialog modal-simple modal-center modal-lg">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -57,43 +70,49 @@ role="dialog" tabindex="-1">
 		<div class="modal-body">
 			<input type="hidden" id="no_urut_L">
 			<div class="form-group row">
-				<label class="col-sm-4 form-label">No. Urut<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
+				<label class="col-sm-2 form-label">No. Urut<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
 					<?php echo form_input('no_urut', '', ["class" => "form-control", 'id' => 'no_urut']); ?>
 					<small id=er>Validasi View</small>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 form-label">Nomor Surat<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
+				<label class="col-sm-2 form-label">Nomor Surat<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
 					<?php echo form_input('no_surat', '', ["class" => "form-control", 'id' => 'no_surat']); ?>
 					<small id=er>Validasi View</small>
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-4 form-label">Waktu Undangan<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
+				<label class="col-sm-2 form-label">Asal Surat<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
+					<?php echo form_input('asal_surat', '', ["class" => "form-control", 'id' => 'asal_surat', 'autocomplate' => 'off']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+				<label class="col-sm-2 form-label">Waktu Undangan<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
 					<?php echo form_input('waktu_undangan', '', ["class" => "form-control", 'id' => 'waktu_undangan', 'autocomplate' => 'off']); ?>
 					<small id=er>Validasi View</small>
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-4 form-label">Tempat Undangan<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
-					<?php echo form_input('tempat_undangan', '', ["class" => "form-control", 'id' => 'tempat_undangan']); ?>
+				<label class="col-sm-2 form-label">Tempat Undangan<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
+					<textarea name="" id="tempat_undangan" rows="3" class="form-control"></textarea>
 					<small id=er>Validasi View</small>
 				</div>
-			</div>
-			<div class="form-group row">
-				<label class="col-sm-4 form-label">Uraian<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
+				<label class="col-sm-2 form-label">Uraian<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
 					<textarea name="" id="uraian" rows="3" class="form-control"></textarea>
 					<small id=er>Validasi View</small>
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-4 form-label">Tanggal Terima<span required="">*</span></label>
-				<div class="col-sm-8 data_input">
+				<label class="col-sm-2 form-label">Tanggal Surat<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
+					<?php echo form_input('tgl_surat', '', ["class" => "form-control", 'id' => 'tgl_surat', 'autocomplate' => 'off']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+				<label class="col-sm-2 form-label">Tanggal Terima<span required="">*</span></label>
+				<div class="col-sm-4 data_input">
 					<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima', 'autocomplate' => 'off']); ?>
 					<small id=er>Validasi View</small>
 				</div>
@@ -125,6 +144,7 @@ role="dialog" tabindex="-1">
 				<thead>
 					<tr>
 						<th>No. Surat</th>
+						<th>Asal Surat</th>
 						<th>Waktu Undangan</th>
 						<th>Tempat Undangan</th>
 					</tr>
@@ -132,6 +152,7 @@ role="dialog" tabindex="-1">
 				<tbody>
 					<tr>
 						<td id="hapus_nosurat"></td>
+						<td id="hapus_asalsurat"></td>
 						<td id="hapus_waktu"></td>
 						<td id="hapus_tempat"></td>
 					</tr>
@@ -174,6 +195,11 @@ role="dialog" tabindex="-1">
 						<td id="info_nosurat"></td>
 					</tr>
 					<tr>
+						<td align="right">Asal Surat</td>
+						<td align="center">:</td>
+						<td id="info_asalsurat"></td>
+					</tr>
+					<tr>
 						<td align="right">Tempat Undangan</td>
 						<td align="center">:</td>
 						<td id="info_tempatundangan"></td>
@@ -187,6 +213,11 @@ role="dialog" tabindex="-1">
 						<td align="right">Uraian</td>
 						<td align="center">:</td>
 						<td id="info_uraian"></td>
+					</tr>
+					<tr>
+						<td align="right">Tanggal Surat</td>
+						<td align="center">:</td>
+						<td id="info_tglsurat"></td>
 					</tr>
 					<tr>
 						<td align="right">Tanggal Terima</td>
@@ -223,7 +254,7 @@ role="dialog" tabindex="-1">
 				<div class="form-group row">
 					<label class="col-sm-4 form-label">Tanggal Disposisi<span required="">*</span></label>
 					<div class="col-sm-4 data_input">
-						<input type="hidden" name="nosurat_disposisi" id="nosurat_disposisi">
+						<input type="hidden" name="nourut_disposisi" id="nourut_disposisi">
 						<?php echo form_input('tgl_disposisi', '', ["class" => "form-control", 'id' => 'tgl_disposisi', 'autocomplate' => 'off']); ?>
 						<small id=er>Validasi View</small>
 					</div>
@@ -263,10 +294,15 @@ role="dialog" tabindex="-1">
 <!-- SCRIPT -->
 <script>
 
+    function cetak_disposisi()
+    {
+        location.href = '<?php echo base_url() ?>admin/disposisi/getword_undangan/'+$('#nourut_disposisi').val();
+    }
+
 	function disposisi()
 	{
-		// $(".disposisi").html("Processing...");
-		// $('.disposisi').attr('disabled','disabled');
+		$(".disposisi").html("Processing...");
+		$('.disposisi').attr('disabled','disabled');
 
 		$.ajax({
 			url : "<?php echo base_url()?>admin/disposisi/datainput_undangan",
@@ -299,9 +335,11 @@ role="dialog" tabindex="-1">
 	{
 		$('#id').val($('#confirm'+no).data().value);
 		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
+		$('#hapus_asalsurat').html($('#confirm'+no).data().asalsurat);
 		$('#hapus_waktu').html($('#confirm'+no).data().waktu);
 		$('#hapus_tempat').html($('#confirm'+no).data().tempat);
-		$('#hapus_tgl').html($('#confirm'+no).data().tanggal);
+		$('#hapus_tglsurat').html($('#confirm'+no).data().tglsurat);
+		$('#hapus_tglterima').html($('#confirm'+no).data().tglterima);
 		$('#modal_hapus').modal('show');
 	}
 
@@ -342,14 +380,17 @@ role="dialog" tabindex="-1">
 
 					waktu_undangan = "Jam <b>"+moment(new Date(data.waktu_undangan)).format('HH:mm')+"</b>, Tanggal <b>"+moment(new Date(data.waktu_undangan)).format('DD-MM-YYYY')+"</b>";
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
 
 					$('#info').val(data.no_urut);
 					$('#info_nourut').html(data.no_urut);
 					$('#info_nosurat').html(data.no_surat);
+					$('#info_asalsurat').html(data.asal_surat);
 					$('#info_waktuundangan').html(waktu_undangan);
 					$('#info_tempatundangan').html(data.tempat_undangan);
 					$('#info_uraian').html(data.uraian);
 					$('#info_tglterima').html(tgl_terima);
+					$('#info_tglsurat').html(tgl_surat);
 				}
 			}
 		});
@@ -377,14 +418,17 @@ role="dialog" tabindex="-1">
 
 					waktu_undangan = moment(new Date(data.waktu_undangan)).format('DD-MM-YYYY HH:mm');
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
 
 					$('#no_urut_L').val(data.no_urut);
 					$('#no_urut').val(data.no_urut);
 					$('#no_surat').val(data.no_surat);
+					$('#asal_surat').val(data.asal_surat);
 					$('#waktu_undangan').val(waktu_undangan);
 					$('#tempat_undangan').val(data.tempat_undangan);
 					$('#uraian').val(data.uraian);
 					$('#tgl_terima').val(tgl_terima);
+					$('#tgl_surat').val(tgl_surat);
 				}
 			}
 		});
@@ -399,10 +443,12 @@ role="dialog" tabindex="-1">
 		form_data.append("no_urut_L", $('#no_urut_L').val());
 		form_data.append("no_urut", $('#no_urut').val());
 		form_data.append("no_surat", $('#no_surat').val());
+		form_data.append("asal_surat", $('#asal_surat').val());
 		form_data.append("waktu_undangan", $('#waktu_undangan').val());
 		form_data.append("tempat_undangan", $('#tempat_undangan').val());
 		form_data.append("uraian", $('#uraian').val());
 		form_data.append("tgl_terima", $('#tgl_terima').val());
+		form_data.append("tgl_surat", $('#tgl_surat').val());
 		$.ajax({
 			url : "<?php echo base_url()?>admin/undangan/datainput",
 			type : 'POST',
@@ -413,7 +459,7 @@ role="dialog" tabindex="-1">
 			success: function(data){
 				if (data.status=="validasi") {
 					$.each(data, function(key, value) {
-						$('#' + key).parents('.form-group').find('#er').addClass('text-danger').html(value);
+						$('#' + key).parents('.data_input').find('#er').addClass('text-danger').html(value);
 					});
 
 				} else {
@@ -433,7 +479,7 @@ role="dialog" tabindex="-1">
 		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
 		$('small#er').html('');
-		$('input').val('');
+		$('input:not(#tgl_filter)').val('');
 		$('select').val('');
 	}
 
@@ -470,11 +516,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable()
+	function dataTable($date = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/undangan/view_data',
+				"url": '<?php echo base_url()?>admin/undangan/view_data/'+$date,
 				"type": "POST",
 			},
 			serverside:true,
@@ -511,17 +557,14 @@ role="dialog" tabindex="-1">
 
 		$('.modal_disposisi').on('click', function(){
 			$('#panel').html(panel_manipulation);
-			$('#nosurat_disposisi').val($('#info').val());
+			$('#nourut_disposisi').val($('#info').val());
 		});
 
 		//Active Menu
 		$('#surat').addClass('active open');
 		$('#undangan').addClass('active hover');
 
-		dataTable();
-
-
-		$("#tgl_terima, #waktu_undangan, #tgl_disposisi").keypress(function(event) {
+		$("#tgl_terima, #waktu_undangan, #tgl_disposisi, #tgl_surat, #tgl_filter").keypress(function(event) {
 			event.preventDefault();
 		});
 
@@ -529,19 +572,31 @@ role="dialog" tabindex="-1">
 			format: "HH:mm DD-MM-YYYY",
 		});
 
-		$('#tgl_terima, #tgl_disposisi').datetimepicker({			
-			format: "DD-MM-YYYY",
+		$('#tgl_surat').datetimepicker({			
+			format: "DD-MM-YYYY"
 		});
+
+		$('#tgl_terima, #tgl_disposisi, #tgl_filter').datetimepicker({			
+			format: "DD-MM-YYYY",
+			date: new Date()
+		});
+
 
 		$('.tambah').on('click', function(){
 
 			$('#judul').html('Tambah');
 			$('small#er').html('');
-			$('input').val('');
+			$('input:not(#tgl_filter)').val('');
 			$('select').val('');
 			$('textarea').val('');
 		});
 
+		dataTable($('#tgl_filter').val());
+
+		$('#filter').click(function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#tgl_filter').val());
+		});
 
 		$('.add_disposisi').click(function(){
 			$('#panel').append($('#add_panel').html());

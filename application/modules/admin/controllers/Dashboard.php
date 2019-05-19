@@ -108,7 +108,7 @@ class Dashboard extends CI_Controller {
 
 	function view_surat()
 	{
-		$list = $this->surat_masuk->get_data(1);
+		$list = $this->surat_masuk->get_data();
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_masuk) {
@@ -133,7 +133,7 @@ class Dashboard extends CI_Controller {
 
 	function view_undangan()
 	{
-		$list = $this->undangan->get_data(1);
+		$list = $this->undangan->get_data();
 		$data = array();
 		$no = 1;
 		foreach ($list as $undangan) {

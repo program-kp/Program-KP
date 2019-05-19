@@ -19,7 +19,20 @@
 			</div>
 			
 			<div class="panel-body">
-				<button type="button" class="btn btn-primary btn-sm tambah" data-toggle="modal" data-target="#modal">Tambah Surat Keluar</button><hr>
+				<div class="row">
+					<div class="col-md-4">
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button>
+					</div>
+					<div class="col-md-2"></div>
+					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
+					<div class="col-md-4 col-sm-12">
+						<input type="text" class="form-control" id="tgl_filter">
+					</div>
+					<div class="col-md-1 col-sm-12">
+						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
+					</div>
+				</div>
+				<hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
@@ -45,7 +58,7 @@
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
 role="dialog" tabindex="-1">
-<div class="modal-dialog modal-simple modal-center modal-lg">
+<div class="modal-dialog modal-simple modal-lg">
 	<div class="modal-content">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -76,6 +89,13 @@ role="dialog" tabindex="-1">
 				<label class="col-sm-2 form-label">Unit Pengolah<span required="">*</span></label>
 				<div class="col-sm-4 data_input">
 					<?php echo form_dropdown('unit_pengolah', $ar_bidang, '', ["class" => "form-control input_data", 'id' => 'unit_pengolah']); ?>
+					<small id=er>Validasi View</small>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 form-label">Tanggal Terima<span required="">*</span></label>
+				<div class="col-sm-10 data_input">
+					<?php echo form_input('tgl_terima', '', ["class" => "form-control", 'id' => 'tgl_terima']); ?>
 					<small id=er>Validasi View</small>
 				</div>
 			</div>
@@ -129,6 +149,7 @@ role="dialog" tabindex="-1">
 						<th style="width:150px">No. Surat</th>
 						<th style="width:150px">Unit Pengolah</th>
 						<th style="width:100px">Tanggal Surat</th>
+						<th style="width:100px">Tanggal Terima</th>
 						<th>Perihal</th>
 					</tr>
 				</thead>
@@ -136,7 +157,8 @@ role="dialog" tabindex="-1">
 					<tr>
 						<td id="hapus_nosurat"></td>
 						<td id="hapus_unit"></td>
-						<td id="hapus_tgl"></td>
+						<td id="hapus_tglsurat"></td>
+						<td id="hapus_tglterima"></td>
 						<td id="hapus_perihal"></td>
 					</tr>
 				</tbody>
@@ -183,11 +205,6 @@ role="dialog" tabindex="-1">
 						<td id="info_unit"></td>
 					</tr>
 					<tr>
-						<td align="right">Tanggal Surat</td>
-						<td align="center">:</td>
-						<td id="info_tgl"></td>
-					</tr>
-					<tr>
 						<td align="right">Perihal</td>
 						<td align="center">:</td>
 						<td id="info_perihal"></td>
@@ -201,6 +218,16 @@ role="dialog" tabindex="-1">
 						<td align="right">Keterangan</td>
 						<td align="center">:</td>
 						<td id="info_ket"></td>
+					</tr>
+					<tr>
+						<td align="right">Tanggal Surat</td>
+						<td align="center">:</td>
+						<td id="info_tglsurat"></td>
+					</tr>
+					<tr>
+						<td align="right">Tanggal Terima</td>
+						<td align="center">:</td>
+						<td id="info_tglterima"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -224,7 +251,8 @@ role="dialog" tabindex="-1">
 		$('#id').val($('#confirm'+no).data().value);
 		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
 		$('#hapus_unit').html($('#confirm'+no).data().unit);
-		$('#hapus_tgl').html($('#confirm'+no).data().tgl);
+		$('#hapus_tglsurat').html($('#confirm'+no).data().tglsurat);
+		$('#hapus_tglterima').html($('#confirm'+no).data().tglterima);
 		$('#hapus_perihal').html($('#confirm'+no).data().perihal);
 		$('#modal_hapus').modal('show');
 	}
@@ -267,11 +295,13 @@ role="dialog" tabindex="-1">
 					$('#modal_info').modal('show');
 
 					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
+					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
 
 					$('#info_nourut').html(data.no_urut);
 					$('#info_nosurat').html(data.no_surat);
 					$('#info_unit').html(data.unit_pengolah);
-					$('#info_tgl').html(tgl_surat);
+					$('#info_tglsurat').html(tgl_surat);
+					$('#info_tglterima').html(tgl_terima);
 					$('#info_perihal').html(data.perihal);
 					$('#info_tujuan').html(data.tujuan_surat);
 					$('#info_ket').html(data.keterangan);
@@ -301,11 +331,13 @@ role="dialog" tabindex="-1">
 					$('#judul').html('Edit');
 
 					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
+					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
 
 					$('#no_urut_L').val(data.no_urut);
 					$('#no_surat').val(data.no_surat);
 					$('#no_urut').val(data.no_urut);
 					$('#tgl_surat').val(tgl_surat);
+					$('#tgl_terima').val(tgl_terima);
 					$('#unit_pengolah').val(data.unit_pengolah);
 					$('#perihal').val(data.perihal);
 					$('#tujuan_surat').val(data.tujuan_surat);
@@ -325,6 +357,7 @@ role="dialog" tabindex="-1">
 		form_data.append("no_urut", $('#no_urut').val());
 		form_data.append("no_surat", $('#no_surat').val());
 		form_data.append("tgl_surat", $('#tgl_surat').val());
+		form_data.append("tgl_terima", $('#tgl_terima').val());
 		form_data.append("unit_pengolah", $('#unit_pengolah').val());
 		form_data.append("perihal", $('#perihal').val());
 		form_data.append("tujuan_surat", $('#tujuan_surat').val());
@@ -359,7 +392,7 @@ role="dialog" tabindex="-1">
 		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
 		$('small#er').html('');
-		$('input').val('');
+		$('input:not(#tgl_filter)').val('');
 		$('select').val('');
 	}
 
@@ -396,11 +429,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable()
+	function dataTable($date = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/surat_keluar/view_data',
+				"url": '<?php echo base_url()?>admin/surat_keluar/view_data/'+$date,
 				"type": "POST",
 			},
 			responsive: true,
@@ -436,9 +469,7 @@ role="dialog" tabindex="-1">
 		$('#surat').addClass('active open');
 		$('#surat_keluar').addClass('active hover');
 
-		dataTable();
-
-		$("#tgl_surat").keypress(function(event) {
+		$("#tgl_surat, #tgl_filter").keypress(function(event) {
 			event.preventDefault();
 		});
 
@@ -446,15 +477,27 @@ role="dialog" tabindex="-1">
 			format: "DD-MM-YYYY",
 		});	
 
+		$('#tgl_terima, #tgl_filter').datetimepicker({		
+			format: "DD-MM-YYYY",
+			date: new Date()
+		});	
+
 		$('.tambah').on('click', function(){
 
 			$('#judul').html('Tambah');
 			$('er').html('');
 			$('small').html('');
-			$('input').val('');
+			$('input:not(#tgl_filter)').val('');
 			$('select').val('');
 			$('textarea').val('');
-		})
+		});
+
+		dataTable($('#tgl_filter').val());
+
+		$('#filter').click(function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#tgl_filter').val());
+		});
 	});
 </script>
 <!-- END SCRIPT -->

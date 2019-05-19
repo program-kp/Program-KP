@@ -14,13 +14,15 @@ class Surat_masuk_m extends CI_Model {
 			return false;
 	}
 
-	function get_data($dash = null)
+	function get_data($date = null)
 	{
-		$date = date("Y-m-d");
+		$date_now = date("Y-m-d");
 		$this->db->select('tbl_surat_masuk.*, (SELECT COUNT(*) FROM tbl_disposisi where tbl_disposisi.no_urut_surat=tbl_surat_masuk.no_urut) as jumlah');
 		$this->db->from('tbl_surat_masuk');
 		$this->db->order_by('tbl_surat_masuk.no_urut', 'desc');
-		if ($dash != null) {
+		if ($date == null) {
+			$this->db->where('tbl_surat_masuk.tgl_terima', $date_now);
+		} else {
 			$this->db->where('tbl_surat_masuk.tgl_terima', $date);
 		}
 		$query = $this->db->get();

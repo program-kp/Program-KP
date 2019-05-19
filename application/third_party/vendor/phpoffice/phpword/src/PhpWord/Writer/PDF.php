@@ -46,9 +46,13 @@ class PDF
     {
         $pdfLibraryName = Settings::getPdfRendererName();
         $pdfLibraryPath = Settings::getPdfRendererPath();
-        if (is_null($pdfLibraryName) || is_null($pdfLibraryPath)) {
-            throw new Exception('PDF rendering library or library path has not been defined.');
+        if (is_null($pdfLibraryName)) {
+            $gagal = 'Gagal Nama';
+        } else if (is_null($pdfLibraryPath)) {
+            $gagal = 'Gagal Path';
         }
+
+        throw new Exception($gagal);
 
         $includePath = str_replace('\\', '/', get_include_path());
         $rendererPath = str_replace('\\', '/', $pdfLibraryPath);

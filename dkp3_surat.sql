@@ -60,12 +60,12 @@ CREATE TABLE `tbl_disposisi` (
 /*Data for the table `tbl_disposisi` */
 
 insert  into `tbl_disposisi`(`kode_disposisi`,`no_urut_surat`,`no_urut_undangan`,`tipe_surat`,`tujuan_surat`,`tgl_disposisi`) values 
-(64,2147483647,NULL,'Surat Masuk',65,'2019-05-17'),
+(64,11,NULL,'Surat Masuk',65,'2019-05-17'),
 (66,2432,NULL,'Surat Masuk',65,'2019-05-17'),
 (67,2432,NULL,'Surat Masuk',27,'2019-05-17'),
 (68,2432,NULL,'Surat Masuk',1,'2019-05-17'),
-(70,NULL,123412,'Undangan',1,'2019-05-16'),
-(71,NULL,123412,'Undangan',27,'2019-05-23'),
+(70,NULL,67,'Undangan',1,'2019-05-16'),
+(71,NULL,67,'Undangan',27,'2019-05-23'),
 (74,NULL,4,'Undangan',65,'2019-05-15'),
 (75,NULL,4,'Undangan',66,'2019-05-15'),
 (76,NULL,4,'Undangan',27,'2019-05-15'),
@@ -79,6 +79,7 @@ CREATE TABLE `tbl_surat_keluar` (
   `no_urut` int(11) DEFAULT NULL,
   `no_surat` varchar(30) NOT NULL,
   `tgl_surat` date DEFAULT NULL,
+  `tgl_terima` date DEFAULT NULL,
   `perihal` text,
   `tujuan_surat` text,
   `keterangan` text,
@@ -91,10 +92,10 @@ CREATE TABLE `tbl_surat_keluar` (
 
 /*Data for the table `tbl_surat_keluar` */
 
-insert  into `tbl_surat_keluar`(`no_urut`,`no_surat`,`tgl_surat`,`perihal`,`tujuan_surat`,`keterangan`,`unit_pengolah`,`tahun`) values 
-(12,'200/012-PP/DKP3/2019','2019-05-18','12 vhngiaue hgikduhzjgiuaer uiewhft iuWEHR NCiuweh iLWE\nEU FT098weutn oWJFD ur984uwT VAOEWJFSLJR 0','12W9UT','ewrvqw345tq3456eqr12',1,NULL),
-(21312,'213123','2019-05-17','12312','3123','12312',66,NULL),
-(213,'21321','2019-05-17','12321','3123','1231',68,NULL);
+insert  into `tbl_surat_keluar`(`no_urut`,`no_surat`,`tgl_surat`,`tgl_terima`,`perihal`,`tujuan_surat`,`keterangan`,`unit_pengolah`,`tahun`) values 
+(12,'200/012-PP/DKP3/2019','2019-05-18','2019-05-19','12 vhngiaue hgikduhzjgiuaer uiewhft iuWEHR NCiuweh iLWE\nEU FT098weutn oWJFD ur984uwT VAOEWJFSLJR 0','12W9UT','ewrvqw345tq3456eqr12',1,NULL),
+(21312,'213123','2019-05-17','2019-05-19','12312','3123','12312',66,NULL),
+(213,'21321','2019-05-17','2019-05-18','12321','3123','1231',68,NULL);
 
 /*Table structure for table `tbl_surat_masuk` */
 
@@ -105,20 +106,21 @@ CREATE TABLE `tbl_surat_masuk` (
   `no_surat` varchar(30) DEFAULT NULL,
   `asal_surat` varchar(50) DEFAULT NULL,
   `perihal` text,
+  `tgl_surat` date DEFAULT NULL,
   `tgl_terima` date DEFAULT NULL,
-  `tahun` int(11) DEFAULT NULL,
   PRIMARY KEY (`no_urut`),
   KEY `Asal Surat` (`asal_surat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_masuk` */
 
-insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_terima`,`tahun`) values 
-(123,'123','1231231','12321312312','2019-05-18',NULL),
-(1234,'12312','12312','231213123','2019-05-17',2019),
-(2432,'eqwe','qweqw','eqweq','2019-05-18',NULL),
-(123333,'12344','21312','31231','2019-05-18',NULL),
-(2147483647,'qwerty','65qwertyuiop','324324234','2019-05-18',NULL);
+insert  into `tbl_surat_masuk`(`no_urut`,`no_surat`,`asal_surat`,`perihal`,`tgl_surat`,`tgl_terima`) values 
+(11,'800/011-PP/DKP3/2019','Dinas Mantul','Perihal Perihal Perihal Perihal Perihal Perihal',NULL,'2019-05-19'),
+(123,'123','1231231','12321312312',NULL,'2019-05-18'),
+(1234,'12312','12312','231213123',NULL,'2019-05-17'),
+(2432,'eqwe','qweqw','eqweq',NULL,'2019-05-18'),
+(12313,'1231231','213123','123123','2019-05-19','2019-05-19'),
+(123333,'12344','21312','31231',NULL,'2019-05-18');
 
 /*Table structure for table `tbl_surat_undangan` */
 
@@ -128,20 +130,21 @@ CREATE TABLE `tbl_surat_undangan` (
   `no_urut` int(11) NOT NULL,
   `no_surat` varchar(30) DEFAULT NULL,
   `tgl_terima` date DEFAULT NULL,
+  `tgl_surat` date DEFAULT NULL,
+  `asal_surat` varchar(100) DEFAULT NULL,
   `waktu_undangan` datetime DEFAULT NULL,
   `tempat_undangan` varchar(100) DEFAULT NULL,
-  `tahun` int(11) DEFAULT NULL,
   `uraian` text,
-  `keterangan` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`no_urut`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `tbl_surat_undangan` */
 
-insert  into `tbl_surat_undangan`(`no_urut`,`no_surat`,`tgl_terima`,`waktu_undangan`,`tempat_undangan`,`tahun`,`uraian`,`keterangan`) values 
-(1,'3123123','2019-05-18','2019-05-18 14:23:00','QWERTY',NULL,'Rapat pulang',NULL),
-(4,'2131231','2019-05-18','2019-05-19 14:23:00','1231',NULL,'Rapat Tarus',NULL),
-(123412,'800/012-PP/DKP3/2019','2017-07-26','2019-05-21 14:24:00','3242342',NULL,'Rapat Anu',NULL);
+insert  into `tbl_surat_undangan`(`no_urut`,`no_surat`,`tgl_terima`,`tgl_surat`,`asal_surat`,`waktu_undangan`,`tempat_undangan`,`uraian`) values 
+(1,'3123123','2019-05-18',NULL,NULL,'2019-05-18 14:23:00','QWERTY','Rapat pulang'),
+(4,'2131231','2019-05-18',NULL,NULL,'2019-05-19 14:23:00','1231','Rapat Tarus'),
+(67,'800/067-PP/DKP3/2019','2019-05-17','2019-05-19','1111111','2019-05-21 14:24:00','3242342','Rapat Anu'),
+(12345,'12','2019-05-19','2019-05-19','12','2019-05-19 08:00:00','12','12');
 
 /*Table structure for table `tbl_user` */
 

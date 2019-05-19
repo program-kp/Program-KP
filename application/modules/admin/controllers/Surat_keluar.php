@@ -87,6 +87,7 @@ class Surat_keluar extends CI_Controller {
 		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|numeric|trim|callback_cekInput|numeric');
 		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
 		$this->form_validation->set_rules('tgl_surat', 'Tanggal Surat', 'required|trim');
+		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
 		$this->form_validation->set_rules('unit_pengolah', 'Unit Pengolah', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('perihal', 'Perihal', 'required|trim|callback_cekInput');
 		$this->form_validation->set_rules('tujuan_surat', 'Tujuan Surat', 'required|trim|callback_cekInput');
@@ -102,6 +103,7 @@ class Surat_keluar extends CI_Controller {
 				'no_urut' => form_error('no_urut'),
 				'no_surat' => form_error('no_surat'),
 				'tgl_surat' => form_error('tgl_surat'),
+				'tgl_terima' => form_error('tgl_terima'),
 				'unit_pengolah' => form_error('unit_pengolah'),
 				'perihal' => form_error('perihal'),
 				'tujuan_surat' => form_error('tujuan_surat'),
@@ -116,6 +118,7 @@ class Surat_keluar extends CI_Controller {
 				"no_urut" => $this->input->post('no_urut', TRUE),
 				"no_surat" => $this->input->post('no_surat', TRUE),
 				"tgl_surat" => date('Y-m-d', strtotime($this->input->post('tgl_surat', TRUE))),
+				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
 				"unit_pengolah" => $this->input->post('unit_pengolah', TRUE),
 				"perihal" => $this->input->post('perihal', TRUE),
 				"tujuan_surat" => $this->input->post('tujuan_surat', TRUE),
@@ -164,9 +167,10 @@ class Surat_keluar extends CI_Controller {
 		}
 	}
 
-	function view_data()
+	function view_data($date = null)
 	{
-		$list = $this->surat_keluar->get_data();
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_keluar->get_data($tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_keluar) {
