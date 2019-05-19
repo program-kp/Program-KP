@@ -14,22 +14,27 @@ class Surat_masuk_m extends CI_Model {
 			return false;
 	}
 
-	function get_data()
+	function get_data($id, $date = null)
 	{
-		$this->db->select('tbl_surat_masuk.*, tbl_bidang.*');
+		$date_now = date("Y-m-d");
+		$this->db->select('*');
 		$this->db->from('tbl_surat_masuk');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_masuk.asal_surat');
+		$this->db->join('tbl_disposisi', 'tbl_disposisi.no_urut_surat = tbl_surat_masuk.no_urut');
 		$this->db->order_by('tbl_surat_masuk.no_urut', 'desc');
+		$this->db->where('tbl_disposisi.tujuan_surat', $id);
+		if ($date == null) {
+			$this->db->where('tbl_surat_masuk.tgl_terima', $date_now);
+		} else {
+			$this->db->where('tbl_surat_masuk.tgl_terima', $date);
+		}
 		$query = $this->db->get();
 		return $query->result();
 	}
 
 	function get_data_byID($no_urut)
 	{
-		$this->db->select('tbl_surat_masuk.*, tbl_bidang.*');
+		$this->db->select('tbl_surat_masuk.*');
 		$this->db->from('tbl_surat_masuk');
-		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_masuk.asal_surat');
-		$this->db->order_by('tbl_surat_masuk.no_urut', 'desc');
 		$this->db->where('no_urut', $no_urut);
 		$query = $this->db->get();
 		return $query->row();

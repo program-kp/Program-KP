@@ -18,6 +18,17 @@
 			</div>
 			
 			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6"></div>
+					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
+					<div class="col-md-4 col-sm-12">
+						<input type="text" class="form-control" id="tgl_filter">
+					</div>
+					<div class="col-md-1 col-sm-12">
+						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
+					</div>
+				</div>
+				<hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
@@ -106,29 +117,14 @@ role="dialog" tabindex="-1">
 	{
 		$('#id').val($('#confirm'+no).data().value);
 		$('#hapus_nosurat').html($('#confirm'+no).data().nosurat);
+		$('#hapus_asalsurat').html($('#confirm'+no).data().asalsurat);
 		$('#hapus_waktu').html($('#confirm'+no).data().waktu);
 		$('#hapus_tempat').html($('#confirm'+no).data().tempat);
-		$('#hapus_tgl').html($('#confirm'+no).data().tanggal);
+		$('#hapus_tglsurat').html($('#confirm'+no).data().tglsurat);
+		$('#hapus_tglterima').html($('#confirm'+no).data().tglterima);
 		$('#modal_hapus').modal('show');
 	}
 
-	function hapus()
-	{
-		var nourut = $('#id').val();
-		
-		$.ajax({
-			url : "<?php echo base_url()?>admin/undangan/datahapus/"+nourut,
-			type : 'POST',
-			dataType:'json',
-			success: function(data) {
-				if (data.hasil == "berhasil") {
-					success();
-					notify(data.title, data.message, data.icon, data.type);
-					table.ajax.reload( null, false );
-				}
-			}
-		});
-	}
 
 	function info(no)
 	{
@@ -149,13 +145,17 @@ role="dialog" tabindex="-1">
 
 					waktu_undangan = "Jam <b>"+moment(new Date(data.waktu_undangan)).format('HH:mm')+"</b>, Tanggal <b>"+moment(new Date(data.waktu_undangan)).format('DD-MM-YYYY')+"</b>";
 					tgl_terima = moment(new Date(data.tgl_terima)).format('DD-MM-YYYY');
+					tgl_surat = moment(new Date(data.tgl_surat)).format('DD-MM-YYYY');
 
 					$('#info').val(data.no_urut);
 					$('#info_nourut').html(data.no_urut);
 					$('#info_nosurat').html(data.no_surat);
+					$('#info_asalsurat').html(data.asal_surat);
 					$('#info_waktuundangan').html(waktu_undangan);
 					$('#info_tempatundangan').html(data.tempat_undangan);
+					$('#info_uraian').html(data.uraian);
 					$('#info_tglterima').html(tgl_terima);
+					$('#info_tglsurat').html(tgl_surat);
 				}
 			}
 		});
@@ -165,9 +165,9 @@ role="dialog" tabindex="-1">
 	function success()
 	{
 		$('#modal').modal('hide');
-		// $('#judul').html('Tambah');
+		$('#judul').html('Info');
 		$('small#er').html('');
-		$('input').val('');
+		$('input:not(#tgl_filter)').val('');
 		$('select').val('');
 	}
 
@@ -204,11 +204,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable()
+	function dataTable($date = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>bidang/undangan/view_data',
+				"url": '<?php echo base_url()?>bidang/undangan/view_data/'+$date,
 				"type": "POST",
 			},
 			serverside: true,
@@ -240,15 +240,14 @@ role="dialog" tabindex="-1">
 	$(document).ready(function(){
 
 		var table;
+		var nourut;
+		var panel_manipulation = $('#panel').html();
 
 		//Active Menu
-		$('#surat').addClass('active open');
 		$('#undangan').addClass('active hover');
 
-		dataTable();
 
-
-		$("#tgl_terima, #waktu_undangan").keypress(function(event) {
+		$("#tgl_terima, #waktu_undangan, #tgl_disposisi, #tgl_surat, #tgl_filter").keypress(function(event) {
 			event.preventDefault();
 		});
 
@@ -256,17 +255,22 @@ role="dialog" tabindex="-1">
 			format: "DD/MM/YYYY HH:mm",
 		});
 
-		$('#tgl_terima').datetimepicker({			
-			format: "DD/MM/YYYY",
+		$('#tgl_surat').datetimepicker({			
+			format: "DD-MM-YYYY"
 		});
 
-		$('.tambah').on('click', function(){
+		$('#tgl_terima, #tgl_disposisi, #tgl_filter').datetimepicker({			
+			format: "DD-MM-YYYY",
+			date: new Date()
+		});
 
-			$('#judul').html('Tambah');
-			$('small#er').html('');
-			$('input').val('');
-			$('select').val('');
-		})
+		dataTable($('#tgl_filter').val());
+
+		$('#filter').click(function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#tgl_filter').val());
+		});
+
 	});
 </script>
 <!-- END SCRIPT -->

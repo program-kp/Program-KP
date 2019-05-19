@@ -14,12 +14,18 @@ class Surat_keluar_m extends CI_Model {
 			return false;
 	}
 
-	function get_data($id)
+	function get_data($id, $date = null)
 	{
-		$this->db->order_by('no_urut', 'asc');
+		$date_now = date("Y-m-d");
 		$this->db->select('*');
 		$this->db->from('tbl_surat_keluar');
-		$this->db->where('id_bidang', $id);
+		$this->db->order_by('no_urut', 'desc');
+		$this->db->where('unit_pengolah', $id);
+		if ($date == null) {
+			$this->db->where('tgl_terima', $date_now);
+		} else {
+			$this->db->where('tgl_terima', $date);
+		}
 		$query = $this->db->get();
 		return $query->result();
 	}

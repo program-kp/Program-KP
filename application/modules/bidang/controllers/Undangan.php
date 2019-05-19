@@ -52,114 +52,12 @@ class Undangan extends CI_Controller {
 		}
 	}
 
-	function datahapus($no_urut)
+
+	function view_data($date = null)
 	{
-		$cek = $this->surat_undangan->cek($no_urut);
-		$data = $this->surat_undangan->get_data_byID($no_urut);
-		if ($cek) {
-
-			$this->surat_undangan->delete($no_urut);
-
-			$validasi = [
-				'hasil' => 'berhasil',
-				'type' => 'success',
-				'icon' => 'fa fa-check',
-				'title' => 'Berhasil',
-				'message' => 'Data <b>'.$data->no_surat.'</b> Berhasil dihapus.'
-			];
-		} else {
-			$validasi = [
-				'hasil' => 'gagal',
-				'type' => 'danger',
-				'icon' => 'fa fa-ban',
-				'title' => 'Gagal',
-				'message' => 'Data <b>'.$data->no_surat.'</b> tidak Tersedia.'
-			];
-		}
-		echo json_encode($validasi);
-	}
-
-	function datainput()
-	{		
-		$this->load->library('form_validation');
-		// Set Rule
-		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
-		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
-		$this->form_validation->set_rules('waktu_undangan', 'Waktu Undangan', 'required|trim');
-		$this->form_validation->set_rules('tempat_undangan', 'Tempat Undangan', 'required|trim|callback_cekInput');
-		$this->form_validation->set_rules('tgl_terima', 'Tanggal Terima', 'required|trim');
-
-		$no_urut_L = $this->input->post('no_urut_L', TRUE);
-		$no_urut = $this->input->post('no_urut', TRUE);
-
-		if ($this->form_validation->run() == FALSE) {
-
-			$validasi = [
-				'status' => 'validasi',
-				'no_urut' => form_error('no_urut'),
-				'no_surat' => form_error('no_surat'),
-				'waktu_undangan' => form_error('waktu_undangan'),
-				'tempat_undangan' => form_error('tempat_undangan'),
-				'tgl_terima' => form_error('tgl_terima'),
-			];
-
-			echo json_encode($validasi);
-
-		} else {
-
-			$data = [
-				"no_urut" => $this->input->post('no_urut', TRUE),
-				"no_surat" => $this->input->post('no_surat', TRUE),
-				"waktu_undangan" => date('Y-m-d h:i', strtotime($this->input->post('waktu_undangan', TRUE))),
-				"tempat_undangan" => $this->input->post('tempat_undangan', TRUE),
-				"tgl_terima" => date('Y-m-d', strtotime($this->input->post('tgl_terima', TRUE))),
-			];
-
-			$cek = $this->surat_undangan->cek($no_urut_L);
-			if ($cek) {
-
-				$suratId = $this->surat_undangan->get_data_byID($no_urut_L);
-				$this->surat_undangan->update($no_urut_L, $data);
-
-				$validasi = [
-					'type' => 'success',
-					'icon' => 'fa fa-check',
-					'title' => 'Berhasil',
-					'message' => 'Data <b>'.$suratId->no_surat.'</b> Berhasil diedit.'
-				];
-
-			} else {
-				$cek = $this->surat_undangan->cek($no_urut);
-				if ($cek) {
-
-					$validasi = [
-						'type' => 'danger',
-						'icon' => 'fa fa-ban',
-						'title' => 'Gagal',
-						'message' => 'Terdapat Kesalahan pada Inputan Anda.'
-					];
-
-				} else {
-
-					$this->surat_undangan->insert($data);
-
-					$validasi = [
-						'type' => 'success',
-						'icon' => 'fa fa-check',
-						'title' => 'Berhasil',
-						'message' => 'Data '.$this->input->post('no_surat', TRUE).' Berhasil ditambah.'
-					];
-
-				}
-			}
-
-			echo json_encode($validasi);
-		}
-	}
-
-	function view_data()
-	{
-		$list = $this->surat_undangan->get_data();
+		$id_bidang = $this->session->userdata('id');
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_undangan->get_data($id_bidang, $tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_undangan) {

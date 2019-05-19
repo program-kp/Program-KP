@@ -52,10 +52,11 @@ class Surat_keluar extends CI_Controller {
 		}
 	}
 
-	function view_data()
+	function view_data($date = null)
 	{
-        $id_bidang = $this->session->userdata('id');
-		$list = $this->surat_keluar->get_data($id_bidang);
+		$id_bidang = $this->session->userdata('id');
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_keluar->get_data($id_bidang, $tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_keluar) {
@@ -68,7 +69,7 @@ class Surat_keluar extends CI_Controller {
 			"</div>";
 			$row[] = $surat_keluar->no_surat;
 			$row[] = $tgl_surat;
-			$row[] = $surat_keluar->perihal;
+			$row[] = $surat_keluar->tujuan_surat;
 
 
 			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_keluar->no_urut."' onClick='info(".$no.")'>Info</button></div>";
@@ -83,11 +84,6 @@ class Surat_keluar extends CI_Controller {
         echo json_encode($output);
         // echo $id_bidang;
     }
-    
-    // function cek()
-    // {
-    //     echo $this->session->userdata('id');
-    // }
 
 }
 

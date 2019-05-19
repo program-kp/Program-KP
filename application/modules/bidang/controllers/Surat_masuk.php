@@ -40,25 +40,26 @@ class Surat_masuk extends CI_Controller {
 		echo "</pre>";
 	}
 
-	function view_data()
+	function view_data($date = null)
 	{
-		$list = $this->surat_masuk->get_data();
+		$id_bidang = $this->session->userdata('id');
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->surat_masuk->get_data($id_bidang, $tgl_filter);
 		$data = array();
 		$no = 1;
 		foreach ($list as $surat_masuk) {
 			$row = array();
 
+			$tgl_surat = date('d-m-Y', strtotime($surat_masuk->tgl_surat));
 			$tgl_terima = date('d-m-Y', strtotime($surat_masuk->tgl_terima));
 
-			$row[] = "
-			<div align='center'>".$no++.
-			"</div>";
+			$row[] = "<div align='center'>".$no++."</div>";
 			$row[] = $surat_masuk->no_surat;
-			$row[] = $surat_masuk->nama_bidang;
+			$row[] = $surat_masuk->asal_surat;
 			$row[] = $tgl_terima;
 
 
-			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_masuk->no_urut."' onClick='info(".$no.")'>Info</button></div>";
+			$row[] = "<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_masuk->no_urut."' onClick='info(".$no.")'>Info</button>";
 
 			$data[] = $row;
 		}
