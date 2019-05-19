@@ -286,9 +286,10 @@ class Disposisi extends CI_Controller {
 		}
 	}
 
-	function view_data_surat($id_bidang = null)
+	function view_data_surat($date = null, $id_bidang = null)
 	{
-		$list = $this->disposisi->get_data_surat($id_bidang);
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->disposisi->get_data_surat($tgl_filter, $id_bidang);
 		$data = array();
 		$no = 1;
 		foreach ($list as $disposisi) {
@@ -408,9 +409,10 @@ class Disposisi extends CI_Controller {
 		}
 	}
 
-	function view_data_undangan($id_bidang = null)
+	function view_data_undangan($date = null, $id_bidang = null)
 	{
-		$list = $this->disposisi->get_data_undangan($id_bidang);
+		$tgl_filter = date('Y-m-d', strtotime($date));
+		$list = $this->disposisi->get_data_undangan($tgl_filter, $id_bidang);
 		$data = array();
 		$no = 1;
 		foreach ($list as $disposisi) {

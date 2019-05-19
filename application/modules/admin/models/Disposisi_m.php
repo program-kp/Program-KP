@@ -29,8 +29,9 @@ class Disposisi_m extends CI_Model {
 			return false;
 	}
 
-	function get_data_undangan($id_bidang = null)
+	function get_data_undangan($date = null, $id_bidang = null)
 	{
+		$date_now = date("Y-m-d");
 		$this->db->select('tbl_surat_undangan.no_surat, tbl_surat_undangan.no_urut, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi, tbl_disposisi.tgl_disposisi');
 		$this->db->from('tbl_disposisi');
 		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
@@ -38,6 +39,11 @@ class Disposisi_m extends CI_Model {
 		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
 		if ($id_bidang!=null) {
 			$this->db->where('tbl_disposisi.tujuan_surat', $id_bidang);
+		}
+		if ($date == null) {
+			$this->db->where('tbl_disposisi.tgl_disposisi', $date_now);
+		} else {
+			$this->db->where('tbl_disposisi.tgl_disposisi', $date);
 		}
 		$this->db->where('tbl_disposisi.tipe_surat', 'Undangan');
 		$query = $this->db->get();
@@ -57,8 +63,9 @@ class Disposisi_m extends CI_Model {
 		return $query->result();
 	}
 
-	function get_data_surat($id_bidang = null)
+	function get_data_surat($date = null, $id_bidang = null)
 	{
+		$date_now = date("Y-m-d");
 		$this->db->select('tbl_surat_masuk.no_surat, tbl_surat_masuk.no_urut, tbl_bidang.nama_bidang, tbl_disposisi.kode_disposisi, tbl_disposisi.tgl_disposisi');
 		$this->db->from('tbl_disposisi');
 		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
@@ -66,6 +73,11 @@ class Disposisi_m extends CI_Model {
 		$this->db->order_by('tbl_bidang.nama_bidang', 'asc');
 		if ($id_bidang!=null) {
 			$this->db->where('tbl_disposisi.tujuan_surat', $id_bidang);
+		}
+		if ($date == null) {
+			$this->db->where('tbl_disposisi.tgl_disposisi', $date_now);
+		} else {
+			$this->db->where('tbl_disposisi.tgl_disposisi', $date);
 		}
 		$this->db->where('tbl_disposisi.tipe_surat', 'Surat Masuk');
 		$query = $this->db->get();

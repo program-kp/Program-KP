@@ -19,10 +19,17 @@
 			</div>
 			
 			<div class="panel-body">
-				<div class="form-group row">
+				<div class="row">
 					<label class="col-sm-2 form-label">Filter Data</label>
 					<div class="col-sm-4">
 						<?php echo form_dropdown('bidang_filter',$ar_bidang,'',['class'=>'form-control', 'id' => 'bidang_filter']);?>
+					</div>
+					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
+					<div class="col-md-4 col-sm-12">
+						<input type="text" class="form-control" id="tgl_filter">
+					</div>
+					<div class="col-md-1 col-sm-12">
+						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
 					</div>
 				</div>
 				<hr>
@@ -334,7 +341,7 @@ role="dialog" tabindex="-1">
 		$('#modal').modal('hide');
 		$('#judul').html('Tambah');
 		$('small#er').html('');
-		$('input').val('');
+		$('input:not(#tgl_filter)').val('');
 		$('select#tujuan_surat').val('');
 	}
 
@@ -371,11 +378,11 @@ role="dialog" tabindex="-1">
 		});
 	}
 
-	function dataTable($bidang = null)
+	function dataTable($date = null, $bidang = null)
 	{
 		table = $('#tabel').DataTable({
 			"ajax": {
-				"url": '<?php echo base_url()?>admin/disposisi/view_data_surat/'+$bidang,
+				"url": '<?php echo base_url()?>admin/disposisi/view_data_surat/'+$date+'/'+$bidang,
 				"type": "POST",
 			},
 			responsive: true,
@@ -411,14 +418,13 @@ role="dialog" tabindex="-1">
 		$('#disposisi').addClass('active open');
 		$('#dis_surat').addClass('active hover');
 
-		dataTable('');
-
-		$("#tgl_disposisi").keypress(function(event) {
+		$("#tgl_disposisi, #tgl_filter").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_disposisi').datetimepicker({		
+		$('#tgl_disposisi, #tgl_filter').datetimepicker({		
 			format: "DD-MM-YYYY",
+			date: new Date()
 		});	
 
 		$('.tambah').on('click', function(){
@@ -426,14 +432,21 @@ role="dialog" tabindex="-1">
 			$('#judul').html('Tambah');
 			$('er').html('');
 			$('small').html('');
-			$('input').val('');
+			$('input:not(#tgl_filter)').val('');
 			$('select').val('');
 			$('textarea').val('');
 		});
 
+		dataTable($('#tgl_filter').val(), '');
+
 		$('#bidang_filter').on('change', function(){
 			$('#tabel').dataTable().fnDestroy();
-			dataTable($('#bidang_filter').val());
+			dataTable($('#tgl_filter').val(), $('#bidang_filter').val());
+		});
+
+		$('#filter').click(function(){
+			$('#tabel').dataTable().fnDestroy();
+			dataTable($('#tgl_filter').val(), $('#bidang_filter').val());
 		});
 	});
 </script>
