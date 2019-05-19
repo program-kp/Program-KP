@@ -21,7 +21,7 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-4">
-						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button>
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Surat Keluar</button>
 					</div>
 					<div class="col-md-2"></div>
 					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>

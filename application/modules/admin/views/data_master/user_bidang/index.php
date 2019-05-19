@@ -167,7 +167,7 @@ role="dialog" tabindex="-1">
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="reset()">Hapus</button>
+			<button type="button" class="btn btn-sm btn-danger hapus" id="hapus_data" data-dismiss="modal" onclick="reset()">Reset</button>
 		</div>
 	</div>
 </div>

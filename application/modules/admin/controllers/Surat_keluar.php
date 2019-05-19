@@ -177,6 +177,7 @@ class Surat_keluar extends CI_Controller {
 			$row = array();
 
 			$tgl_surat = date('d-m-Y', strtotime($surat_keluar->tgl_surat));
+			$tgl_terima = date('d-m-Y', strtotime($surat_keluar->tgl_terima));
 
 			$row[] = "
 			<div align='center'>".$no++.
@@ -187,7 +188,7 @@ class Surat_keluar extends CI_Controller {
 
 
 			$row[] = "
-			<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_keluar->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_keluar->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_keluar->no_urut."' data-nosurat='".$surat_keluar->no_surat."' data-unit='".$surat_keluar->nama_bidang."' data-tgl='".$tgl_surat."' data-perihal='".$surat_keluar->perihal."' onClick='confirm(".$no.")'>Hapus</button></div>";
+			<div align='center'><button class='btn btn-sm btn-info info' name='info' id='info".$no."' data-value='".$surat_keluar->no_urut."' onClick='info(".$no.")'>Info</button>&ensp;<button class='btn btn-sm btn-secondary edit' name='edit' id='edit".$no."' data-value='".$surat_keluar->no_urut."' onClick='edit(".$no.")'>Edit</button>&ensp;<button class='btn btn-sm btn-danger confirm' name='confirm' id='confirm".$no."'  data-value='".$surat_keluar->no_urut."' data-nosurat='".$surat_keluar->no_surat."' data-unit='".$surat_keluar->nama_bidang."' data-tglsurat='".$tgl_surat."' data-tglterima='".$tgl_terima."' data-perihal='".$surat_keluar->perihal."' onClick='confirm(".$no.")'>Hapus</button></div>";
 
 			$data[] = $row;
 		}
