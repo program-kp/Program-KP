@@ -32,6 +32,7 @@
 						<button class="btn btn-sm btn-primary" id="filter">Filter</button>
 					</div>
 				</div>
+				<hr>
 				<!-- <button id="notify">Tes</button> -->
 				<table id="tabel" class="table table-hover dataTable table-striped table-bordered table-hover w-full">
 					<thead>
