@@ -7,7 +7,7 @@
 	<meta name="description" content="bootstrap material admin template">
 	<meta name="author" content="">
 
-	<title>SMSK&D DKP-3</title>
+	<title>SIPALA SURAT</title>
 
 	<link rel="apple-touch-icon" href="<?php echo base_url() ?>assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/logo-dkp3.png">
@@ -67,7 +67,7 @@
 			<i class="icon md-more" aria-hidden="true"></i></button>
 			<div class="navbar-brand navbar-brand-center">
 				<img class="navbar-brand-logo" src="<?php echo base_url() ?>assets/images/logo-dkp3.png">
-				<span class="navbar-brand-text hidden-xs-down"> SMSK&D DKP-3</span>
+				<span class="navbar-brand-text hidden-xs-down"> SIPALA SURAT</span>
 			</div>
 		</div>
 
