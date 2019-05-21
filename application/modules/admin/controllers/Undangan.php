@@ -9,6 +9,7 @@ class Undangan extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
 		$this->load->model("undangan_m", "surat_undangan");
+		$this->load->library('Word');
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -84,7 +85,6 @@ class Undangan extends CI_Controller {
 		$this->load->library('form_validation');
 		// Set Rule
 		$this->form_validation->set_rules('no_urut', 'Nomor Urut', 'required|trim|callback_cekInput|numeric');
-		$this->form_validation->set_rules('no_surat', 'Nomor Surat', 'required|trim');
 		$this->form_validation->set_rules('asal_surat', 'Asal Surat', 'required|trim');
 		$this->form_validation->set_rules('waktu_undangan', 'Waktu Undangan', 'required|trim');
 		$this->form_validation->set_rules('tempat_undangan', 'Tempat Undangan', 'required|trim|callback_cekInput');
@@ -100,7 +100,6 @@ class Undangan extends CI_Controller {
 			$validasi = [
 				'status' => 'validasi',
 				'no_urut' => form_error('no_urut'),
-				'no_surat' => form_error('no_surat'),
 				'asal_surat' => form_error('asal_surat'),
 				'waktu_undangan' => form_error('waktu_undangan'),
 				'tempat_undangan' => form_error('tempat_undangan'),
@@ -198,6 +197,63 @@ class Undangan extends CI_Controller {
 		];
 
 		echo json_encode($output);
+	}
+
+	function laporan($bulan, $tahun)
+	{
+
+		$data = $this->surat_undangan->laporan($bulan);
+		if (file_exists("fileWord/laporan_surat_undangan.docx")) unlink("fileWord/laporan_surat_undangan.docx");
+
+		$BulanIndoFULL = array("JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER");
+
+		$word = new \PhpOffice\PhpWord\TemplateProcessor('fileWord/template_laporan_surat_undangan.docx');
+		$word->setValue('bulan', $BulanIndoFULL[(int)$bulan-1]);
+		$word->setValue('tahun', $tahun);
+		$word->cloneRow('nourut', count($data));
+
+		$no = 0;
+		foreach($data as $row) {
+			$no+=1;
+
+			$BulanIndo = array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des");
+
+			$bulan = substr($row->tgl_terima, 5, 2);
+			$tgl   = substr($row->tgl_terima, 8, 2);
+
+			$tgl_terima = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
+
+			$bulan = substr($row->waktu_undangan, 5, 2);
+			$tgl   = substr($row->waktu_undangan, 8, 2);
+
+			$tgl_undangan = date('D', strtotime($row->waktu_undangan)).', '.$tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
+
+			$tujuan = array();
+			$tgl_dis = '';
+
+			$dis = $this->surat_undangan->disposisi($row->no_urut);
+
+			foreach ($dis as $row2) {				
+				$tujuan[] = $row2->nama_bidang;
+			};
+
+			$word->setValue('nourut#'.($no), $row->no_urut);
+			$word->setValue('tgl_terima#'.($no), $tgl_terima);
+			$word->setValue('no_surat#'.($no), '- '.$row->no_surat);
+			$word->setValue('uraian#'.($no), '- '.$row->uraian);
+			$word->setValue('hari_tgl#'.($no), '- '.$tgl_undangan);
+			$word->setValue('waktu#'.($no), '- '.date('h:m', strtotime($row->waktu_undangan)));
+			$word->setValue('tempat#'.($no), '- '.$row->tempat_undangan);
+			$word->setValue('ket#'.($no), implode(', ',$tujuan));
+			unset($tujuan);
+			$tujuan = array();
+		}
+
+		$word->saveAs('fileWord/laporan_surat_undangan.docx');
+
+		$this->load->helper('download');
+		force_download('fileWord/laporan_surat_undangan.docx', NULL);
+		unlink("fileWord/laporan_surat_undangan.docx");
 	}
 
 }

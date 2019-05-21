@@ -21,7 +21,8 @@
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-4">
-						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Undangan</button>
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Surat Masuk</button>
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal_cetak">Cetak Laporan</button>
 					</div>
 					<div class="col-md-2"></div>
 					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
@@ -68,18 +69,22 @@ role="dialog" tabindex="-1">
 			<h4 class="modal-title">Cetak Surat Masuk</h4>
 		</div>
 		<div class="modal-body">
-			<div class="form-group row text-center">
-				<div class="col-sm-5 data_input">
-					<?php echo form_input('tgl_mulai', '', ["class" => "form-control", 'id' => 'tgl_mulai', 'autocomplate' => 'off']); ?>
-				</div>&nbsp;-&nbsp;
-				<div class="col-sm-5 data_input float-right">
-					<?php echo form_input('tgl_akhir', '', ["class" => "form-control", 'id' => 'tgl_akhir', 'autocomplate' => 'off']); ?>
+			<form action="#" id="form_cetak">
+				<div class="form-group row">
+					<label class="col-sm-1 form-label">Bulan<span required="">*</span></label>
+					<div class="col-sm-5">
+						<?php echo form_input('bulan', '', ["class" => "form-control", 'id' => 'bulan', 'autocomplate' => 'off']); ?>
+					</div>
+					<label class="col-sm-1 form-label">Tahun<span required="">*</span></label>
+					<div class="col-sm-5 float-right">
+						<?php echo form_input('tahun', '', ["class" => "form-control", 'id' => 'tahun', 'autocomplate' => 'off']); ?>
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 		<div class="modal-footer">
 			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
-			<button type="button" class="btn btn-sm btn-primary simpan" data-dismiss="modal" onclick="cetak()">Simpan</button>
+			<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="cetak_suratmasuk()">Cetak</button>
 		</div>
 	</div>
 </div>
@@ -307,10 +312,15 @@ role="dialog" tabindex="-1">
 <!-- SCRIPT -->
 <script>
 
-    function cetak_disposisi()
-    {
-        location.href = '<?php echo base_url() ?>admin/disposisi/getword_surat/'+$('#nourut_disposisi').val();
-    }
+	function cetak_suratmasuk()
+	{
+		location.href = '<?php echo base_url()?>admin/surat_masuk/laporan/'+$('#bulan').val()+'/'+$('#tahun').val();
+	}
+
+	function cetak_disposisi()
+	{
+		location.href = '<?php echo base_url() ?>admin/disposisi/getword_surat/'+$('#nourut_disposisi').val();
+	}
 
 	function disposisi()
 	{
@@ -570,12 +580,20 @@ role="dialog" tabindex="-1">
 		$('#surat').addClass('active open');
 		$('#surat_masuk').addClass('active hover');
 
-		$("#tgl_terima, #tgl_disposisi, #tgl_surat, #tgl_filter").keypress(function(event) {
+		$("#tgl_terima, #tgl_disposisi, #tgl_surat, #tgl_filter, #bulan, #tahun").keypress(function(event) {
 			event.preventDefault();
 		});
 
-		$('#tgl_surat').datetimepicker({		
+		$('#tgl_surat').datetimepicker({
 			format: "DD-MM-YYYY",
+		});
+
+		$('#bulan').datetimepicker({
+			format: "MM",
+		});
+
+		$('#tahun').datetimepicker({
+			format: "YYYY",
 		});
 
 		$('#tgl_terima, #tgl_disposisi, #tgl_surat, #tgl_filter').datetimepicker({		

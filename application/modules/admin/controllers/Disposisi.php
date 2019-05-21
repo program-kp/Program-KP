@@ -210,16 +210,6 @@ class Disposisi extends CI_Controller {
 		$word->setValue('tgl_terima', $tgl_terima);
 		$word->setValue('nourut', $data->no_urut);
 		$word->saveAs('fileWord/disposisi_surat.docx');
-		// $word->ExportAsFixedFormat('fileWord/disposisi.pdf');
-
-		// $TCPDFPath = realpath(__DIR__ . '/../../../third_party/tcpdf/tcpdf');
-		// \PhpOffice\PhpWord\Settings::setPdfRendererPath($TCPDFPath);
-		// \PhpOffice\PhpWord\Settings::setPdfRendererName('TCPDF');
-
-		// $phpWord = \PhpOffice\PhpWord\IOFactory::load('fileWord/disposisi.docx'); 
-
-		// $xmlWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord , 'PDF');
-		// $xmlWriter->save('result.pdf', true);
 
 		$this->load->helper('download');
 		force_download('fileWord/disposisi_surat.docx', NULL);

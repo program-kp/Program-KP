@@ -9,6 +9,7 @@ class Surat_keluar extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
 		$this->load->model("surat_keluar_m", "surat_keluar");
+		$this->load->library('Word');
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -198,6 +199,59 @@ class Surat_keluar extends CI_Controller {
 		];
 
 		echo json_encode($output);
+	}
+
+
+	function test_laporan($bulan)
+	{
+		echo "<pre>";
+		print_r ($this->surat_masuk->disposisi($bulan));
+		echo "</pre>";
+	}
+
+	function laporan($bulan, $tahun)
+	{
+
+		$data = $this->surat_keluar->laporan($bulan);
+		if (file_exists("fileWord/laporan_surat_keluar.docx")) unlink("fileWord/laporan_surat_keluar.docx");
+
+		$BulanIndoFULL = array("JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER");
+
+		$word = new \PhpOffice\PhpWord\TemplateProcessor('fileWord/template_laporan_surat_keluar.docx');
+		$word->setValue('bulan', $BulanIndoFULL[(int)$bulan-1]);
+		$word->setValue('tahun', $tahun);
+		$word->cloneRow('nourut', count($data));
+
+		$no = 0;
+		foreach($data as $row) {
+			$no+=1;
+
+			$BulanIndo = array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des");
+
+			$bulan = substr($row->tgl_surat, 5, 2);
+			$tgl   = substr($row->tgl_surat, 8, 2);
+
+			$tgl_surat = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
+
+			$tujuan = array();
+			$tgl_dis = '';
+
+			$word->setValue('nourut#'.($no), $row->no_urut);
+			$word->setValue('unit_pengolah#'.($no), $row->nama_bidang);
+			$word->setValue('tgl_surat#'.($no), $tgl_surat);
+			$word->setValue('nosurat#'.($no), $row->no_surat);
+			$word->setValue('perihal#'.($no), $row->perihal);
+			$word->setValue('tujuan#'.($no), $row->tujuan_surat);
+			$word->setValue('ket#'.($no), $row->keterangan);
+			unset($tujuan);
+			$tujuan = array();
+		}
+
+		$word->saveAs('fileWord/laporan_surat_keluar.docx');
+
+		$this->load->helper('download');
+		force_download('fileWord/laporan_surat_keluar.docx', NULL);
+		unlink("fileWord/laporan_surat_keluar.docx");
 	}
 
 }

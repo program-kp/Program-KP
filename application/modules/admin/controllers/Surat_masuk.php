@@ -9,6 +9,8 @@ class Surat_masuk extends CI_Controller {
 		$this->load->library('form_validation');
 		$this->load->model("referensi_bidang_m", "bidang");
 		$this->load->model("surat_masuk_m", "surat_masuk");
+		$this->load->library('Word');
+
 		if ($this->session->userdata('role') != "Admin" && $this->session->userdata('role') != "Super")
 			redirect('/login/');
 	}
@@ -190,6 +192,76 @@ class Surat_masuk extends CI_Controller {
 		];
 
 		echo json_encode($output);
+	}
+
+	function test_laporan($bulan)
+	{
+		echo "<pre>";
+		print_r ($this->surat_masuk->disposisi($bulan));
+		echo "</pre>";
+	}
+
+	function laporan_test()
+	{
+		echo "<pre>";
+		print_r ($this->input->post());
+		echo "</pre>";
+	}
+
+	function laporan($bulan, $tahun)
+	{
+
+		$data = $this->surat_masuk->laporan($bulan);
+		if (file_exists("fileWord/laporan_surat_masuk.docx")) unlink("fileWord/laporan_surat_masuk.docx");
+
+		$BulanIndoFULL = array("JANUARI", "FEBRUARI", "MARET", "APRIL", "MEI", "JUNI", "JULI", "AGUSTUS", "SEPTEMBER", "OKTOBER", "NOVEMBER", "DESEMBER");
+
+		$word = new \PhpOffice\PhpWord\TemplateProcessor('fileWord/template_laporan_surat_masuk.docx');
+		$word->setValue('bulan', $BulanIndoFULL[(int)$bulan-1]);
+		$word->setValue('tahun', $tahun);
+		$word->cloneRow('nourut', count($data));
+
+		$no = 0;
+		foreach($data as $row) {
+			$no+=1;
+
+			$BulanIndo = array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Ags", "Sep", "Okt", "Nov", "Des");
+
+			$bulan = substr($row->tgl_surat, 5, 2);
+			$tgl   = substr($row->tgl_surat, 8, 2);
+
+			$tgl_surat = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
+
+			$tujuan = array();
+			$tgl_dis = '';
+
+			$dis = $this->surat_masuk->disposisi($row->no_urut);
+
+			foreach ($dis as $row2) {
+
+				$bulan = substr($row2->tgl_disposisi, 5, 2);
+				$tgl   = substr($row2->tgl_disposisi, 8, 2);
+
+				$tgl_dis = $tgl . " " . $BulanIndo[(int)$bulan-1] . " ". $tahun;
+				$tujuan[] = $row2->nama_bidang;
+			};
+
+			$word->setValue('nourut#'.($no), $row->no_urut);
+			$word->setValue('asal_surat#'.($no), $row->asal_surat);
+			$word->setValue('nosurat#'.($no), $row->no_surat);
+			$word->setValue('tgl_surat#'.($no), $tgl_surat);
+			$word->setValue('perihal#'.($no), $row->perihal);
+			$word->setValue('tujuan#'.($no), implode(',',$tujuan));
+			$word->setValue('tgl_disposisi#'.($no), $tgl_dis);
+			unset($tujuan);
+			$tujuan = array();
+		}
+
+		$word->saveAs('fileWord/laporan_surat_masuk.docx');
+
+		$this->load->helper('download');
+		force_download('fileWord/laporan_surat_masuk.docx', NULL);
+		unlink("fileWord/laporan_surat_masuk.docx");
 	}
 
 }

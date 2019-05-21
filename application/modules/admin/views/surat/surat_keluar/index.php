@@ -22,6 +22,7 @@
 				<div class="row">
 					<div class="col-md-4">
 						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal">Tambah Surat Keluar</button>
+						<button type="button" class="btn btn-sm btn-primary btn-md tambah" data-toggle="modal" data-target="#modal_cetak">Cetak Laporan</button>
 					</div>
 					<div class="col-md-2"></div>
 					<label class="col-md-1 form-label" style="margin-top: 5px">Tanggal</label>
@@ -54,6 +55,40 @@
 	</div>
 	<!-- End Page-Content -->
 </div>
+
+<!-- Modal -->
+<div class="modal fade modal-fade-in-scale-up" id="modal_cetak" aria-hidden="true" aria-labelledby="exampleMultipleOne"
+role="dialog" tabindex="-1">
+<div class="modal-dialog modal-simple modal-center">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">×</span>
+			</button>
+			<h4 class="modal-title">Cetak Surat Keluar</h4>
+		</div>
+		<div class="modal-body">
+			<form action="#" id="form_cetak">
+				<div class="form-group row">
+					<label class="col-sm-1 form-label">Bulan<span required="">*</span></label>
+					<div class="col-sm-5">
+						<?php echo form_input('bulan', '', ["class" => "form-control", 'id' => 'bulan', 'autocomplate' => 'off']); ?>
+					</div>
+					<label class="col-sm-1 form-label">Tahun<span required="">*</span></label>
+					<div class="col-sm-5 float-right">
+						<?php echo form_input('tahun', '', ["class" => "form-control", 'id' => 'tahun', 'autocomplate' => 'off']); ?>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-sm btn-secondary batal" data-dismiss="modal">Batal</button>
+			<button type="button" class="btn btn-sm btn-primary" data-dismiss="modal" onclick="cetak_suratmasuk()">Cetak</button>
+		</div>
+	</div>
+</div>
+</div>
+<!-- End Modal -->
 
 <!-- Modal -->
 <div class="modal fade modal-fade-in-scale-up" id="modal" aria-hidden="true" aria-labelledby="exampleMultipleOne"
@@ -245,6 +280,11 @@ role="dialog" tabindex="-1">
 
 <!-- SCRIPT -->
 <script>
+
+	function cetak_suratmasuk()
+	{
+		location.href = '<?php echo base_url()?>admin/surat_keluar/laporan/'+$('#bulan').val()+'/'+$('#tahun').val();
+	}
 
 	function confirm(no)
 	{
@@ -469,8 +509,16 @@ role="dialog" tabindex="-1">
 		$('#surat').addClass('active open');
 		$('#surat_keluar').addClass('active hover');
 
-		$("#tgl_surat, #tgl_filter").keypress(function(event) {
+		$("#tgl_surat, #tgl_filter, #bulan, #tahun").keypress(function(event) {
 			event.preventDefault();
+		});
+
+		$('#bulan').datetimepicker({
+			format: "MM",
+		});
+
+		$('#tahun').datetimepicker({
+			format: "YYYY",
 		});
 
 		$('#tgl_surat').datetimepicker({		

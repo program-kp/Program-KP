@@ -52,6 +52,26 @@ class Undangan_m extends CI_Model {
 		return $query->result();
 	}
 
+	function laporan($bulan)
+	{
+		$this->db->select('*');
+		$this->db->from('tbl_surat_undangan');
+		$this->db->order_by('no_urut', 'asc');
+		$this->db->where('DATE_FORMAT(tgl_terima,"%m")', $bulan);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
+	function disposisi($no_urut)
+	{
+		$this->db->select('tbl_bidang.nama_bidang');
+		$this->db->from('tbl_disposisi');
+		$this->db->join('tbl_bidang','tbl_disposisi.tujuan_surat = tbl_bidang.id_bidang');
+		$this->db->where('no_urut_undangan', $no_urut);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	function get_data_byID($no_urut)
 	{
 		$this->db->select('*');

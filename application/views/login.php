@@ -9,7 +9,7 @@
 	<meta name="description" content="bootstrap material admin template">
 	<meta name="author" content="">
 
-	<title>Login | SIPALA SURAT</title>
+	<title>Login | SIPALSU</title>
 
 	<link rel="apple-touch-icon" href="<?php echo base_url() ?>assets/images/apple-touch-icon.png">
     <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/logo-dkp3.png">
@@ -51,7 +51,7 @@
 				<div class="panel-body">
 					<div class="brand">
 						<img class="brand-img" width="80px" src="<?php echo base_url() ?>assets/images/logo-dkp3.png" alt="...">
-						<br><br><h2 class="brand-text font-size-18">SIPALA SURAT</h2>
+						<br><br><h2 class="brand-text font-size-18">SIPALSU</h2>
 					</div>
 					<div id="type_alert" class="alert dark alert-dismissible d-none notif">
 						<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>

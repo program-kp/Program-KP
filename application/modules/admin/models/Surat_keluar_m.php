@@ -30,6 +30,18 @@ class Surat_keluar_m extends CI_Model {
 		return $query->result();
 	}
 
+	function laporan($bulan)
+	{
+		$date_now = date("Y-m-d");
+		$this->db->select('tbl_surat_keluar.*, tbl_bidang.*');
+		$this->db->from('tbl_surat_keluar');
+		$this->db->join('tbl_bidang','tbl_bidang.id_bidang=tbl_surat_keluar.unit_pengolah');
+		$this->db->order_by('tbl_surat_keluar.no_urut', 'desc');
+		$this->db->where('DATE_FORMAT(tgl_terima,"%m")', $bulan);
+		$query = $this->db->get();
+		return $query->result();
+	}
+
 	function get_data_byID($no_urut)
 	{
 		$this->db->select('tbl_surat_keluar.*, tbl_bidang.*');
